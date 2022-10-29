@@ -12,20 +12,14 @@ export class CyclesService {
   }
 
   async findById(id: number) {
-    // Paramsで取得した値はstringとなってしまうので、numberに変換
-    // 後でバリデーションを実装したら直す
     return await this.prisma.cycle.findUnique({
       where: {
-        id: Number(id),
+        id: id,
       },
     });
   }
 
   async create(cycleDto: CycleDto) {
-    // Paramsで取得した値はstringとなってしまうので、numberに変換
-    // 後でバリデーションを実装したら直す
-    cycleDto.userId = Number(cycleDto.userId);
-
     await this.prisma.cycle.create({
       data: cycleDto,
     });

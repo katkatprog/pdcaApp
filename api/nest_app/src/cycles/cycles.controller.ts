@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { CycleDto } from './cycle.dto';
 import { CyclesService } from './cycles.service';
 
@@ -11,7 +18,7 @@ export class CyclesController {
   }
 
   @Get(':id')
-  async findById(@Param('id') id: number) {
+  async findById(@Param('id', ParseIntPipe) id: number) {
     return await this.cyclesService.findById(id);
   }
 
