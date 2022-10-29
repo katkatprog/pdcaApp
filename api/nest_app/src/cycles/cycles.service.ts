@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CycleDto, CycleDtoEdit } from './cycle.dto';
 import { CycleIfc } from './cycle.interface';
@@ -16,11 +20,13 @@ export class CyclesService {
   }
 
   async findById(id: number): Promise<CycleIfc> {
-    return await this.prisma.cycle.findUnique({
+    const cycle = await this.prisma.cycle.findUnique({
       where: {
         id: id,
       },
     });
+    if (!cycle) throw new NotFoundException('そのサイクルは存在しません。');
+    return cycle;
   }
 
   async create(cycleDto: CycleDto): Promise<void> {
@@ -30,6 +36,8 @@ export class CyclesService {
   }
 
   async update(id: number, cycleDtoEdit: CycleDtoEdit): Promise<void> {
+    const cycle = await this.findById(id); //指定のサイクルの存在確認
+
     await this.prisma.cycle.update({
       where: { id: id },
       data: cycleDtoEdit,
@@ -38,6 +46,8 @@ export class CyclesService {
 
   // サイクルを消去する(erasedをtrueに変更する)処理
   async erase(id: number): Promise<void> {
+    const cycle = await this.findById(id); //指定のサイクルの存在確認
+
     await this.prisma.cycle.update({
       where: { id: id },
       data: { erased: true },
@@ -53,6 +63,8 @@ export class CyclesService {
 
   // サイクルを復元する(erasedをfalseに変更する)処理
   async restore(id: number): Promise<void> {
+    const cycle = await this.findById(id); //指定のサイクルの存在確認
+
     await this.prisma.cycle.update({
       where: { id: id },
       data: { erased: false },
@@ -60,15 +72,14 @@ export class CyclesService {
   }
 
   async delete(id: number): Promise<void> {
-    const cycle = await this.prisma.cycle.findUnique({
+    const cycle = await this.findById(id); //指定のサイクルの存在確認
+
+    // サイクルが消去済でなければ削除処理に至らないようにしている。
+    if (!cycle.erased)
+      throw new BadRequestException('消去済みのサイクルしか削除できません。');
+
+    await this.prisma.cycle.delete({
       where: { id: id },
     });
-
-    // サイクルが消去済でなければ削除処理に入らないようにしている。
-    if (cycle.erased) {
-      await this.prisma.cycle.delete({
-        where: { id: id },
-      });
-    }
   }
 }
