@@ -31,4 +31,12 @@ export class CyclesService {
       data: cycleDtoEdit,
     });
   }
+
+  // サイクルを消去する(erasedをtrueに変更する)処理
+  async erase(id: number): Promise<void> {
+    await this.prisma.cycle.update({
+      where: { id: id },
+      data: { erased: true },
+    });
+  }
 }

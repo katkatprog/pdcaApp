@@ -36,4 +36,10 @@ export class CyclesController {
   ): Promise<void> {
     return await this.cyclesService.update(id, cycleDtoEdit);
   }
+
+  // サイクルを消去する(erasedをtrueに変更する)処理
+  @Put('erase/:id')
+  async erase(@Param('id', ParseIntPipe) id: number) {
+    return await this.cyclesService.erase(id);
+  }
 }
