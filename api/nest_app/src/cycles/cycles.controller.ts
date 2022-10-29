@@ -19,6 +19,14 @@ export class CyclesController {
     return await this.cyclesService.findAll();
   }
 
+  // 消去されたサイクル一覧
+  @Get('trashed/:userId')
+  async findTrashedCycles(
+    @Param('userId', ParseIntPipe) userId: number,
+  ): Promise<CycleIfc[]> {
+    return await this.cyclesService.findTrashedCycles(userId);
+  }
+
   @Get(':id')
   async findById(@Param('id', ParseIntPipe) id: number): Promise<CycleIfc> {
     return await this.cyclesService.findById(id);

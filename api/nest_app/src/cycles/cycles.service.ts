@@ -40,6 +40,13 @@ export class CyclesService {
     });
   }
 
+  // 消去されたサイクル一覧を取得
+  async findTrashedCycles(userId: number): Promise<CycleIfc[]> {
+    return await this.prisma.cycle.findMany({
+      where: { userId: userId, erased: true },
+    });
+  }
+
   // サイクルを復元する(erasedをfalseに変更する)処理
   async restore(id: number): Promise<void> {
     await this.prisma.cycle.update({
