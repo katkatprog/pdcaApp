@@ -42,4 +42,10 @@ export class CyclesController {
   async erase(@Param('id', ParseIntPipe) id: number) {
     return await this.cyclesService.erase(id);
   }
+
+  // 消去されたサイクルを復元する(erasedをfalseに変更する)処理
+  @Put('restore/:id')
+  async restore(@Param('id', ParseIntPipe) id: number) {
+    return await this.cyclesService.restore(id);
+  }
 }

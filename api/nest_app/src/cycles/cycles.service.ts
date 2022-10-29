@@ -39,4 +39,12 @@ export class CyclesService {
       data: { erased: true },
     });
   }
+
+  // サイクルを復元する(erasedをfalseに変更する)処理
+  async restore(id: number): Promise<void> {
+    await this.prisma.cycle.update({
+      where: { id: id },
+      data: { erased: false },
+    });
+  }
 }
