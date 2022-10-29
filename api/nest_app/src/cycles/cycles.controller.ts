@@ -6,6 +6,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { CycleDto, CycleDtoEdit } from './cycle.dto';
 import { CycleIfc } from './cycle.interface';
@@ -15,18 +16,22 @@ import { CyclesService } from './cycles.service';
 export class CyclesController {
   constructor(private readonly cyclesService: CyclesService) {}
   @Get('')
-  async findAll(): Promise<CycleIfc[]> {
-    return await this.cyclesService.findAll();
+  async findAll(
+    @Query('userId', ParseIntPipe) userId: number,
+  ): Promise<CycleIfc[]> {
+    return await this.cyclesService.findAll(userId);
   }
 
   // 消去されたサイクル一覧
-  @Get('trashed/:userId')
+  @Get('trashed')
   async findTrashedCycles(
-    @Param('userId', ParseIntPipe) userId: number,
+    @Query('userId', ParseIntPipe) userId: number,
   ): Promise<CycleIfc[]> {
     return await this.cyclesService.findTrashedCycles(userId);
   }
 
+  // サイクルの詳細を取得 サイクルのIDをURLパラメータに表示させるため、
+  // 上記のメソッドとかぶらないよう、Getの一番下に記載している。
   @Get(':id')
   async findById(@Param('id', ParseIntPipe) id: number): Promise<CycleIfc> {
     return await this.cyclesService.findById(id);

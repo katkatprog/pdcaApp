@@ -7,8 +7,12 @@ import { CycleIfc } from './cycle.interface';
 export class CyclesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(): Promise<CycleIfc[]> {
-    return await this.prisma.cycle.findMany();
+  async findAll(userId: number): Promise<CycleIfc[]> {
+    return await this.prisma.cycle.findMany({
+      where: {
+        userId: userId,
+      },
+    });
   }
 
   async findById(id: number): Promise<CycleIfc> {
