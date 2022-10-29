@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -60,5 +61,11 @@ export class CyclesController {
   @Put('restore/:id')
   async restore(@Param('id', ParseIntPipe) id: number) {
     return await this.cyclesService.restore(id);
+  }
+
+  // サイクルの完全な削除
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number) {
+    return await this.cyclesService.delete(id);
   }
 }

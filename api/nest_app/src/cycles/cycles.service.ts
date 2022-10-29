@@ -58,4 +58,17 @@ export class CyclesService {
       data: { erased: false },
     });
   }
+
+  async delete(id: number): Promise<void> {
+    const cycle = await this.prisma.cycle.findUnique({
+      where: { id: id },
+    });
+
+    // サイクルが消去済でなければ削除処理に入らないようにしている。
+    if (cycle.erased) {
+      await this.prisma.cycle.delete({
+        where: { id: id },
+      });
+    }
+  }
 }
