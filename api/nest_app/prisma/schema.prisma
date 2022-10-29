@@ -9,3 +9,16 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Cycle{
+  id Int @default(autoincrement()) @id
+  name String
+  about String?
+  goal String
+  userId Int
+  favorite Boolean @default(false)
+  watchFromAnyone Boolean @default(false)
+  erased Boolean @default(false)
+  currentRound Int @default(1)
+  suspend Boolean @default(false)
+}

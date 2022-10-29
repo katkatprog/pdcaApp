@@ -5,12 +5,12 @@ import { CyclesService } from './cycles.service';
 export class CyclesController {
   constructor(private readonly cyclesService: CyclesService) {}
   @Get('')
-  findAll() {
-    return this.cyclesService.findAll();
+  async findAll() {
+    return await this.cyclesService.findAll();
   }
 
   @Get(':id')
-  findById(@Param('id') id: number) {
-    return this.cyclesService.findById(id);
+  async findById(@Param('id') id: number) {
+    return await this.cyclesService.findById(id);
   }
 }
