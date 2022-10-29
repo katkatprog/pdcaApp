@@ -5,8 +5,9 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
 } from '@nestjs/common';
-import { CycleDto } from './cycle.dto';
+import { CycleDto, CycleDtoEdit } from './cycle.dto';
 import { CycleIfc } from './cycle.interface';
 import { CyclesService } from './cycles.service';
 
@@ -26,5 +27,13 @@ export class CyclesController {
   @Post('create')
   async create(@Body() cycleDto: CycleDto): Promise<void> {
     return await this.cyclesService.create(cycleDto);
+  }
+
+  @Put('update/:id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() cycleDtoEdit: CycleDtoEdit,
+  ): Promise<void> {
+    return await this.cyclesService.update(id, cycleDtoEdit);
   }
 }

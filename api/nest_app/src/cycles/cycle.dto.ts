@@ -16,6 +16,22 @@ export class CycleDto {
   goal: string;
 
   @Type(() => Number)
-  @IsInt({ message: 'サイクルのユーザーIDは数値で入力してください。' })
+  @IsNotEmpty()
+  @IsInt()
   userId: number;
+}
+
+// 編集時のDTO
+export class CycleDtoEdit extends CycleDto {
+  @Type(() => Boolean)
+  @IsNotEmpty()
+  favorite: boolean;
+
+  @Type(() => Boolean)
+  @IsNotEmpty()
+  watchFromAnyone: boolean;
+
+  @Type(() => Boolean)
+  @IsNotEmpty()
+  suspend: boolean;
 }

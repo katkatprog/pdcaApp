@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CycleDto } from './cycle.dto';
+import { CycleDto, CycleDtoEdit } from './cycle.dto';
 import { CycleIfc } from './cycle.interface';
 
 @Injectable()
@@ -22,6 +22,13 @@ export class CyclesService {
   async create(cycleDto: CycleDto): Promise<void> {
     await this.prisma.cycle.create({
       data: cycleDto,
+    });
+  }
+
+  async update(id: number, cycleDtoEdit: CycleDtoEdit): Promise<void> {
+    await this.prisma.cycle.update({
+      where: { id: id },
+      data: cycleDtoEdit,
     });
   }
 }
