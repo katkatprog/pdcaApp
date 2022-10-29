@@ -7,11 +7,11 @@ import { CycleIfc } from './cycle.interface';
 export class CyclesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll() {
+  async findAll(): Promise<CycleIfc[]> {
     return await this.prisma.cycle.findMany();
   }
 
-  async findById(id: number) {
+  async findById(id: number): Promise<CycleIfc> {
     return await this.prisma.cycle.findUnique({
       where: {
         id: id,
@@ -19,7 +19,7 @@ export class CyclesService {
     });
   }
 
-  async create(cycleDto: CycleDto) {
+  async create(cycleDto: CycleDto): Promise<void> {
     await this.prisma.cycle.create({
       data: cycleDto,
     });
