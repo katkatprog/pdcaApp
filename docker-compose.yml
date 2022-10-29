@@ -8,8 +8,6 @@ services:
         - FRONT_WORKDIR=$FRONT_WORKDIR
     tty: true
     stdin_open: true
-    environment:
-      TZ: Asia/Tokyo
     volumes:
       - ./front:$FRONT_WORKDIR
     ports:
@@ -38,8 +36,6 @@ services:
         - API_WORKDIR=$API_WORKDIR
     tty: true
     stdin_open: true
-    environment:
-      TZ: Asia/Tokyo
     volumes:
       - ./api:$API_WORKDIR
     ports:
