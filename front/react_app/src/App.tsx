@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Layout from "./components/layout/Layout";
 
 const Title = styled.h1`
   font-weight: 100;
@@ -12,8 +13,10 @@ const Title2 = styled(Title)`
 function App() {
   return (
     <div>
-      <Title>Hello</Title>
-      <Title2>Hello</Title2>
+      <Layout>
+        <Title>Hello</Title>
+        <Title2>Hello</Title2>
+      </Layout>
     </div>
   );
 }
