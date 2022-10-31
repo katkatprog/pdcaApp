@@ -1,23 +1,19 @@
-import styled from "styled-components";
-import Layout from "./components/layout/Layout";
-
-const Title = styled.h1`
-  font-weight: 100;
-  color: red;
-`;
-
-const Title2 = styled(Title)`
-  color: blue;
-`;
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Cycle from "./pages/Cycle";
+import Home from "./pages/Home";
+import Trash from "./pages/Trash";
 
 function App() {
   return (
-    <div>
-      <Layout>
-        <Title>Hello</Title>
-        <Title2>Hello</Title2>
-      </Layout>
-    </div>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home></Home>}></Route>
+          <Route path="/trash" element={<Trash></Trash>}></Route>
+          <Route path="/:cycleId" element={<Cycle></Cycle>}></Route>
+        </Routes>
+      </Router>
+    </>
   );
 }
 
