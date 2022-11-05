@@ -5,17 +5,18 @@ services:
     build:
       context: ./front
       args:
-        - FRONT_WORKDIR=$FRONT_WORKDIR
+        - FRONT_WORKDIR=/workspace/front
     tty: true
     stdin_open: true
     volumes:
-      - ./front:$FRONT_WORKDIR
+      - .:/workspace
+      - front_store:/workspace/front/$FRONT_PROJ_NAME/node_modules
     ports:
       - "$FRONT_PORT:3000"
     # docker-compose起動時コマンド。プロジェクトディレクトリがある場合はアプリを起動し、ない場合はメッセージを出して待機
     command: >
       sh -c 
-        "if [ -d $FRONT_PROJ_NAME ]; then 
+        "if [ -e $FRONT_PROJ_NAME/package.json ]; then 
           cd $FRONT_PROJ_NAME && yarn install && yarn start
         else
           echo 'Project Directory is not found...' && tail -f /dev/null
@@ -33,18 +34,19 @@ services:
     build:
       context: ./api
       args:
-        - API_WORKDIR=$API_WORKDIR
+        - API_WORKDIR=/workspace/api
     tty: true
     stdin_open: true
     volumes:
-      - ./api:$API_WORKDIR
+      - .:/workspace
+      - api_store:/workspace/api/$API_PROJ_NAME/node_modules
     ports:
       - "$API_PORT:3000"
       - "$PRISMA_STUDIO_PORT:5555"
     # docker-compose起動時コマンド。プロジェクトディレクトリがある場合はアプリを起動し、ない場合はメッセージを出して待機
     command: >
       sh -c 
-        "if [ -d $API_PROJ_NAME ]; then 
+        "if [ -e $API_PROJ_NAME/package.json ]; then 
           cd $API_PROJ_NAME && yarn install && yarn start:dev
         else
           echo 'Project Directory is not found...' && tail -f /dev/null
@@ -73,3 +75,5 @@ services:
       - $DB_PORT:5432
 volumes:
   db_store:
+  front_store:
+  api_store:
