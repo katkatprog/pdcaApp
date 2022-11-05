@@ -10,6 +10,7 @@ services:
     stdin_open: true
     volumes:
       - ./front:$FRONT_WORKDIR
+      - front_store:$FRONT_WORKDIR/$FRONT_PROJ_NAME/node_modules
     ports:
       - "$FRONT_PORT:3000"
     # docker-compose起動時コマンド。プロジェクトディレクトリがある場合はアプリを起動し、ない場合はメッセージを出して待機
@@ -38,6 +39,7 @@ services:
     stdin_open: true
     volumes:
       - ./api:$API_WORKDIR
+      - api_store:$API_WORKDIR/$API_PROJ_NAME/node_modules
     ports:
       - "$API_PORT:3000"
       - "$PRISMA_STUDIO_PORT:5555"
@@ -73,3 +75,5 @@ services:
       - $DB_PORT:5432
 volumes:
   db_store:
+  front_store:
+  api_store:
