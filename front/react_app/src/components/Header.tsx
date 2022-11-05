@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const StyledHeader = styled.header`
   display: flex;
@@ -8,6 +9,7 @@ const StyledHeader = styled.header`
   background-color: #0bd;
   color: #f2f2f2;
   font-size: 1.1rem;
+  top: 0;
 
   /* ヘッダーを固定する */
   position: fixed;
@@ -24,18 +26,14 @@ const StyledHeader = styled.header`
   }
 `;
 
-// StyledHeaderを固定させるためのダミー。StyledHeaderの下に配置させる。
-const StyledHeaderDummy = styled.div`
-  height: 7vh;
-`;
-
 const Header = () => {
   return (
     <>
       <StyledHeader>
-        <h1>PDCA App</h1>
+        <Link to="/">
+          <h1>PDCA App</h1>
+        </Link>
       </StyledHeader>
-      <StyledHeaderDummy></StyledHeaderDummy>
     </>
   );
 };

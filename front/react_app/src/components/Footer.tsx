@@ -16,15 +16,9 @@ const StyledFooter = styled.footer`
   width: 100vw;
 `;
 
-// StyledFooterを固定させるためのダミー。StyledFooterの下に配置させる。
-const StyledFooterDummy = styled.div`
-  height: 5vh;
-`;
-
 const Footer = () => {
   return (
     <>
-      <StyledFooterDummy></StyledFooterDummy>
       <StyledFooter>@katkatprog</StyledFooter>
     </>
   );

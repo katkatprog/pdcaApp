@@ -14,8 +14,11 @@ const Home = () => {
   return (
     <>
       <Layout>
-        <Title>Home</Title>
-        <Title2>Home</Title2>
+        <Title2>Home1</Title2>
+        <Title2>Home2</Title2>
+        <Title2>Home3</Title2>
+        <Title2>Home4</Title2>
+        <Title2>Home5</Title2>
       </Layout>
     </>
   );
