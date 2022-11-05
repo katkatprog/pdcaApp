@@ -22,11 +22,10 @@
 		"vscode": {
 			"extensions": [
 				"dsznajder.es7-react-js-snippets",
-				"foxundermoon.next-js",
-				"PulkitGangwar.nextjs-snippets",
 				"esbenp.prettier-vscode",
 				"MS-CEINTL.vscode-language-pack-ja",
-				"dbaeumer.vscode-eslint"
+				"dbaeumer.vscode-eslint",
+				"styled-components.vscode-styled-components"
 			]
 		}
 	},
