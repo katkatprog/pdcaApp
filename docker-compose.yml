@@ -5,12 +5,12 @@ services:
     build:
       context: ./front
       args:
-        - FRONT_WORKDIR=$FRONT_WORKDIR
+        - FRONT_WORKDIR=/workspace/front
     tty: true
     stdin_open: true
     volumes:
-      - ./front:$FRONT_WORKDIR
-      - front_store:$FRONT_WORKDIR/$FRONT_PROJ_NAME/node_modules
+      - .:/workspace
+      - front_store:/workspace/front/$FRONT_PROJ_NAME/node_modules
     ports:
       - "$FRONT_PORT:3000"
     # docker-compose起動時コマンド。プロジェクトディレクトリがある場合はアプリを起動し、ない場合はメッセージを出して待機
@@ -34,12 +34,12 @@ services:
     build:
       context: ./api
       args:
-        - API_WORKDIR=$API_WORKDIR
+        - API_WORKDIR=/workspace/api
     tty: true
     stdin_open: true
     volumes:
-      - ./api:$API_WORKDIR
-      - api_store:$API_WORKDIR/$API_PROJ_NAME/node_modules
+      - .:/workspace
+      - api_store:/workspace/api/$API_PROJ_NAME/node_modules
     ports:
       - "$API_PORT:3000"
       - "$PRISMA_STUDIO_PORT:5555"
