@@ -2,6 +2,7 @@ FROM node:16
 ARG FRONT_WORKDIR
 WORKDIR ${FRONT_WORKDIR}
 # ENV DOCKERIZE_VERSION v0.6.1
+ENV TZ Asia/Tokyo
 RUN apt update
 RUN apt install -y wget vim
 RUN echo "set encoding=utf-8" >> ~/.vimrc
