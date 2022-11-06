@@ -49,7 +49,7 @@ front-exec:
 # 	node_modules, .gitの移動は行いたくないので、移動前に削除。
 # (3)/workspace_tmpのプロジェクトから残ったファイルを/workspace/frontに移動。
 # (4)/workspace_tmpを削除
-front-build:
+front-create-app:
 	docker-compose exec front sh -c \
 		"mkdir /workspace_tmp && cd /workspace_tmp && yarn create react-app --template typescript ${FRONT_PROJ_NAME} && \
 		cd ./${FRONT_PROJ_NAME} && rm -rf .git node_modules &&\
@@ -63,7 +63,7 @@ front-build:
 # 	node_modules, .gitの移動は行いたくないので、移動前に削除。
 # (3)/workspace_tmpのプロジェクトから残ったファイルを/workspace/frontに移動。
 # (4)/workspace_tmpを削除
-# front-build:
+# front-create-app:
 # 	docker-compose exec front sh -c \
 # 		"mkdir /workspace_tmp && cd /workspace_tmp && yarn create next-app --ts ${FRONT_PROJ_NAME} && \
 # 		cd ./${FRONT_PROJ_NAME} && rm -rf .git node_modules &&\
@@ -79,7 +79,7 @@ api-exec:
 
 # NestJSプロジェクト新規作成
 # --skip-installをすることで、プロジェクト作成の際にnode_modulesがインストールされなくなり、Volume-Mountされているnode_modulesと競合せず済む。
-api-build:
+api-create-app:
 	docker-compose exec api sh -c \
 		"nest new ${API_PROJ_NAME} --package-manager yarn --skip-install"
 
