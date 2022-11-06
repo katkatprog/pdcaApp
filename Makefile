@@ -76,15 +76,12 @@ front-build:
 api-exec:
 	docker-compose exec api bash
 
-# NestJSプロジェクト作成
-# プロジェクト作成の前からnode_modulesのVolume-Mountがされている場合、docker-compose.ymlの該当箇所をコメントアウトするように指示する。
+# NestJSプロジェクト新規作成
+# --skip-installをすることで、プロジェクト作成の際にnode_modulesがインストールされなくなり、Volume-Mountされているnode_modulesと競合せず済む。
 api-build:
 	docker-compose exec api sh -c \
-		"if [ -d ${API_PROJ_NAME}/node_modules ]; then \
-			echo Comment out api_store Volume-Mount in docker-compose.yml ! ; \
-		else \
-			nest new ${API_PROJ_NAME} --package-manager yarn --skip-git \
-		fi"
+		"nest new ${API_PROJ_NAME} --package-manager yarn --skip-install"
+
 ########################################################################################
 ################################# dbに関するコマンド ######################################
 ########################################################################################
