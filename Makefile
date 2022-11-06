@@ -42,33 +42,34 @@ all-reset:
 front-exec:
 	docker-compose exec front bash
 
-# Reactプロジェクト作成
-# プロジェクト作成の前からnode_modulesのVolume-Mountがされている場合、docker-compose.ymlの該当箇所をコメントアウトするように指示する。
-# プロジェクトのルート位置でgit管理しているため、Reactプロジェクト内に生成される.gitは削除する。
-front-build:
+# Reactプロジェクト新規作成
+# (1)/workspace/front(ホスト側の./front)のプロジェクト内のnode_modulesがVolume-Mountがされている関係上、
+# 	一時的にコンテナ内の/workspace_tmpにプロジェクトを作成、
+# (2)/workspace_tmpに作成したプロジェクトのファイルを、/workspace/frontのプロジェクトに移動させるが、
+# 	node_modules, .gitの移動は行いたくないので、移動前に削除。
+# (3)/workspace_tmpのプロジェクトから残ったファイルを/workspace/frontに移動。
+# (4)/workspace_tmpを削除
+front-create-app:
 	docker-compose exec front sh -c \
-		"if [ -d ${FRONT_PROJ_NAME}/node_modules ]; then \
-			echo Comment out front_store Volume-Mount in docker-compose.yml ! ; \
-		else \
-			yarn create react-app --template typescript ${FRONT_PROJ_NAME} && cd ${FRONT_PROJ_NAME} && \
-			if [ -d .git ]; then \
-				rm -rf .git ; \
-			fi\
-		fi"
+		"mkdir /workspace_tmp && cd /workspace_tmp && yarn create react-app --template typescript ${FRONT_PROJ_NAME} && \
+		cd ./${FRONT_PROJ_NAME} && rm -rf .git node_modules &&\
+		cd /workspace/front && mv /workspace_tmp/${FRONT_PROJ_NAME}/* ./${FRONT_PROJ_NAME} && \
+		rm -rf /workspace_tmp"
 
-# Next.jsプロジェクト作成
-# プロジェクト作成の前からnode_modulesのVolume-Mountがされている場合、docker-compose.ymlの該当箇所をコメントアウトするように指示する。
-# プロジェクトのルート位置でgit管理しているため、Nextプロジェクト内に生成される.gitは削除する。
-# front-build:
+# Next.jsプロジェクト新規作成
+# (1)/workspace/front(ホスト側の./front)のプロジェクト内のnode_modulesがVolume-Mountがされている関係上、
+# 	一時的にコンテナ内の/workspace_tmpにプロジェクトを作成、
+# (2)/workspace_tmpに作成したプロジェクトのファイルを、/workspace/frontのプロジェクトに移動させるが、
+# 	node_modules, .gitの移動は行いたくないので、移動前に削除。
+# (3)/workspace_tmpのプロジェクトから残ったファイルを/workspace/frontに移動。
+# (4)/workspace_tmpを削除
+# front-create-app:
 # 	docker-compose exec front sh -c \
-# 		"if [ -d ${FRONT_PROJ_NAME}/node_modules ]; then \
-# 			echo Comment out front_store Volume-Mount in docker-compose.yml ! ; \
-# 		else \
-# 			yarn create next-app --ts ${FRONT_PROJ_NAME} && cd ${FRONT_PROJ_NAME} && \
-# 			if [ -d .git ]; then \
-# 				rm -rf .git ; \
-# 			fi\
-# 		fi"
+# 		"mkdir /workspace_tmp && cd /workspace_tmp && yarn create next-app --ts ${FRONT_PROJ_NAME} && \
+# 		cd ./${FRONT_PROJ_NAME} && rm -rf .git node_modules &&\
+# 		cd /workspace/front && mv /workspace_tmp/${FRONT_PROJ_NAME}/* ./${FRONT_PROJ_NAME} && \
+# 		rm -rf /workspace_tmp"
+
 ########################################################################################
 ################################# apiに関するコマンド #####################################
 ########################################################################################
