@@ -20,14 +20,6 @@ Makefile内コマンドを用いた諸々の操作方法は以下のとおりで
 - apiコンテナに入り作業をする: make api-exec
 - dbコンテナに入り作業をする: make db-exec
 - dbコンテナに入りつつデータベースにログイン: make db-login
+- front(React)のプロジェクト新規作成: make front-create-app
+- api(NestJS)のプロジェクト新規作成: make api-create-app
 - (注意)front,apiのimage削除、各種volume削除: make all-reset
-
-front(React)のプロジェクト作成手順は以下のとおりです。
-1. docker-compose.ymlのfront-storeのVolume-Mount設定をコメントアウト
-2. make front-build を実行
-3. docker-compose.ymlのfront-storeのVolume-Mount設定のコメントアウトを外して再起動 (3終了後は、ホスト側のnode_modulesは削除して良い)
-
-api(NestJS)のプロジェクト作成手順は以下のとおりです。
-1. docker-compose.ymlのapi-storeのVolume-Mount設定をコメントアウト
-2. make api-build を実行
-3. docker-compose.ymlのapi-storeのVolume-Mount設定のコメントアウトを外して再起動 (3終了後は、ホスト側のnode_modulesは削除して良い)
