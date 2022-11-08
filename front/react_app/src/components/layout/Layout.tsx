@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Footer from "../Footer";
-import Header from "../Header";
+import Sidebar from "../Sidebar";
 
 interface MainProps {
   children: React.ReactNode;
@@ -9,14 +8,20 @@ interface MainProps {
 
 const StyledMain = styled.main`
   text-align: center;
+  flex: 4;
+`;
+
+const StyledLayout = styled.div`
+  display: flex;
 `;
 
 const Layout = (props: MainProps) => {
   return (
     <>
-      <Header></Header>
-      <StyledMain>{props.children}</StyledMain>
-      <Footer></Footer>
+      <StyledLayout>
+        <Sidebar></Sidebar>
+        <StyledMain>{props.children}</StyledMain>
+      </StyledLayout>
     </>
   );
 };
