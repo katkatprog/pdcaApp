@@ -34,7 +34,9 @@ rmvol:
 
 # 環境の全リセット
 all-reset:
-	$(shell make rmi) ; $(shell make db-rmvol) ; $(shell make rmvol)
+	@make rmi
+	@make db-rmvol
+	@make rmvol
 ########################################################################################
 ################################# frontに関するコマンド ######################################
 ########################################################################################
@@ -79,9 +81,10 @@ api-exec:
 
 # NestJSプロジェクト新規作成
 # --skip-installをすることで、プロジェクト作成の際にnode_modulesがインストールされなくなり、Volume-Mountされているnode_modulesと競合せず済む。
+# .gitが作られないようにする
 api-create-app:
 	docker-compose exec api sh -c \
-		"nest new ${API_PROJ_NAME} --package-manager yarn --skip-install"
+		"nest new ${API_PROJ_NAME} --package-manager yarn --skip-install --skip-git"
 
 ########################################################################################
 ################################# dbに関するコマンド ######################################
