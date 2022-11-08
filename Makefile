@@ -20,23 +20,14 @@ restart:
 build:
 	docker-compose build --no-cache
 
-# buildしたimageの削除
-rmi:
-# image名を取得するため、$(shell ...)にて、カレントディレクトリのみを取得し、なおかつ小文字に変換する。
-	docker rmi $(shell basename `pwd` | tr 'A-Z' 'a-z')_api
-	docker rmi $(shell basename `pwd` | tr 'A-Z' 'a-z')_front
-
-# front, apiのvolumeの削除
-rmvol:
-# volume名を取得するため、$(shell ...)にてフルパスからカレントディレクトリのみを抽出し、それを小文字に変換する。
-	docker volume rm $(shell basename `pwd` | tr 'A-Z' 'a-z')_api_store
-	docker volume rm $(shell basename `pwd` | tr 'A-Z' 'a-z')_front_store
-
 # 環境の全リセット
 all-reset:
-	@make rmi
+	@make front-rmi
+	@make api-rmi
+	@make front-rmvol
+	@make api-rmvol
 	@make db-rmvol
-	@make rmvol
+
 ########################################################################################
 ################################# frontに関するコマンド ######################################
 ########################################################################################
@@ -57,6 +48,14 @@ front-create-app:
 		cd ./${FRONT_PROJ_NAME} && rm -rf .git node_modules &&\
 		cd /workspace_tmp/${FRONT_PROJ_NAME} && mv * .[^\.]* /workspace/front/${FRONT_PROJ_NAME} && \
 		cd /workspace/front && rm -rf /workspace_tmp"
+
+# front	イメージ削除
+front-rmi:
+	docker rmi $(shell basename `pwd` | tr 'A-Z' 'a-z')_front
+
+# front volume削除
+front-rmvol:
+	docker volume rm $(shell basename `pwd` | tr 'A-Z' 'a-z')_front_store
 
 # Next.jsプロジェクト新規作成
 # (1)/workspace/front(ホスト側の./front)のプロジェクト内のnode_modulesがVolume-Mountがされている関係上、
@@ -86,6 +85,14 @@ api-create-app:
 	docker-compose exec api sh -c \
 		"nest new ${API_PROJ_NAME} --package-manager yarn --skip-install --skip-git"
 
+# api イメージ削除
+api-rmi:
+	docker rmi $(shell basename `pwd` | tr 'A-Z' 'a-z')_api
+
+# api volume削除
+api-rmvol:
+	docker volume rm $(shell basename `pwd` | tr 'A-Z' 'a-z')_api_store
+
 ########################################################################################
 ################################# dbに関するコマンド ######################################
 ########################################################################################
@@ -99,5 +106,4 @@ db-exec:
 
 # dbコンテナのvolume(データ保存場所)を削除する。
 db-rmvol:
-# volume名を取得するため、$(shell ...)にてフルパスからカレントディレクトリのみを抽出し、それを小文字に変換する。
 	docker volume rm $(shell basename `pwd` | tr 'A-Z' 'a-z')_db_store
