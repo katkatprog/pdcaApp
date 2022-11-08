@@ -53,8 +53,8 @@ front-create-app:
 	docker-compose exec front sh -c \
 		"mkdir /workspace_tmp && cd /workspace_tmp && yarn create react-app --template typescript ${FRONT_PROJ_NAME} && \
 		cd ./${FRONT_PROJ_NAME} && rm -rf .git node_modules &&\
-		cd /workspace/front && mv /workspace_tmp/${FRONT_PROJ_NAME}/* /workspace_tmp/${FRONT_PROJ_NAME}/.[^\.]* ./${FRONT_PROJ_NAME} && \
-		rm -rf /workspace_tmp"
+		cd /workspace_tmp/${FRONT_PROJ_NAME} && mv * .[^\.]* /workspace/front/${FRONT_PROJ_NAME} && \
+		cd /workspace/front && rm -rf /workspace_tmp"
 
 # Next.jsプロジェクト新規作成
 # (1)/workspace/front(ホスト側の./front)のプロジェクト内のnode_modulesがVolume-Mountがされている関係上、
@@ -67,8 +67,8 @@ front-create-app:
 # 	docker-compose exec front sh -c \
 # 		"mkdir /workspace_tmp && cd /workspace_tmp && yarn create next-app --ts ${FRONT_PROJ_NAME} && \
 # 		cd ./${FRONT_PROJ_NAME} && rm -rf .git node_modules &&\
-# 		cd /workspace/front && mv /workspace_tmp/${FRONT_PROJ_NAME}/* /workspace_tmp/${FRONT_PROJ_NAME}/.[^\.]* ./${FRONT_PROJ_NAME} && \
-# 		rm -rf /workspace_tmp"
+# 		cd /workspace_tmp/${FRONT_PROJ_NAME} && mv * .[^\.]* /workspace/front/${FRONT_PROJ_NAME} && \
+# 		cd /workspace/front && rm -rf /workspace_tmp"
 
 ########################################################################################
 ################################# apiに関するコマンド #####################################
