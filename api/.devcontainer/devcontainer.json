@@ -21,7 +21,8 @@
 				"Prisma.prisma",
 				"esbenp.prettier-vscode",
 				"MS-CEINTL.vscode-language-pack-ja",
-				"dbaeumer.vscode-eslint"
+				"dbaeumer.vscode-eslint",
+				"mhutchie.git-graph"
 			]
 		}
 	},
