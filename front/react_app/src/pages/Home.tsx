@@ -8,25 +8,26 @@ import { CycleIfc } from "../interfaces/cycle.interface";
 
 const StyledHeader = styled.header`
   display: flex;
-  border-bottom: solid #eff3f4;
+  justify-content: space-between;
+  border-bottom: 2px solid #eff3f4;
   h1 {
-    flex: 1;
     font-size: 1.2rem;
     margin: 12px 0 12px 20px;
   }
 `;
 
 const StyledHeaderRight = styled.div`
-  flex: 1;
   display: flex;
+  margin-right: 20px;
 `;
 
 const StyledSearchForm = styled.form`
   input {
-    margin-top: 10px;
+    margin-top: 8px;
     padding: 10px 30px 10px 10px;
     border-radius: 5px;
     background-color: #eff3f4;
+    width: 20vw;
     border: none;
     outline: none;
   }
