@@ -1,24 +1,26 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Layout from "../components/layout/Layout";
+import { CycleIfc } from "../interfaces/cycle.interface";
 
-const Title = styled.h1`
-  font-weight: 100;
-  color: red;
-`;
-
-const Title2 = styled(Title)`
-  color: blue;
-`;
 const Home = () => {
+  const [cycles, setCycles] = useState<CycleIfc[]>([]);
+  useEffect(() => {
+    (async () => {
+      const response = await axios.get("http://localhost:3001/cycles?userId=1");
+      setCycles(response.data);
+    })();
+  }, []);
+
   return (
     <>
       <Layout>
-        <Title2>Home1</Title2>
-        <Title2>Home2</Title2>
-        <Title2>Home3</Title2>
-        <Title2>Home4</Title2>
-        <Title2>Home5</Title2>
+        <ul>
+          {cycles.map((ele) => (
+            <li key={ele.id}>{ele.name}</li>
+          ))}
+        </ul>
       </Layout>
     </>
   );

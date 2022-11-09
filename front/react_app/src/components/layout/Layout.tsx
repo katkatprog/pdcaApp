@@ -7,7 +7,6 @@ interface MainProps {
 }
 
 const StyledMain = styled.main`
-  text-align: center;
   flex: 4;
 `;
 
