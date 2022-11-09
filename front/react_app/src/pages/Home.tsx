@@ -18,6 +18,7 @@ const StyledHeader = styled.header`
 
 const StyledHeaderRight = styled.div`
   flex: 1;
+  display: flex;
 `;
 
 const StyledSearchForm = styled.form`
@@ -35,9 +36,30 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   margin-left: -25px;
 `;
 
-const submitHandler = (e: React.FormEvent) => {
+const StyledCreateForm = styled.form`
+  input {
+    color: white;
+    background-color: #0057d8;
+    margin-top: 8px;
+    margin-left: 20px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: none;
+    &:hover {
+      cursor: pointer;
+      background-color: #0049b6;
+    }
+  }
+`;
+
+const searchHandler = (e: React.FormEvent) => {
   e.preventDefault();
-  console.log("submit!");
+  console.log("search!");
+};
+
+const createHandler = (e: React.FormEvent) => {
+  e.preventDefault();
+  console.log("create!");
 };
 
 const Home = () => {
@@ -55,10 +77,17 @@ const Home = () => {
         <StyledHeader>
           <h1>作成したサイクル</h1>
           <StyledHeaderRight>
-            <StyledSearchForm onSubmit={(e) => submitHandler(e)}>
+            <StyledSearchForm onSubmit={(e) => searchHandler(e)}>
               <input type="text" placeholder="検索" />
               <StyledFontAwesomeIcon icon={faMagnifyingGlass} />
             </StyledSearchForm>
+            <StyledCreateForm>
+              <input
+                type="button"
+                value="サイクルの作成"
+                onClick={(e) => createHandler(e)}
+              />
+            </StyledCreateForm>
           </StyledHeaderRight>
         </StyledHeader>
         <ul>
