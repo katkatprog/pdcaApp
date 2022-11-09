@@ -1,6 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowsSpin,
+  faCircleUser,
+  faHeart,
+  faRightFromBracket,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 
 const StyledSidebar = styled.aside`
   background-color: #eff3f4;
@@ -19,20 +27,39 @@ const StyledSidebar = styled.aside`
     }
   }
 `;
+const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
+  padding-right: 10px;
+  font-size: 1.4rem;
+`;
 
 const Sidebar = () => {
   return (
     <StyledSidebar>
       <div>
-        <p>kat</p>
+        <p>
+          <StyledFontAwesomeIcon icon={faCircleUser} />
+          kat
+        </p>
         <Link to="/">
-          <p>作成したサイクル</p>
+          <p>
+            <StyledFontAwesomeIcon icon={faArrowsSpin} />
+            作成したサイクル
+          </p>
         </Link>
-        <p>お気に入り</p>
+        <p>
+          <StyledFontAwesomeIcon icon={faHeart} />
+          お気に入り
+        </p>
         <Link to="/trash">
-          <p>消去したサイクル</p>
+          <p>
+            <StyledFontAwesomeIcon icon={faTrash} />
+            消去したサイクル
+          </p>
         </Link>
-        <p>サインアウト</p>
+        <p>
+          <StyledFontAwesomeIcon icon={faRightFromBracket} />
+          サインアウト
+        </p>
       </div>
     </StyledSidebar>
   );
