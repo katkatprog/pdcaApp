@@ -1,7 +1,11 @@
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowsSpin,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../components/layout/Layout";
 import { CycleIfc } from "../interfaces/cycle.interface";
@@ -33,7 +37,7 @@ const StyledSearchForm = styled.form`
   }
 `;
 
-const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
+const StyledMagnifyingGlass = styled(FontAwesomeIcon)`
   margin-left: -25px;
 `;
 
@@ -51,6 +55,35 @@ const StyledCreateForm = styled.form`
       background-color: #0049b6;
     }
   }
+`;
+
+const StyledContainer = styled.div`
+  margin-top: 10px;
+`;
+
+const StyledCard = styled.div`
+  display: flex;
+  /* padding-top: 15px; */
+  height: 70px;
+  margin-bottom: 10px;
+  &:hover {
+    margin-left: 15px;
+    transition: all 0.4s;
+    cursor: pointer;
+  }
+  h2 {
+    flex: 9;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #eff3f4;
+    margin: 0;
+  }
+`;
+
+const StyledArrowsSpin = styled(FontAwesomeIcon)`
+  flex: 1;
+  font-size: 50px;
+  align-items: center;
+  color: #0057d8;
 `;
 
 const searchHandler = (e: React.FormEvent) => {
@@ -80,7 +113,7 @@ const Home = () => {
           <StyledHeaderRight>
             <StyledSearchForm onSubmit={(e) => searchHandler(e)}>
               <input type="text" placeholder="検索" />
-              <StyledFontAwesomeIcon icon={faMagnifyingGlass} />
+              <StyledMagnifyingGlass icon={faMagnifyingGlass} />
             </StyledSearchForm>
             <StyledCreateForm>
               <input
@@ -91,11 +124,16 @@ const Home = () => {
             </StyledCreateForm>
           </StyledHeaderRight>
         </StyledHeader>
-        <ul>
+        <StyledContainer>
           {cycles.map((ele) => (
-            <li key={ele.id}>{ele.name}</li>
+            <Link key={ele.id} to={`/${ele.id}`}>
+              <StyledCard>
+                <StyledArrowsSpin icon={faArrowsSpin} />
+                <h2>{ele.name}</h2>
+              </StyledCard>
+            </Link>
           ))}
-        </ul>
+        </StyledContainer>
       </Layout>
     </>
   );
