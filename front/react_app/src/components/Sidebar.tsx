@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,8 +31,15 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   padding-right: 10px;
   font-size: 1.4rem;
 `;
+const StyledFavorites = styled.div`
+  margin-top: 50px;
+`;
 
 const Sidebar = () => {
+  const [showFavorites, setShowFavorites] = useState<boolean>(false);
+  const favoriteClickHandler = () => {
+    setShowFavorites(!showFavorites);
+  };
   return (
     <StyledSidebar>
       <div>
@@ -46,10 +53,26 @@ const Sidebar = () => {
             作成したサイクル
           </p>
         </Link>
-        <p>
+        <p onClick={favoriteClickHandler}>
           <StyledFontAwesomeIcon icon={faHeart} />
           お気に入り
         </p>
+        {showFavorites && (
+          <StyledFavorites>
+            <Link to="/2">
+              <p>
+                <StyledFontAwesomeIcon icon={faArrowsSpin} />
+                お気に入り1
+              </p>
+            </Link>
+            <Link to="/4">
+              <p>
+                <StyledFontAwesomeIcon icon={faArrowsSpin} />
+                お気に入り2
+              </p>
+            </Link>
+          </StyledFavorites>
+        )}
         <Link to="/trash">
           <p>
             <StyledFontAwesomeIcon icon={faTrash} />
