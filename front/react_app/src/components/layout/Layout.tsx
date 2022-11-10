@@ -6,10 +6,6 @@ interface MainProps {
   children: React.ReactNode;
 }
 
-const StyledMain = styled.main`
-  flex: 4;
-`;
-
 const StyledLayout = styled.div`
   display: flex;
 `;
@@ -19,7 +15,7 @@ const Layout = (props: MainProps) => {
     <>
       <StyledLayout>
         <Sidebar></Sidebar>
-        <StyledMain>{props.children}</StyledMain>
+        <main className="w-4/5">{props.children}</main>
       </StyledLayout>
     </>
   );
