@@ -13,3 +13,7 @@ a{
   text-decoration: none;
   color: #2d3133;
 }
+
+li{
+  list-style: none;
+}
