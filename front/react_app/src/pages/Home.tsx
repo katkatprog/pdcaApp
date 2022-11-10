@@ -1,5 +1,6 @@
 import {
   faArrowsSpin,
+  faCircleNotch,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -102,10 +103,12 @@ const createHandler = (e: React.FormEvent) => {
 
 const Home = () => {
   const [cycles, setCycles] = useState<CycleIfc[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
     (async () => {
       const response = await axios.get("http://localhost:3001/cycles?userId=1");
       setCycles(response.data);
+      setIsLoading(false);
     })();
   }, []);
 
@@ -128,18 +131,34 @@ const Home = () => {
             </StyledCreateForm>
           </StyledHeaderRight>
         </StyledHeader>
-        {cycles.map((ele) => (
-          <Link key={ele.id} to={`/${ele.id}`}>
-            <StyledCard>
-              <StyledCardLeft>
-                <StyledArrowsSpin icon={faArrowsSpin} />
-              </StyledCardLeft>
-              <StyledCardRight>
-                <h2>{ele.name}</h2>
-              </StyledCardRight>
-            </StyledCard>
-          </Link>
-        ))}
+        {isLoading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              paddingTop: "50px",
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faCircleNotch}
+              spin
+              style={{ fontSize: "50px" }}
+            />
+          </div>
+        ) : (
+          cycles.map((ele) => (
+            <Link key={ele.id} to={`/${ele.id}`}>
+              <StyledCard>
+                <StyledCardLeft>
+                  <StyledArrowsSpin icon={faArrowsSpin} />
+                </StyledCardLeft>
+                <StyledCardRight>
+                  <h2>{ele.name}</h2>
+                </StyledCardRight>
+              </StyledCard>
+            </Link>
+          ))
+        )}
       </Layout>
     </>
   );
