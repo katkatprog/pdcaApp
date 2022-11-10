@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faAngleDown,
+  faAngleUp,
   faArrowsSpin,
   faCircleUser,
   faHeart,
@@ -14,13 +16,12 @@ const StyledSidebar = styled.aside`
   background-color: #eff3f4;
   flex: 1;
   min-height: 100vh;
-  div {
-    margin: 25px;
-  }
+  padding-top: 25px;
+  user-select: none;
   p {
-    margin: 10px auto;
-    padding: 8px;
+    margin: 0 25px 0 25px;
     border-radius: 5px;
+    padding: 10px;
     &:hover {
       background-color: #cacaca;
       transition: all 0.4s;
@@ -32,7 +33,7 @@ const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   font-size: 1.4rem;
 `;
 const StyledFavorites = styled.div`
-  margin-top: 50px;
+  margin-left: 25px;
 `;
 
 const Sidebar = () => {
@@ -42,48 +43,51 @@ const Sidebar = () => {
   };
   return (
     <StyledSidebar>
-      <div>
+      <p>
+        <StyledFontAwesomeIcon icon={faCircleUser} />
+        kat
+      </p>
+      <Link to="/">
         <p>
-          <StyledFontAwesomeIcon icon={faCircleUser} />
-          kat
+          <StyledFontAwesomeIcon icon={faArrowsSpin} />
+          作成したサイクル
         </p>
-        <Link to="/">
-          <p>
-            <StyledFontAwesomeIcon icon={faArrowsSpin} />
-            作成したサイクル
-          </p>
-        </Link>
-        <p onClick={favoriteClickHandler}>
-          <StyledFontAwesomeIcon icon={faHeart} />
-          お気に入り
-        </p>
-        {showFavorites && (
-          <StyledFavorites>
-            <Link to="/2">
-              <p>
-                <StyledFontAwesomeIcon icon={faArrowsSpin} />
-                お気に入り1
-              </p>
-            </Link>
-            <Link to="/4">
-              <p>
-                <StyledFontAwesomeIcon icon={faArrowsSpin} />
-                お気に入り2
-              </p>
-            </Link>
-          </StyledFavorites>
+      </Link>
+      <p onClick={favoriteClickHandler}>
+        <StyledFontAwesomeIcon icon={faHeart} />
+        <span style={{ marginRight: "10px" }}>お気に入り</span>
+        {showFavorites ? (
+          <FontAwesomeIcon icon={faAngleUp} />
+        ) : (
+          <FontAwesomeIcon icon={faAngleDown} />
         )}
-        <Link to="/trash">
-          <p>
-            <StyledFontAwesomeIcon icon={faTrash} />
-            消去したサイクル
-          </p>
-        </Link>
+      </p>
+      {showFavorites && (
+        <StyledFavorites>
+          <Link to="/2">
+            <p>
+              <StyledFontAwesomeIcon icon={faArrowsSpin} />
+              お気に入り1
+            </p>
+          </Link>
+          <Link to="/4">
+            <p>
+              <StyledFontAwesomeIcon icon={faArrowsSpin} />
+              お気に入り2
+            </p>
+          </Link>
+        </StyledFavorites>
+      )}
+      <Link to="/trash">
         <p>
-          <StyledFontAwesomeIcon icon={faRightFromBracket} />
-          サインアウト
+          <StyledFontAwesomeIcon icon={faTrash} />
+          消去したサイクル
         </p>
-      </div>
+      </Link>
+      <p>
+        <StyledFontAwesomeIcon icon={faRightFromBracket} />
+        サインアウト
+      </p>
     </StyledSidebar>
   );
 };
