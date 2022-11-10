@@ -57,32 +57,36 @@ const StyledCreateForm = styled.form`
   }
 `;
 
-const StyledContainer = styled.div`
-  margin-top: 10px;
-`;
-
 const StyledCard = styled.div`
   display: flex;
   /* padding-top: 15px; */
-  height: 70px;
-  margin-bottom: 10px;
+  height: 80px;
   &:hover {
-    margin-left: 15px;
+    /* margin-left: 15px; */
+    background-color: #cacaca;
     transition: all 0.4s;
     cursor: pointer;
   }
   h2 {
-    flex: 9;
     font-size: 1.1rem;
-    border-bottom: 1px solid #eff3f4;
     margin: 0;
   }
 `;
 
-const StyledArrowsSpin = styled(FontAwesomeIcon)`
+const StyledCardLeft = styled.div`
   flex: 1;
-  font-size: 50px;
+  display: flex;
   align-items: center;
+  justify-content: center;
+`;
+
+const StyledCardRight = styled.div`
+  flex: 9;
+  padding-top: 10px;
+  border-bottom: 1px solid #eff3f4;
+`;
+const StyledArrowsSpin = styled(FontAwesomeIcon)`
+  font-size: 50px;
   color: #0057d8;
 `;
 
@@ -124,16 +128,18 @@ const Home = () => {
             </StyledCreateForm>
           </StyledHeaderRight>
         </StyledHeader>
-        <StyledContainer>
-          {cycles.map((ele) => (
-            <Link key={ele.id} to={`/${ele.id}`}>
-              <StyledCard>
+        {cycles.map((ele) => (
+          <Link key={ele.id} to={`/${ele.id}`}>
+            <StyledCard>
+              <StyledCardLeft>
                 <StyledArrowsSpin icon={faArrowsSpin} />
+              </StyledCardLeft>
+              <StyledCardRight>
                 <h2>{ele.name}</h2>
-              </StyledCard>
-            </Link>
-          ))}
-        </StyledContainer>
+              </StyledCardRight>
+            </StyledCard>
+          </Link>
+        ))}
       </Layout>
     </>
   );
