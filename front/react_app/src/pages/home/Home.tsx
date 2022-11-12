@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import CycleCard from "../../components/CycleCard";
+import CycleCard from "./CycleCard";
 import Layout from "../../components/layout/Layout";
 import { CycleIfc } from "../../interfaces/cycle.interface";
 import HomeHeader from "./HomeHeader";
