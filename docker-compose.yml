@@ -50,7 +50,7 @@ services:
           cd $API_PROJ_NAME && yarn install && yarn start:dev
         else
           echo 'Project Directory is not found...' && tail -f /dev/null
-        fi" 
+        fi"
     depends_on:
       - db
   # entrypoint:
