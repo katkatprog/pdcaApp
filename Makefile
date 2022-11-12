@@ -36,18 +36,9 @@ front-exec:
 	docker-compose exec front bash
 
 # Reactプロジェクト新規作成
-# (1)/workspace/front(ホスト側の./front)のプロジェクト内のnode_modulesがVolume-Mountがされている関係上、
-# 	一時的にコンテナ内の/workspace_tmpにプロジェクトを作成、
-# (2)/workspace_tmpに作成したプロジェクトのファイルを、/workspace/frontのプロジェクトに移動させるが、
-# 	node_modules, .gitの移動は行いたくないので、移動前に削除。
-# (3)/workspace_tmpのプロジェクトから残ったファイルを/workspace/frontに移動。
-# (4)/workspace_tmpを削除
 front-create-app:
 	docker-compose exec front sh -c \
-		"mkdir /workspace_tmp && cd /workspace_tmp && yarn create react-app --template typescript ${FRONT_PROJ_NAME} && \
-		cd ./${FRONT_PROJ_NAME} && rm -rf .git node_modules &&\
-		cd /workspace_tmp/${FRONT_PROJ_NAME} && mv * .[^\.]* /workspace/front/${FRONT_PROJ_NAME} && \
-		cd /workspace/front && rm -rf /workspace_tmp"
+		"yarn create vite ${FRONT_PROJ_NAME} --template react-ts"
 
 # front	イメージ削除
 front-rmi:
