@@ -44,13 +44,13 @@ const Sidebar = () => {
         <div className="ml-6">
           <Link to="/2">
             <p className="my-0 mx-6 p-2 rounded-md hover:bg-slate-300 transition duration-400">
-              <FontAwesomeIcon icon={faArrowsSpin} className="text-2xl" />
+              <FontAwesomeIcon icon={faArrowsSpin} className="pr-3 text-2xl" />
               お気に入り1
             </p>
           </Link>
           <Link to="/4">
             <p className="my-0 mx-6 p-2 rounded-md hover:bg-slate-300 transition duration-400">
-              <FontAwesomeIcon icon={faArrowsSpin} className="text-2xl" />
+              <FontAwesomeIcon icon={faArrowsSpin} className="pr-3 text-2xl" />
               お気に入り2
             </p>
           </Link>
