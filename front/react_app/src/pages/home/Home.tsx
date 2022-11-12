@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import CycleCard from "./CycleCard";
 import Layout from "../../components/layout/Layout";
 import { CycleIfc } from "../../interfaces/cycle.interface";
-import HomeHeader from "./HomeHeader";
+import Header from "./Header";
 
 const Home = () => {
   const [cycles, setCycles] = useState<CycleIfc[]>([]);
@@ -23,7 +23,7 @@ const Home = () => {
   return (
     <>
       <Layout>
-        <HomeHeader></HomeHeader>
+        <Header></Header>
         {isLoading ? (
           <div
             style={{

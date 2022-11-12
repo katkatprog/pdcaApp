@@ -12,7 +12,7 @@ const createHandler = (e: React.FormEvent) => {
   console.log("create!");
 };
 
-const HomeHeader = () => {
+const Header = () => {
   return (
     <header className="flex justify-between h-20 items-center px-5 border-b border-slate-100">
       <h1 className="text-xl">作成したサイクル</h1>
@@ -38,4 +38,4 @@ const HomeHeader = () => {
   );
 };
 
-export default HomeHeader;
+export default Header;
