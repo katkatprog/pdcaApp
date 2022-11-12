@@ -1,6 +1,7 @@
 import {
   faArrowsSpin,
   faCircleNotch,
+  faEllipsisVertical,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +24,7 @@ const createHandler = (e: React.FormEvent) => {
 const Home = () => {
   const [cycles, setCycles] = useState<CycleIfc[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
   useEffect(() => {
     (async () => {
       const response = await axios.get("http://localhost:3001/cycles?userId=1");
@@ -30,6 +32,12 @@ const Home = () => {
       setIsLoading(false);
     })();
   }, []);
+
+  const MenuHandler = (e: React.FormEvent, cycleId: number) => {
+    e.preventDefault();
+    console.log("Menu!");
+    console.log(`CycleId: ${cycleId}`);
+  };
 
   return (
     <>
@@ -79,8 +87,13 @@ const Home = () => {
                     className="text-5xl text-blue-600"
                   />
                 </div>
-                <div className="w-5/6 pt-2 border-b border-slate-100">
+                <div className="w-5/6 pt-2 border-b border-slate-100 flex justify-between">
                   <h2 className="text-lg">{ele.name}</h2>
+                  <FontAwesomeIcon
+                    icon={faEllipsisVertical}
+                    className="hover:bg-slate-200 px-3 py-2 mr-3 text-xl rounded"
+                    onClick={(e) => MenuHandler(e, ele.id)}
+                  />
                 </div>
               </div>
             </Link>
