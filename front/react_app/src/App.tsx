@@ -1,10 +1,20 @@
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Cycle from "./pages/Cycle";
+import Home from "./pages/Home";
+import Trash from "./pages/Trash";
 import "./App.css";
 
 function App() {
   return (
-    <div>
-      <h1 className="text-red-500">Hello</h1>
-    </div>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home></Home>}></Route>
+          <Route path="/trash" element={<Trash></Trash>}></Route>
+          <Route path="/:cycleId" element={<Cycle></Cycle>}></Route>
+        </Routes>
+      </Router>
+    </>
   );
 }
 
