@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CycleCard from "./CycleCard";
 import Layout from "../../components/layout/Layout";
-import { CycleIfc } from "../../interfaces/cycle.interface";
+import { CycleIfc } from "../../utils/cycle.interface";
 import Header from "./Header";
 
 const Trash = () => {
