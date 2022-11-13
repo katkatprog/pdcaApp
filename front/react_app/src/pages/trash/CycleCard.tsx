@@ -27,7 +27,7 @@ const CycleCard = (props: CycleInfoProps) => {
 
   return (
     <div>
-      <div className="flex h-28">
+      <div className="flex h-28 select-none">
         <div className="w-1/6 flex items-center justify-center">
           <FontAwesomeIcon
             icon={faArrowsSpin}
@@ -42,7 +42,13 @@ const CycleCard = (props: CycleInfoProps) => {
                 <div className="mt-3 mr-3 menu">
                   <p
                     onClick={(e) => DeleteHandler(e, props.element.id)}
-                    className="bg-slate-300 hover:bg-slate-200 px-3 py-1 rounded-md"
+                    className="bg-slate-200 hover:bg-slate-300 px-3 py-1 rounded-t-md"
+                  >
+                    復元する
+                  </p>
+                  <p
+                    onClick={(e) => DeleteHandler(e, props.element.id)}
+                    className="bg-slate-200 hover:bg-slate-300 px-3 py-1 rounded-b-md"
                   >
                     削除する
                   </p>
