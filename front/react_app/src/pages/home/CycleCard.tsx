@@ -34,7 +34,7 @@ const CycleCard = (props: CycleInfoProps) => {
 
   return (
     <div>
-      <div className="flex h-28 transition duration-400 hover:bg-slate-200 hover:cursor-pointer">
+      <div className="flex h-28 transition duration-400 hover:bg-slate-200 hover:cursor-pointer select-none">
         <div className="w-1/6 flex items-center justify-center">
           <FontAwesomeIcon
             icon={faArrowsSpin}
@@ -49,13 +49,13 @@ const CycleCard = (props: CycleInfoProps) => {
                 <div className="mt-3 mr-3 menu">
                   <p
                     onClick={(e) => FavoriteHandler(e, props.element.id)}
-                    className="bg-slate-300 hover:bg-slate-200 px-3 py-1 rounded-t-md"
+                    className="bg-slate-300 hover:bg-slate-400 px-3 py-1 rounded-t-md"
                   >
                     お気に入りに登録
                   </p>
                   <p
                     onClick={(e) => ElaseHandler(e, props.element.id)}
-                    className="bg-slate-300 hover:bg-slate-200 px-3 py-1 rounded-b-md"
+                    className="bg-slate-300 hover:bg-slate-400 px-3 py-1 rounded-b-md"
                   >
                     消去する
                   </p>
