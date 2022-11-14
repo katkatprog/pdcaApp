@@ -2,7 +2,6 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import CycleCard from "./CycleCard";
 import Layout from "../../components/layout/Layout";
 import { CycleIfc } from "../../utils/cycle.interface";
@@ -40,9 +39,7 @@ const Home = () => {
           </div>
         ) : (
           cycles.map((ele) => (
-            <Link key={ele.id} to={`/${ele.id}`}>
-              <CycleCard element={ele}></CycleCard>
-            </Link>
+            <CycleCard key={ele.id} element={ele}></CycleCard>
           ))
         )}
       </Layout>
