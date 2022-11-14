@@ -17,7 +17,7 @@ const Modal = (props: PropsIfc) => {
     <>
       <div
         onClick={() => props.setShowElaseModal(false)}
-        className="bg-black/[.3] h-full w-full fixed inset-0 flex items-center justify-center"
+        className="bg-black/[.3] h-full w-full fixed inset-0 flex items-center justify-center z-10"
       >
         <div
           onClick={(e) => {

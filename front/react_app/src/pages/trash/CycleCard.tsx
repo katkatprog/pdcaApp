@@ -58,7 +58,7 @@ const CycleCard = (props: CycleInfoProps) => {
             )}
             <FontAwesomeIcon
               icon={faEllipsisVertical}
-              className="hover:bg-slate-300 px-3 py-2 mr-3 text-xl rounded transition duration-400 z-10"
+              className="hover:bg-slate-300 px-3 py-2 mr-3 text-xl rounded transition duration-400"
               onClick={(e) => MenuHandler(e)}
             />
           </div>
