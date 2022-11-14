@@ -15,7 +15,7 @@ interface CycleInfoProps {
 const CycleCard = (props: CycleInfoProps) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const [showElaseModal, setShowElaseModal] = useState(false);
-  
+
   const MenuHandler = (e: React.FormEvent) => {
     e.preventDefault();
     setShowMenu(!showMenu);
@@ -33,7 +33,6 @@ const CycleCard = (props: CycleInfoProps) => {
     setShowMenu(false);
     setShowElaseModal(true);
   };
-
 
   return (
     <div>

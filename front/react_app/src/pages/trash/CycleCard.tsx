@@ -4,6 +4,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import Modal from "../../components/modal/Modal";
 import { CycleIfc } from "../../utils/cycle.interface";
 
 interface CycleInfoProps {
@@ -12,17 +13,17 @@ interface CycleInfoProps {
 
 const CycleCard = (props: CycleInfoProps) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [showElaseModal, setShowElaseModal] = useState(false);
 
   const MenuHandler = (e: React.FormEvent) => {
     e.preventDefault();
     setShowMenu(!showMenu);
   };
 
-  const DeleteHandler = (e: React.FormEvent, cycleId: number) => {
+  const DeleteHandler = (e: React.FormEvent) => {
     e.preventDefault();
     setShowMenu(false);
-    console.log("delete!");
-    console.log(`CycleId: ${cycleId}`);
+    setShowElaseModal(true);
   };
 
   return (
@@ -41,13 +42,13 @@ const CycleCard = (props: CycleInfoProps) => {
               <div>
                 <div className="mt-3 mr-3 menu">
                   <p
-                    onClick={(e) => DeleteHandler(e, props.element.id)}
+                    onClick={(e) => DeleteHandler(e)}
                     className="bg-slate-200 hover:bg-slate-300 px-3 py-1 rounded-t-md"
                   >
                     復元する
                   </p>
                   <p
-                    onClick={(e) => DeleteHandler(e, props.element.id)}
+                    onClick={(e) => DeleteHandler(e)}
                     className="bg-slate-200 hover:bg-slate-300 px-3 py-1 rounded-b-md"
                   >
                     削除する
@@ -63,6 +64,19 @@ const CycleCard = (props: CycleInfoProps) => {
           </div>
         </div>
       </div>
+      {showElaseModal && (
+        <Modal
+          cycleId={props.element.id}
+          buttonMessage={"削除する"}
+          setShowElaseModal={setShowElaseModal}
+        >
+          <p>
+            <span>{props.element.name}</span> を削除します。
+          </p>
+          <p>削除すると復元できません。</p>
+          <p>本当によろしいですか。</p>
+        </Modal>
+      )}
     </div>
   );
 };
