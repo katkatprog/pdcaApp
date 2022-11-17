@@ -57,15 +57,12 @@ export class CyclesService {
     });
   }
 
-  // サイクルを消去する(erasedをtrueに変更する)処理
-  async erase(id: number, userId: number): Promise<void> {
+  // サイクルを消去する/復元する処理(erasedを変更する)処理
+  async eraseOrRestore(id: number, userId: number): Promise<void> {
     const cycle = await this.findById(id, userId); //指定のサイクルの存在確認
-    if (cycle.erased == true) {
-      throw new ForbiddenException('そのサイクルはすでに消去されています。');
-    }
     await this.prisma.cycle.update({
       where: { id: id },
-      data: { erased: true },
+      data: { erased: !cycle.erased },
     });
   }
 
@@ -73,18 +70,6 @@ export class CyclesService {
   async findTrashedCycles(userId: number): Promise<CycleIfc[]> {
     return await this.prisma.cycle.findMany({
       where: { userId: userId, erased: true },
-    });
-  }
-
-  // サイクルを復元する(erasedをfalseに変更する)処理
-  async restore(id: number, userId: number): Promise<void> {
-    const cycle = await this.findById(id, userId); //指定のサイクルの存在確認
-    if (cycle.erased == false) {
-      throw new ForbiddenException('そのサイクルは消去されていません。');
-    }
-    await this.prisma.cycle.update({
-      where: { id: id },
-      data: { erased: false },
     });
   }
 

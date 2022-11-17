@@ -54,22 +54,14 @@ export class CyclesController {
     return await this.cyclesService.update(id, userId, cycleDtoEdit);
   }
 
-  // サイクルを消去する(erasedをtrueに変更する)処理
-  @Put('erase/:id/:userId')
+  // サイクルを消去状態を変更する(erasedを変更する)処理
+  // 消去されていない→消去 / 消去済み → 復元
+  @Put('erase-restore/:id/:userId')
   async erase(
     @Param('id', ParseIntPipe) id: number,
     @Param('userId', ParseIntPipe) userId: number,
   ) {
-    return await this.cyclesService.erase(id, userId);
-  }
-
-  // 消去されたサイクルを復元する(erasedをfalseに変更する)処理
-  @Put('restore/:id/:userId')
-  async restore(
-    @Param('id', ParseIntPipe) id: number,
-    @Param('userId', ParseIntPipe) userId: number,
-  ) {
-    return await this.cyclesService.restore(id, userId);
+    return await this.cyclesService.eraseOrRestore(id, userId);
   }
 
   // 消去されたサイクルを復元する(erasedをfalseに変更する)処理
