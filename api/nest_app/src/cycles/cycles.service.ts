@@ -88,6 +88,18 @@ export class CyclesService {
     });
   }
 
+  // サイクルをお気に入りする処理(付ける/外す両方対応)
+  async favorite(id: number, userId: number): Promise<void> {
+    const cycle = await this.findById(id, userId); //指定のサイクルの存在確認
+    if (cycle.erased == true) {
+      throw new ForbiddenException('そのサイクルはすでに消去されています。');
+    }
+    await this.prisma.cycle.update({
+      where: { id: id },
+      data: { favorite: !cycle.favorite },
+    });
+  }
+
   async delete(id: number, userId: number): Promise<void> {
     const cycle = await this.findById(id, userId); //指定のサイクルの存在確認
     // サイクルが消去済でなければ削除処理に至らないようにしている。

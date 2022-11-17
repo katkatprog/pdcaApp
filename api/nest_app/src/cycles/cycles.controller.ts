@@ -72,6 +72,15 @@ export class CyclesController {
     return await this.cyclesService.restore(id, userId);
   }
 
+  // 消去されたサイクルを復元する(erasedをfalseに変更する)処理
+  @Put('favorite/:id/:userId')
+  async favorite(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('userId', ParseIntPipe) userId: number,
+  ) {
+    return await this.cyclesService.favorite(id, userId);
+  }
+
   // サイクルの完全な削除
   @Delete(':id/:userId')
   async delete(
