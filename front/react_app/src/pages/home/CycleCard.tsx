@@ -4,7 +4,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import Modal from "../../components/modal/Modal";
+import Modal from "../../components/Modal";
 import { CycleIfc } from "../../utils/cycle.interface";
 import { Link } from "react-router-dom";
 
