@@ -79,7 +79,7 @@ const CycleCard = (props: CycleInfoProps) => {
           <p>
             <span>{props.element.name}</span> を削除します。
           </p>
-          <p>削除すると復元できません。</p>
+          <p>削除すると復元できませんが、</p>
           <p>本当によろしいですか。</p>
         </Modal>
       )}
