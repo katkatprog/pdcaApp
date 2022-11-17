@@ -23,12 +23,6 @@ services:
         fi" 
     depends_on:
       - api
-  # entrypoint:
-  #   - dockerize
-  #   - -timeout
-  #   - 60s
-  #   - -wait
-  #   - tcp://api:$API_PORT
 
   api:
     build:
@@ -53,26 +47,32 @@ services:
         fi"
     depends_on:
       - db
-  # entrypoint:
-  #   - dockerize
-  #   - -timeout
-  #   - 60s
-  #   - -wait
-  #   - tcp://db:$DB_PORT
 
   db:
-    image: postgres:12
+    image: postgres:12-alpine
     restart: always
     environment:
       TZ: Asia/Tokyo
       POSTGRES_DB: $DB_NAME
       POSTGRES_USER: $DB_USER
       POSTGRES_PASSWORD: $DB_PASS
-      # POSTGRES_ROOT_PASSWORD: $DB_ROOT_PASS
     volumes:
       - db_store:/var/lib/postgresql/data
     ports:
       - $DB_PORT:5432
+  
+  web:
+    image: nginx:alpine
+    ports:
+      - 80:80
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - ./web/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - front
+      - api
+
 volumes:
   db_store:
   front_store:
