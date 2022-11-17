@@ -26,6 +26,12 @@ const CycleCard = (props: CycleInfoProps) => {
     setShowElaseModal(true);
   };
 
+  const RestoreHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowMenu(false);
+    console.log("restore!");
+  };
+
   return (
     <div>
       <div className="flex h-28 select-none">
@@ -42,7 +48,7 @@ const CycleCard = (props: CycleInfoProps) => {
               <div>
                 <div className="mt-3 mr-3 menu">
                   <p
-                    onClick={(e) => DeleteHandler(e)}
+                    onClick={(e) => RestoreHandler(e)}
                     className="bg-slate-200 hover:bg-slate-300 px-3 py-1 rounded-t-md"
                   >
                     復元する
