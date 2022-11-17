@@ -33,7 +33,7 @@ all-reset:
 ########################################################################################
 # frontコンテナにアクセスする。
 front-exec:
-	docker-compose exec front ash
+	docker-compose exec front bash
 
 # Reactプロジェクト新規作成
 front-create-app:
@@ -67,7 +67,7 @@ front-rmvol:
 ########################################################################################
 # apiコンテナ(NestJS)にアクセスする。
 api-exec:
-	docker-compose exec api ash
+	docker-compose exec api bash
 
 # NestJSプロジェクト新規作成
 # --skip-installをすることで、プロジェクト作成の際にnode_modulesがインストールされなくなり、Volume-Mountされているnode_modulesと競合せず済む。
@@ -93,7 +93,7 @@ db-login:
 
 # dbコンテナにアクセスする。
 db-exec:
-	docker-compose exec db ash
+	docker-compose exec db bash
 
 # dbコンテナのvolume(データ保存場所)を削除する。
 db-rmvol:
