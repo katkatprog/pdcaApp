@@ -61,7 +61,7 @@ services:
   #   - tcp://db:$DB_PORT
 
   db:
-    image: postgres:12
+    image: postgres:12-alpine
     restart: always
     environment:
       TZ: Asia/Tokyo
