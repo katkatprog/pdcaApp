@@ -3,6 +3,7 @@ import {
   faEllipsisVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 import React, { useState } from "react";
 import Modal from "../../components/Modal";
 import { CycleIfc } from "../../utils/cycle.interface";
@@ -20,16 +21,16 @@ const CycleCard = (props: CycleInfoProps) => {
     setShowMenu(!showMenu);
   };
 
-  const DeleteHandler = (e: React.FormEvent) => {
+  const DeleteMenuHandler = (e: React.FormEvent) => {
     e.preventDefault();
     setShowMenu(false);
     setShowElaseModal(true);
   };
 
-  const RestoreHandler = (e: React.FormEvent) => {
+  const RestoreMenuHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     setShowMenu(false);
-    console.log("restore!");
+    await axios.put(`/api/cycles/erase-restore/${props.element.id}/${1}`);
   };
 
   return (
@@ -48,13 +49,13 @@ const CycleCard = (props: CycleInfoProps) => {
               <div>
                 <div className="mt-3 mr-3 menu">
                   <p
-                    onClick={(e) => RestoreHandler(e)}
+                    onClick={(e) => RestoreMenuHandler(e)}
                     className="bg-slate-200 hover:bg-slate-300 px-3 py-1 rounded-t-md"
                   >
                     復元する
                   </p>
                   <p
-                    onClick={(e) => DeleteHandler(e)}
+                    onClick={(e) => DeleteMenuHandler(e)}
                     className="bg-slate-200 hover:bg-slate-300 px-3 py-1 rounded-b-md"
                   >
                     削除する
@@ -72,9 +73,10 @@ const CycleCard = (props: CycleInfoProps) => {
       </div>
       {showElaseModal && (
         <Modal
-          cycleId={props.element.id}
           buttonMessage={"削除する"}
           setShowElaseModal={setShowElaseModal}
+          apiUri={`/api/cycles/${props.element.id}/${1}`}
+          apiMethod="DELETE"
         >
           <p>
             <span>{props.element.name}</span> を削除します。

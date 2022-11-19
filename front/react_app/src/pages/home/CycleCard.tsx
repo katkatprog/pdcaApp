@@ -76,9 +76,10 @@ const CycleCard = (props: CycleInfoProps) => {
       </Link>
       {showElaseModal && (
         <Modal
-          cycleId={props.element.id}
           buttonMessage={"消去する"}
           setShowElaseModal={setShowElaseModal}
+          apiUri={`/api/cycles/erase-restore/${props.element.id}/${1}`}
+          apiMethod="PUT"
         >
           <p>
             <span>{props.element.name}</span> を消去します。

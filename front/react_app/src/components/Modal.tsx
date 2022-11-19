@@ -1,17 +1,23 @@
+import axios from "axios";
 import React from "react";
 
 interface PropsIfc {
-  cycleId: number;
   buttonMessage: string;
   children: React.ReactNode; //ここで、Modalの前半部分に表示するテキストを受け取る。スタイルは付けなくて良い
   setShowElaseModal: React.Dispatch<React.SetStateAction<boolean>>;
+  apiUri: string; //confirm(赤いボタン)が押された際に叩かれるAPIのURI
+  apiMethod: string; //叩かれるAPIのメソッド
 }
 
 const Modal = (props: PropsIfc) => {
   // 確定ボタンが押されたときの処理
-  const confirmAction = () => {
+  const confirmAction = async () => {
     props.setShowElaseModal(false);
-    // ここに、消去や削除の処理を追加していく…
+    if (props.apiMethod === "PUT") {
+      await axios.put(props.apiUri);
+    } else if (props.apiMethod === "DELETE") {
+      await axios.delete(props.apiUri);
+    }
   };
   return (
     <>
@@ -31,7 +37,7 @@ const Modal = (props: PropsIfc) => {
           <div>
             <button
               className="text-white bg-red-500 text-lg px-4 py-2 rounded-md hover:bg-red-600"
-              onClick={() => props.setShowElaseModal(false)}
+              onClick={() => confirmAction()}
             >
               {props.buttonMessage}
             </button>
