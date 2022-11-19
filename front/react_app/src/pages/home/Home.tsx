@@ -13,7 +13,7 @@ const Home = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get("/api/cycles?userId=1");
+      const response = await axios.get("/api/cycles/1");
       setCycles(response.data);
       setIsLoading(false);
     })();

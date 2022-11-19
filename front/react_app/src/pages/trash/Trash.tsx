@@ -13,7 +13,7 @@ const Trash = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get("/api/cycles/trashed?userId=1");
+      const response = await axios.get("/api/cycles/trashed/1");
       setCycles(response.data);
       setIsLoading(false);
     })();
