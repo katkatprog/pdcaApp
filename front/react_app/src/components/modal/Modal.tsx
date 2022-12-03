@@ -1,28 +1,20 @@
-import axios from "axios";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { hideModal, ModalIfc } from "../../redux/modalSlice";
 
 interface PropsIfc {
   buttonMessage: string;
   children: React.ReactNode; //ここで、Modalの前半部分に表示するテキストを受け取る。スタイルは付けなくて良い
-  setShowElaseModal: React.Dispatch<React.SetStateAction<boolean>>;
-  apiUri: string; //confirm(赤いボタン)が押された際に叩かれるAPIのURI
-  apiMethod: string; //叩かれるAPIのメソッド
+  confirmAction: () => Promise<void>;
 }
 
 const Modal = (props: PropsIfc) => {
-  // 確定ボタンが押されたときの処理
-  const confirmAction = async () => {
-    props.setShowElaseModal(false);
-    if (props.apiMethod === "PUT") {
-      await axios.put(props.apiUri);
-    } else if (props.apiMethod === "DELETE") {
-      await axios.delete(props.apiUri);
-    }
-  };
+  const modalState: ModalIfc = useSelector((state: any) => state.modal.value);
+  const dispatch = useDispatch();
   return (
     <>
       <div
-        onClick={() => props.setShowElaseModal(false)}
+        onClick={(e) => dispatch(hideModal(modalState))}
         className="bg-black/[.3] h-full w-full fixed inset-0 flex items-center justify-center z-10"
       >
         <div
@@ -37,13 +29,13 @@ const Modal = (props: PropsIfc) => {
           <div>
             <button
               className="text-white bg-red-500 text-lg px-4 py-2 rounded-md hover:bg-red-600"
-              onClick={() => confirmAction()}
+              onClick={() => props.confirmAction()}
             >
               {props.buttonMessage}
             </button>
             <button
               onClick={() => {
-                confirmAction();
+                dispatch(hideModal(modalState));
               }}
               className="text-white bg-slate-500 text-lg px-4 py-2 rounded-md hover:bg-slate-600 ml-6"
             >

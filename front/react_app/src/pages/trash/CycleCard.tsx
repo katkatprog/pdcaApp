@@ -5,7 +5,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useState } from "react";
-import Modal from "../../components/Modal";
+import Modal from "../../components/modal/Modal";
 import { CycleIfc } from "../../utils/cycle.interface";
 
 interface CycleInfoProps {

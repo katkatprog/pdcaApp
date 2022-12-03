@@ -4,9 +4,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import Modal from "../../components/Modal";
 import { CycleIfc } from "../../utils/cycle.interface";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { ModalIfc, showModal } from "../../redux/modalSlice";
 
 interface CycleInfoProps {
   element: CycleIfc;
@@ -14,7 +15,8 @@ interface CycleInfoProps {
 
 const CycleCard = (props: CycleInfoProps) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
-  const [showElaseModal, setShowElaseModal] = useState(false);
+  const modalState: ModalIfc = useSelector((state: any) => state.modal.value);
+  const dispatch = useDispatch();
 
   const MenuHandler = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,10 +30,13 @@ const CycleCard = (props: CycleInfoProps) => {
     console.log(`CycleId: ${cycleId}`);
   };
 
-  const ElaseHandler = (e: React.FormEvent) => {
+  const ElaseHandler = (
+    e: React.FormEvent,
+    cycleId: number,
+    cycleName: string,
+  ) => {
     e.preventDefault();
-    setShowMenu(false);
-    setShowElaseModal(true);
+    dispatch(showModal({ cycleId, cycleName }));
   };
 
   return (
@@ -57,7 +62,9 @@ const CycleCard = (props: CycleInfoProps) => {
                       お気に入りに登録
                     </p>
                     <p
-                      onClick={(e) => ElaseHandler(e)}
+                      onClick={(e) =>
+                        ElaseHandler(e, props.element.id, props.element.name)
+                      }
                       className="bg-slate-300 hover:bg-slate-400 px-3 py-1 rounded-b-md"
                     >
                       消去する
@@ -74,19 +81,6 @@ const CycleCard = (props: CycleInfoProps) => {
           </div>
         </div>
       </Link>
-      {showElaseModal && (
-        <Modal
-          buttonMessage={"消去する"}
-          setShowElaseModal={setShowElaseModal}
-          apiUri={`/api/cycles/erase-restore/${props.element.id}/${1}`}
-          apiMethod="PUT"
-        >
-          <p>
-            <span>{props.element.name}</span> を消去します。
-          </p>
-          <p>本当によろしいですか。</p>
-        </Modal>
-      )}
     </div>
   );
 };
