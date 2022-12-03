@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { eraseModalSlice } from "./eraseModalSlice";
+import { modalSlice } from "./modalSlice";
 
 export const store = configureStore({
   reducer: {
-    eraseModal: eraseModalSlice.reducer,
+    modal: modalSlice.reducer,
   },
 });
