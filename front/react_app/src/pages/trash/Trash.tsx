@@ -6,10 +6,14 @@ import CycleCard from "./CycleCard";
 import Layout from "../../components/Layout";
 import { CycleIfc } from "../../utils/cycle.interface";
 import Header from "./Header";
+import { useSelector } from "react-redux";
+import { ModalIfc } from "../../redux/modalSlice";
+import DeleteModal from "../../components/modal/DeleteModal";
 
 const Trash = () => {
   const [cycles, setCycles] = useState<CycleIfc[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const modalState: ModalIfc = useSelector((state: any) => state.modal.value);
 
   useEffect(() => {
     (async () => {
@@ -45,6 +49,9 @@ const Trash = () => {
           ))
         )}
       </Layout>
+      {modalState.visible && (
+        <DeleteModal cycles={cycles} setCycles={setCycles}></DeleteModal>
+      )}
     </>
   );
 };

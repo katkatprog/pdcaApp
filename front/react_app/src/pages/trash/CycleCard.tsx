@@ -5,7 +5,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useState } from "react";
-import Modal from "../../components/modal/Modal";
+import { useDispatch } from "react-redux";
+import { showModal } from "../../redux/modalSlice";
 import { CycleIfc } from "../../utils/cycle.interface";
 
 interface CycleInfoProps {
@@ -14,17 +15,21 @@ interface CycleInfoProps {
 
 const CycleCard = (props: CycleInfoProps) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
-  const [showElaseModal, setShowElaseModal] = useState(false);
+  const dispatch = useDispatch();
 
   const MenuHandler = (e: React.FormEvent) => {
     e.preventDefault();
     setShowMenu(!showMenu);
   };
 
-  const DeleteMenuHandler = (e: React.FormEvent) => {
+  const DeleteMenuHandler = (
+    e: React.FormEvent,
+    cycleId: number,
+    cycleName: string,
+  ) => {
     e.preventDefault();
     setShowMenu(false);
-    setShowElaseModal(true);
+    dispatch(showModal({ cycleId, cycleName }));
   };
 
   const RestoreMenuHandler = async (e: React.FormEvent) => {
@@ -55,7 +60,9 @@ const CycleCard = (props: CycleInfoProps) => {
                     復元する
                   </p>
                   <p
-                    onClick={(e) => DeleteMenuHandler(e)}
+                    onClick={(e) =>
+                      DeleteMenuHandler(e, props.element.id, props.element.name)
+                    }
                     className="bg-slate-200 hover:bg-slate-300 px-3 py-1 rounded-b-md"
                   >
                     削除する
@@ -71,20 +78,6 @@ const CycleCard = (props: CycleInfoProps) => {
           </div>
         </div>
       </div>
-      {showElaseModal && (
-        <Modal
-          buttonMessage={"削除する"}
-          setShowElaseModal={setShowElaseModal}
-          apiUri={`/api/cycles/${props.element.id}/${1}`}
-          apiMethod="DELETE"
-        >
-          <p>
-            <span>{props.element.name}</span> を削除します。
-          </p>
-          <p>削除すると復元できませんが、</p>
-          <p>本当によろしいですか。</p>
-        </Modal>
-      )}
     </div>
   );
 };
