@@ -8,8 +8,8 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { Cycle } from '@prisma/client';
 import { CycleDto, CycleDtoEdit } from './cycle.dto';
-import { CycleIfc } from './cycle.interface';
 import { CyclesService } from './cycles.service';
 
 @Controller('cycles')
@@ -18,7 +18,7 @@ export class CyclesController {
   @Get(':userId')
   async findAll(
     @Param('userId', ParseIntPipe) userId: number,
-  ): Promise<CycleIfc[]> {
+  ): Promise<Cycle[]> {
     return await this.cyclesService.findAll(userId);
   }
 
@@ -26,7 +26,7 @@ export class CyclesController {
   @Get('trashed/:userId')
   async findTrashedCycles(
     @Param('userId', ParseIntPipe) userId: number,
-  ): Promise<CycleIfc[]> {
+  ): Promise<Cycle[]> {
     return await this.cyclesService.findTrashedCycles(userId);
   }
 
@@ -36,7 +36,7 @@ export class CyclesController {
   async findById(
     @Param('id', ParseIntPipe) id: number,
     @Param('userId', ParseIntPipe) userId: number,
-  ): Promise<CycleIfc> {
+  ): Promise<Cycle> {
     return await this.cyclesService.findById(id, userId);
   }
 
