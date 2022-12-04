@@ -1,22 +1,19 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { hideModal } from "../../redux/modalSlice";
 
 interface PropsIfc {
-  cycleId: number;
   buttonMessage: string;
   children: React.ReactNode; //ここで、Modalの前半部分に表示するテキストを受け取る。スタイルは付けなくて良い
-  setShowElaseModal: React.Dispatch<React.SetStateAction<boolean>>;
+  confirmAction: () => Promise<void>;
 }
 
 const Modal = (props: PropsIfc) => {
-  // 確定ボタンが押されたときの処理
-  const confirmAction = () => {
-    props.setShowElaseModal(false);
-    // ここに、消去や削除の処理を追加していく…
-  };
+  const dispatch = useDispatch();
   return (
     <>
       <div
-        onClick={() => props.setShowElaseModal(false)}
+        onClick={(e) => dispatch(hideModal())}
         className="bg-black/[.3] h-full w-full fixed inset-0 flex items-center justify-center z-10"
       >
         <div
@@ -31,13 +28,13 @@ const Modal = (props: PropsIfc) => {
           <div>
             <button
               className="text-white bg-red-500 text-lg px-4 py-2 rounded-md hover:bg-red-600"
-              onClick={() => props.setShowElaseModal(false)}
+              onClick={() => props.confirmAction()}
             >
               {props.buttonMessage}
             </button>
             <button
               onClick={() => {
-                confirmAction();
+                dispatch(hideModal());
               }}
               className="text-white bg-slate-500 text-lg px-4 py-2 rounded-md hover:bg-slate-600 ml-6"
             >
