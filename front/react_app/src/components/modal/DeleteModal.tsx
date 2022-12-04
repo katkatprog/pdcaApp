@@ -1,25 +1,17 @@
 import axios from "axios";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteErasedCycle } from "../../redux/erasedCyclesSlice";
 import { hideModal } from "../../redux/modalSlice";
 import { RootState } from "../../redux/store";
-import { CycleIfc } from "../../utils/cycle.interface";
 import Modal from "./Modal";
 
-interface PropsIfc {
-  cycles: CycleIfc[];
-  setCycles: React.Dispatch<React.SetStateAction<CycleIfc[]>>;
-}
-
-const DeleteModal = (props: PropsIfc) => {
+const DeleteModal = () => {
   const modalState = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
   const confirmAction = async () => {
     // "削除する"が押された際の処理
     await axios.delete(`/api/cycles/${modalState.cycleId}/${1}`);
-    props.setCycles(
-      props.cycles.filter((cycle) => cycle.id != modalState.cycleId),
-    );
+    dispatch(deleteErasedCycle(modalState.cycleId));
     dispatch(hideModal());
   };
   return (

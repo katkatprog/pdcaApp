@@ -1,25 +1,31 @@
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CycleCard from "./CycleCard";
 import Layout from "../../components/Layout";
-import { CycleIfc } from "../../utils/cycle.interface";
 import Header from "./Header";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DeleteModal from "../../components/modal/DeleteModal";
 import { RootState } from "../../redux/store";
+import { setErasedCycles } from "../../redux/erasedCyclesSlice";
+import { CycleIfc } from "../../utils/cycle.interface";
 
 const Trash = () => {
-  const [cycles, setCycles] = useState<CycleIfc[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const erasedCyclesState = useSelector(
+    (state: RootState) => state.erasedCycles.value,
+  );
   const modalState = useSelector((state: RootState) => state.modal.value);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const response = await axios.get("/api/cycles/trashed/1");
-      setCycles(response.data);
-      setIsLoading(false);
+      const data: CycleIfc[] = await (
+        await axios.get(`/api/cycles/trashed/${1}`)
+      ).data;
+      dispatch(setErasedCycles(data));
+      setLoading(false);
     })();
   }, []);
 
@@ -27,7 +33,7 @@ const Trash = () => {
     <>
       <Layout>
         <Header></Header>
-        {isLoading ? (
+        {loading ? (
           <div
             style={{
               display: "flex",
@@ -42,16 +48,14 @@ const Trash = () => {
             />
           </div>
         ) : (
-          cycles.map((ele) => (
+          erasedCyclesState.map((ele) => (
             <div key={ele.id}>
               <CycleCard element={ele}></CycleCard>
             </div>
           ))
         )}
       </Layout>
-      {modalState.visible && (
-        <DeleteModal cycles={cycles} setCycles={setCycles}></DeleteModal>
-      )}
+      {modalState.visible && <DeleteModal></DeleteModal>}
     </>
   );
 };
