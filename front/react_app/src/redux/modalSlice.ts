@@ -1,36 +1,32 @@
-import { createSlice, SliceCaseReducers } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface ModalIfc {
-  visible: boolean;
+export interface ModalState {
+  value: {
+    visible: boolean;
+    cycleId: number;
+    cycleName: string;
+  };
+}
+
+export interface ModalInfo {
   cycleId: number;
   cycleName: string;
 }
 
-export const modalSlice = createSlice<
-  { value: ModalIfc },
-  SliceCaseReducers<{ value: ModalIfc }>,
-  "eraseModal"
->({
-  name: "eraseModal",
-  initialState: {
-    value: {
-      visible: false,
-      cycleId: 0,
-      cycleName: "",
-    },
+const initialState: ModalState = {
+  value: {
+    visible: false,
+    cycleId: 0,
+    cycleName: "",
   },
+};
+
+export const modalSlice = createSlice({
+  name: "modal",
+  initialState,
   reducers: {
     // モーダルを表示するReducer
-    showModal: (
-      state: { value: ModalIfc },
-      action: {
-        payload: {
-          cycleId: number;
-          cycleName: string;
-        };
-        type: string;
-      },
-    ) => {
+    showModal: (state, action: PayloadAction<ModalInfo>) => {
       state.value = {
         visible: true,
         cycleId: action.payload.cycleId,
@@ -38,7 +34,7 @@ export const modalSlice = createSlice<
       };
     },
     // モーダルを隠すReducer
-    hideModal: (state: { value: ModalIfc }) => {
+    hideModal: (state) => {
       state.value = {
         visible: false,
         cycleId: 0,

@@ -1,6 +1,6 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { hideModal, ModalIfc } from "../../redux/modalSlice";
+import { useDispatch } from "react-redux";
+import { hideModal } from "../../redux/modalSlice";
 
 interface PropsIfc {
   buttonMessage: string;
@@ -9,12 +9,11 @@ interface PropsIfc {
 }
 
 const Modal = (props: PropsIfc) => {
-  const modalState: ModalIfc = useSelector((state: any) => state.modal.value);
   const dispatch = useDispatch();
   return (
     <>
       <div
-        onClick={(e) => dispatch(hideModal(modalState))}
+        onClick={(e) => dispatch(hideModal())}
         className="bg-black/[.3] h-full w-full fixed inset-0 flex items-center justify-center z-10"
       >
         <div
@@ -35,7 +34,7 @@ const Modal = (props: PropsIfc) => {
             </button>
             <button
               onClick={() => {
-                dispatch(hideModal(modalState));
+                dispatch(hideModal());
               }}
               className="text-white bg-slate-500 text-lg px-4 py-2 rounded-md hover:bg-slate-600 ml-6"
             >

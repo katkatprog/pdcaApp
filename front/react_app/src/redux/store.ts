@@ -6,3 +6,5 @@ export const store = configureStore({
     modal: modalSlice.reducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;

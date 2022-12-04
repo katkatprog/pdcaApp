@@ -7,13 +7,13 @@ import Layout from "../../components/Layout";
 import { CycleIfc } from "../../utils/cycle.interface";
 import Header from "./Header";
 import { useSelector } from "react-redux";
-import { ModalIfc } from "../../redux/modalSlice";
 import DeleteModal from "../../components/modal/DeleteModal";
+import { RootState } from "../../redux/store";
 
 const Trash = () => {
   const [cycles, setCycles] = useState<CycleIfc[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const modalState: ModalIfc = useSelector((state: any) => state.modal.value);
+  const modalState = useSelector((state: RootState) => state.modal.value);
 
   useEffect(() => {
     (async () => {

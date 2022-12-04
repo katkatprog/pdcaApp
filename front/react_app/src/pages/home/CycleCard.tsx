@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { CycleIfc } from "../../utils/cycle.interface";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { ModalIfc, showModal } from "../../redux/modalSlice";
+import { useDispatch } from "react-redux";
+import { showModal } from "../../redux/modalSlice";
 
 interface CycleInfoProps {
   element: CycleIfc;
@@ -15,7 +15,6 @@ interface CycleInfoProps {
 
 const CycleCard = (props: CycleInfoProps) => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
-  const modalState: ModalIfc = useSelector((state: any) => state.modal.value);
   const dispatch = useDispatch();
 
   const MenuHandler = (e: React.FormEvent) => {

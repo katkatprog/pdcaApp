@@ -1,7 +1,8 @@
 import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { hideModal, ModalIfc } from "../../redux/modalSlice";
+import { hideModal } from "../../redux/modalSlice";
+import { RootState } from "../../redux/store";
 import { CycleIfc } from "../../utils/cycle.interface";
 import Modal from "./Modal";
 
@@ -11,7 +12,7 @@ interface PropsIfc {
 }
 
 const EraseModal = (props: PropsIfc) => {
-  const modalState: ModalIfc = useSelector((state: any) => state.modal.value);
+  const modalState = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
   const confirmAction = async () => {
     // "消去する"が押された際の処理
@@ -19,7 +20,7 @@ const EraseModal = (props: PropsIfc) => {
     props.setCycles(
       props.cycles.filter((cycle) => cycle.id != modalState.cycleId),
     );
-    dispatch(hideModal(modalState));
+    dispatch(hideModal());
   };
   return (
     <>
