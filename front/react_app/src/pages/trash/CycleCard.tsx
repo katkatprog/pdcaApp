@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { deleteErasedCycle } from "../../redux/erasedCyclesSlice";
 import { showModal } from "../../redux/modalSlice";
 import { CycleIfc } from "../../utils/cycle.interface";
 
@@ -36,6 +37,7 @@ const CycleCard = (props: CycleInfoProps) => {
     e.preventDefault();
     setShowMenu(false);
     await axios.put(`/api/cycles/erase-restore/${props.element.id}/${1}`);
+    dispatch(deleteErasedCycle(props.element.id));
   };
 
   return (
