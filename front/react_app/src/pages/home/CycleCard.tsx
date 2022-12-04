@@ -3,28 +3,34 @@ import {
   faEllipsisVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React from "react";
 import { CycleIfc } from "../../utils/cycle.interface";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showModal } from "../../redux/modalSlice";
+import { hideMenu, showMenu } from "../../redux/menuSlice";
+import { RootState } from "../../redux/store";
 
 interface CycleInfoProps {
   element: CycleIfc;
 }
 
 const CycleCard = (props: CycleInfoProps) => {
-  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const menuState = useSelector((state: RootState) => state.menu.value);
   const dispatch = useDispatch();
 
-  const MenuHandler = (e: React.FormEvent) => {
+  const MenuHandler = (e: React.FormEvent, cycleId: number) => {
     e.preventDefault();
-    setShowMenu(!showMenu);
+    if (menuState.visible) {
+      dispatch(hideMenu());
+    } else {
+      dispatch(showMenu(cycleId));
+    }
   };
 
   const FavoriteHandler = (e: React.FormEvent, cycleId: number) => {
     e.preventDefault();
-    setShowMenu(false);
+    dispatch(hideMenu());
     console.log("Favorite!");
     console.log(`CycleId: ${cycleId}`);
   };
@@ -35,6 +41,7 @@ const CycleCard = (props: CycleInfoProps) => {
     cycleName: string,
   ) => {
     e.preventDefault();
+    dispatch(hideMenu());
     dispatch(showModal({ cycleId, cycleName }));
   };
 
@@ -51,7 +58,7 @@ const CycleCard = (props: CycleInfoProps) => {
           <div className="w-5/6 pt-2 border-b border-slate-100 flex justify-between">
             <h2 className="text-lg">{props.element.name}</h2>
             <div className="flex justify-between">
-              {showMenu && (
+              {menuState.visible && menuState.cycleId === props.element.id && (
                 <div>
                   <div className="mt-3 mr-3 menu">
                     <p
@@ -74,7 +81,7 @@ const CycleCard = (props: CycleInfoProps) => {
               <FontAwesomeIcon
                 icon={faEllipsisVertical}
                 className="hover:bg-slate-300 px-3 py-2 mr-3 text-xl rounded transition duration-400"
-                onClick={(e) => MenuHandler(e)}
+                onClick={(e) => MenuHandler(e, props.element.id)}
               />
             </div>
           </div>

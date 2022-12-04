@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { cyclesSlice } from "./cyclesSlice";
 import { erasedCyclesSlice } from "./erasedCyclesSlice";
+import { menuSlice } from "./menuSlice";
 import { modalSlice } from "./modalSlice";
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     modal: modalSlice.reducer,
     cycles: cyclesSlice.reducer,
     erasedCycles: erasedCyclesSlice.reducer,
+    menu: menuSlice.reducer,
   },
 });
 

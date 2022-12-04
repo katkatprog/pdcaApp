@@ -10,6 +10,7 @@ import EraseModal from "../../components/modal/EraseModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { setCycles } from "../../redux/cyclesSlice";
+import { hideMenu } from "../../redux/menuSlice";
 
 const Home = () => {
   const modalState = useSelector((state: RootState) => state.modal.value);
@@ -19,6 +20,7 @@ const Home = () => {
 
   useEffect(() => {
     (async () => {
+      dispatch(hideMenu());
       const data: CycleIfc[] = await (await axios.get(`/api/cycles/${1}`)).data;
       dispatch(setCycles(data));
       setLoading(false);
