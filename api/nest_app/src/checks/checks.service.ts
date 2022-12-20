@@ -19,9 +19,13 @@ export class ChecksService {
     });
   }
 
-  async updateComplete(id: number, complete: boolean): Promise<void> {
-    await this.prisma.check.update({
-      where: { id },
+  async updateComplete(
+    cycleId: number,
+    round: number,
+    complete: boolean,
+  ): Promise<void> {
+    await this.prisma.check.updateMany({
+      where: { cycleId, round },
       data: { complete },
     });
   }

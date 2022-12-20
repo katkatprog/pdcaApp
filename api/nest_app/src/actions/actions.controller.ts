@@ -22,11 +22,12 @@ export class ActionsController {
     return await this.actionService.findAction(cycleId, round);
   }
 
-  @Put('update-complete/:id')
+  @Put('update-complete/:cycleId/:round')
   async updateComplete(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('cycleId', ParseIntPipe) cycleId: number,
+    @Param('round', ParseIntPipe) round: number,
     @Body('complete', ParseBoolPipe) complete: boolean,
   ): Promise<void> {
-    await this.actionService.updateComplete(id, complete);
+    await this.actionService.updateComplete(cycleId, round, complete);
   }
 }

@@ -19,9 +19,13 @@ export class DosService {
     });
   }
 
-  async updateComplete(id: number, complete: boolean): Promise<void> {
-    await this.prisma.do.update({
-      where: { id },
+  async updateComplete(
+    cycleId: number,
+    round: number,
+    complete: boolean,
+  ): Promise<void> {
+    await this.prisma.do.updateMany({
+      where: { cycleId, round },
       data: { complete },
     });
   }

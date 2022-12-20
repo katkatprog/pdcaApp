@@ -22,27 +22,30 @@ export class PlansController {
     return await this.plansService.findPlan(cycleId, round);
   }
 
-  @Put('update-start-date/:id')
+  @Put('update-start-date/:cycleId/:round')
   async updateStartDate(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('cycleId', ParseIntPipe) cycleId: number,
+    @Param('round', ParseIntPipe) round: number,
     @Body('startDate') startDate: Date,
   ): Promise<void> {
-    await this.plansService.updateStartDate(id, startDate);
+    await this.plansService.updateStartDate(cycleId, round, startDate);
   }
 
-  @Put('update-end-date/:id')
+  @Put('update-end-date/:cycleId/:round')
   async updateEndDate(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('cycleId', ParseIntPipe) cycleId: number,
+    @Param('round', ParseIntPipe) round: number,
     @Body('endDate') endDate: Date,
   ): Promise<void> {
-    await this.plansService.updateEndDate(id, endDate);
+    await this.plansService.updateEndDate(cycleId, round, endDate);
   }
 
-  @Put('update-complete/:id')
+  @Put('update-complete/:cycleId/:round')
   async updateComplete(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('cycleId', ParseIntPipe) cycleId: number,
+    @Param('round', ParseIntPipe) round: number,
     @Body('complete', ParseBoolPipe) complete: boolean,
   ): Promise<void> {
-    await this.plansService.updateComplete(id, complete);
+    await this.plansService.updateComplete(cycleId, round, complete);
   }
 }

@@ -19,27 +19,39 @@ export class PlansService {
     });
   }
 
-  async updateStartDate(id: number, date: Date): Promise<void> {
-    await this.prisma.plan.update({
-      where: { id },
+  async updateStartDate(
+    cycleId: number,
+    round: number,
+    date: Date,
+  ): Promise<void> {
+    await this.prisma.plan.updateMany({
+      where: { cycleId, round },
       data: {
         startDate: date,
       },
     });
   }
 
-  async updateEndDate(id: number, date: Date): Promise<void> {
-    await this.prisma.plan.update({
-      where: { id },
+  async updateEndDate(
+    cycleId: number,
+    round: number,
+    date: Date,
+  ): Promise<void> {
+    await this.prisma.plan.updateMany({
+      where: { cycleId, round },
       data: {
         endDate: date,
       },
     });
   }
 
-  async updateComplete(id: number, complete: boolean): Promise<void> {
-    await this.prisma.plan.update({
-      where: { id },
+  async updateComplete(
+    cycleId: number,
+    round: number,
+    complete: boolean,
+  ): Promise<void> {
+    await this.prisma.plan.updateMany({
+      where: { cycleId, round },
       data: { complete },
     });
   }

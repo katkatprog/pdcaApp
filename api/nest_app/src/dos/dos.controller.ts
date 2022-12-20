@@ -22,11 +22,12 @@ export class DosController {
     return await this.dosService.findDo(cycleId, round);
   }
 
-  @Put('update-complete/:id')
+  @Put('update-complete/:cycleId/:round')
   async updateComplete(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('cycleId', ParseIntPipe) cycleId: number,
+    @Param('round', ParseIntPipe) round: number,
     @Body('complete', ParseBoolPipe) complete: boolean,
   ): Promise<void> {
-    await this.dosService.updateComplete(id, complete);
+    await this.dosService.updateComplete(cycleId, round, complete);
   }
 }

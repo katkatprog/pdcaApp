@@ -22,11 +22,12 @@ export class ChecksController {
     return await this.checksService.findCheck(cycleId, round);
   }
 
-  @Put('update-complete/:id')
+  @Put('update-complete/:cycleId/:round')
   async updateComplete(
-    @Param('id', ParseIntPipe) id: number,
+    @Param('cycleId', ParseIntPipe) cycleId: number,
+    @Param('round', ParseIntPipe) round: number,
     @Body('complete', ParseBoolPipe) complete: boolean,
   ): Promise<void> {
-    await this.checksService.updateComplete(id, complete);
+    await this.checksService.updateComplete(cycleId, round, complete);
   }
 }
