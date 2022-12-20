@@ -33,7 +33,7 @@ model Plan{
   startDate DateTime?
   endDate DateTime?
   complete Boolean @default(false)
-  cycle Cycle @relation(fields: [cycleId], references: [id])
+  cycle Cycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
   tasks Task[]
 }
 
@@ -42,7 +42,7 @@ model Do{
   cycleId Int
   round Int @default(1)
   complete Boolean @default(false)
-  cycle Cycle @relation(fields: [cycleId], references: [id])
+  cycle Cycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
 }
 
 model Check{
@@ -50,7 +50,7 @@ model Check{
   cycleId Int
   round Int @default(1)
   complete Boolean @default(false)
-  cycle Cycle @relation(fields: [cycleId], references: [id])
+  cycle Cycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
 }
 
 model Action{
@@ -58,7 +58,7 @@ model Action{
   cycleId Int
   round Int @default(1)
   complete Boolean @default(false)
-  cycle Cycle @relation(fields: [cycleId], references: [id])
+  cycle Cycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
 }
 
 model Task{
@@ -69,8 +69,8 @@ model Task{
   statusId Int
   startDate DateTime?
   endDate DateTime?
-  plan Plan @relation(fields: [planId], references: [id])
-  status Status @relation(fields: [statusId], references: [id])
+  plan Plan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  status Status @relation(fields: [statusId], references: [id], onDelete: Cascade)
 }
 
 model Status{
