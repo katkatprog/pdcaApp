@@ -67,7 +67,7 @@ model Task{
   cycleId Int
   round Int @default(1)
   about String?
-  statusId Int
+  statusId Int @default(0)
   startDate DateTime?
   endDate DateTime?
   cycle Cycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
