@@ -35,7 +35,6 @@ export class TasksController {
     @Param('round', ParseIntPipe) round: number,
     @Body() taskDto: TaskDto,
   ): Promise<void> {
-    console.log(taskDto); //
     taskDto.statusId = 0; //未完了に設定
     await this.tasksService.create(cycleId, round, taskDto);
   }
