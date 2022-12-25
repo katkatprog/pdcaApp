@@ -5,7 +5,7 @@ include .env
 ########################################################################################
 #	環境の起動
 up:
-	docker-compose up
+	docker-compose up -d
 
 # 環境の動作終了
 down:
@@ -48,6 +48,10 @@ front-rmi:
 front-rmvol:
 	docker volume rm $(shell basename `pwd` | tr 'A-Z' 'a-z')_front_store
 
+# front ログ表示
+front-logs:
+	export LESS="-iRMXS" && docker-compose logs front | less
+
 # Next.jsプロジェクト新規作成
 # (1)/workspace/front(ホスト側の./front)のプロジェクト内のnode_modulesがVolume-Mountがされている関係上、
 # 	一時的にコンテナ内の/workspace_tmpにプロジェクトを作成、
@@ -84,6 +88,15 @@ api-rmi:
 api-rmvol:
 	docker volume rm $(shell basename `pwd` | tr 'A-Z' 'a-z')_api_store
 
+# api prisma studio起動
+api-prisma:
+	docker-compose exec api sh -c \
+		"cd ${API_PROJ_NAME} && yarn prisma studio"
+
+# api ログ表示
+api-logs:
+	export LESS="-iRMXS" && docker-compose logs api | less
+
 ########################################################################################
 ################################# dbに関するコマンド ######################################
 ########################################################################################
@@ -98,3 +111,7 @@ db-exec:
 # dbコンテナのvolume(データ保存場所)を削除する。
 db-rmvol:
 	docker volume rm $(shell basename `pwd` | tr 'A-Z' 'a-z')_db_store
+
+# db ログ表示
+db-logs:
+	export LESS="-iRMXS" && docker-compose logs db | less
