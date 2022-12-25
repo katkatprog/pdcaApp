@@ -4,15 +4,15 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { Cycle } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CycleDto, CycleDtoEdit } from './cycle.dto';
-import { CycleIfc } from './cycle.interface';
 
 @Injectable()
 export class CyclesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll(userId: number): Promise<CycleIfc[]> {
+  async findAll(userId: number): Promise<Cycle[]> {
     return await this.prisma.cycle.findMany({
       where: {
         userId: userId,
@@ -21,7 +21,7 @@ export class CyclesService {
     });
   }
 
-  async findById(id: number, userId: number): Promise<CycleIfc> {
+  async findById(id: number, userId: number): Promise<Cycle> {
     const cycle = await this.prisma.cycle.findUnique({
       where: {
         id: id,
@@ -67,7 +67,7 @@ export class CyclesService {
   }
 
   // 消去されたサイクル一覧を取得
-  async findTrashedCycles(userId: number): Promise<CycleIfc[]> {
+  async findTrashedCycles(userId: number): Promise<Cycle[]> {
     return await this.prisma.cycle.findMany({
       where: { userId: userId, erased: true },
     });

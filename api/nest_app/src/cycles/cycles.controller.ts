@@ -8,17 +8,28 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { Cycle } from '@prisma/client';
+import { ActionsService } from 'src/actions/actions.service';
+import { ChecksService } from 'src/checks/checks.service';
+import { DosService } from 'src/dos/dos.service';
+import { PlansService } from 'src/plans/plans.service';
 import { CycleDto, CycleDtoEdit } from './cycle.dto';
-import { CycleIfc } from './cycle.interface';
 import { CyclesService } from './cycles.service';
 
 @Controller('cycles')
 export class CyclesController {
-  constructor(private readonly cyclesService: CyclesService) {}
+  constructor(
+    private readonly cyclesService: CyclesService,
+    private readonly plansService: PlansService,
+    private readonly dosService: DosService,
+    private readonly checksService: ChecksService,
+    private readonly actionsService: ActionsService,
+  ) {}
+
   @Get(':userId')
   async findAll(
     @Param('userId', ParseIntPipe) userId: number,
-  ): Promise<CycleIfc[]> {
+  ): Promise<Cycle[]> {
     return await this.cyclesService.findAll(userId);
   }
 
@@ -26,7 +37,7 @@ export class CyclesController {
   @Get('trashed/:userId')
   async findTrashedCycles(
     @Param('userId', ParseIntPipe) userId: number,
-  ): Promise<CycleIfc[]> {
+  ): Promise<Cycle[]> {
     return await this.cyclesService.findTrashedCycles(userId);
   }
 
@@ -36,13 +47,26 @@ export class CyclesController {
   async findById(
     @Param('id', ParseIntPipe) id: number,
     @Param('userId', ParseIntPipe) userId: number,
-  ): Promise<CycleIfc> {
+  ): Promise<Cycle> {
     return await this.cyclesService.findById(id, userId);
   }
 
   @Post('create')
   async create(@Body() cycleDto: CycleDto): Promise<void> {
     return await this.cyclesService.create(cycleDto);
+  }
+
+  @Post('create-pdca/:cycleId/:round')
+  async createPDCA(
+    @Param('cycleId', ParseIntPipe) cycleId: number,
+    @Param('round', ParseIntPipe) round: number,
+  ): Promise<void> {
+    Promise.all([
+      this.plansService.createPlan(cycleId, round),
+      this.dosService.createDo(cycleId, round),
+      this.checksService.createCheck(cycleId, round),
+      this.actionsService.createAction(cycleId, round),
+    ]);
   }
 
   @Put('update/:id/:userId')
