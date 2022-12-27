@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Cycle from "./pages/Cycle";
+import Cycle from "./pages/cycle/Cycle";
 import Home from "./pages/home/Home";
 import Trash from "./pages/trash/Trash";
 import "./App.css";
