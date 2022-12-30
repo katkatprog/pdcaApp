@@ -13,7 +13,7 @@ import { ActionsService } from 'src/actions/actions.service';
 import { ChecksService } from 'src/checks/checks.service';
 import { DosService } from 'src/dos/dos.service';
 import { PlansService } from 'src/plans/plans.service';
-import { CycleDto, CycleDtoEdit } from './cycle.dto';
+import { CycleDto } from './cycle.dto';
 import { CyclesService } from './cycles.service';
 
 @Controller('cycles')
@@ -69,13 +69,42 @@ export class CyclesController {
     ]);
   }
 
-  @Put('update/:id/:userId')
-  async update(
+  // goal(目標)の変更
+  @Put('update-goal/:id/:userId')
+  async updateGoal(
     @Param('id', ParseIntPipe) id: number,
     @Param('userId', ParseIntPipe) userId: number,
-    @Body() cycleDtoEdit: CycleDtoEdit,
+    @Body('goal') newGoal: string,
   ): Promise<void> {
-    return await this.cyclesService.update(id, userId, cycleDtoEdit);
+    return await this.cyclesService.updateGoal(id, userId, newGoal);
+  }
+
+  // about(概要)の変更
+  @Put('update-about/:id/:userId')
+  async updateAbout(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('userId', ParseIntPipe) userId: number,
+    @Body('about') newAbout: string,
+  ): Promise<void> {
+    return await this.cyclesService.updateAbout(id, userId, newAbout);
+  }
+
+  // suspend(保留設定)の変更
+  @Put('update-suspend/:id/:userId')
+  async updateSuspend(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('userId', ParseIntPipe) userId: number,
+  ): Promise<void> {
+    return await this.cyclesService.updateSuspend(id, userId);
+  }
+
+  // watchFromAnyone(公開設定)の変更
+  @Put('update-watch-from-anyone/:id/:userId')
+  async updateWatchFromAnyone(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('userId', ParseIntPipe) userId: number,
+  ): Promise<void> {
+    return await this.cyclesService.updateWatchFromAnyone(id, userId);
   }
 
   // サイクルを消去状態を変更する(erasedを変更する)処理

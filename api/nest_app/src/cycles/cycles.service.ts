@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Cycle } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CycleDto, CycleDtoEdit } from './cycle.dto';
+import { CycleDto } from './cycle.dto';
 
 @Injectable()
 export class CyclesService {
@@ -42,10 +42,25 @@ export class CyclesService {
     });
   }
 
-  async update(
+  // goal(目標)の変更
+  async updateGoal(id: number, userId: number, newGoal: string): Promise<void> {
+    const cycle = await this.findById(id, userId); //指定のサイクルの存在確認
+    if (cycle.erased == true) {
+      throw new ForbiddenException('そのサイクルは消去されています。');
+    }
+    await this.prisma.cycle.update({
+      where: { id: id },
+      data: {
+        goal: newGoal,
+      },
+    });
+  }
+
+  // about(概要)の変更
+  async updateAbout(
     id: number,
     userId: number,
-    cycleDtoEdit: CycleDtoEdit,
+    newAbout: string,
   ): Promise<void> {
     const cycle = await this.findById(id, userId); //指定のサイクルの存在確認
     if (cycle.erased == true) {
@@ -53,7 +68,37 @@ export class CyclesService {
     }
     await this.prisma.cycle.update({
       where: { id: id },
-      data: cycleDtoEdit,
+      data: {
+        about: newAbout,
+      },
+    });
+  }
+
+  // suspend(保留設定)の変更
+  async updateSuspend(id: number, userId: number): Promise<void> {
+    const cycle = await this.findById(id, userId); //指定のサイクルの存在確認
+    if (cycle.erased == true) {
+      throw new ForbiddenException('そのサイクルは消去されています。');
+    }
+    await this.prisma.cycle.update({
+      where: { id: id },
+      data: {
+        suspend: !cycle.suspend,
+      },
+    });
+  }
+
+  // watchFromAnyone(公開設定)の変更
+  async updateWatchFromAnyone(id: number, userId: number): Promise<void> {
+    const cycle = await this.findById(id, userId); //指定のサイクルの存在確認
+    if (cycle.erased == true) {
+      throw new ForbiddenException('そのサイクルは消去されています。');
+    }
+    await this.prisma.cycle.update({
+      where: { id: id },
+      data: {
+        watchFromAnyone: !cycle.watchFromAnyone,
+      },
     });
   }
 
