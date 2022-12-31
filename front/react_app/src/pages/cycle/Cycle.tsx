@@ -1,4 +1,4 @@
-import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -20,6 +20,10 @@ const Cycle = () => {
     suspend: false,
   });
   const [mode, setMode] = useState<string>("about");
+
+  const openCycleEditModal = () => {
+    console.log("cycle edit");
+  };
 
   useEffect(() => {
     (async () => {
@@ -57,36 +61,23 @@ const Cycle = () => {
           </article>
           <aside className="w-1/3 p-5 border-l border-l-slate-200">
             <h1 className="text-xl">目標</h1>
-            <p className="pl-3">{cycle.goal}</p>
+            <p className="pl-3 text-gray-500">{cycle.goal}</p>
 
             <h1 className="text-xl pt-3">概要</h1>
-            <p className="pl-3">{cycle.about}</p>
+            <p className="pl-3 text-gray-500">{cycle.about}</p>
 
-            <h1 className="text-xl pt-3">サイクル公開</h1>
+            <h1 className="text-xl pt-3">サイクルの公開</h1>
             {cycle.watchFromAnyone ? (
-              <FontAwesomeIcon
-                icon={faToggleOn}
-                className="pl-3 text-3xl cursor-pointer"
-              ></FontAwesomeIcon>
+              <p className="pl-3 text-gray-500">公開する</p>
             ) : (
-              <FontAwesomeIcon
-                icon={faToggleOff}
-                className="pl-3 text-3xl cursor-pointer"
-              ></FontAwesomeIcon>
+              <p className="pl-3 text-gray-500">非公開</p>
             )}
 
-            <h1 className="text-xl pt-3">保留にする</h1>
-            {cycle.suspend ? (
-              <FontAwesomeIcon
-                icon={faToggleOn}
-                className="pl-3 text-3xl cursor-pointer"
-              ></FontAwesomeIcon>
-            ) : (
-              <FontAwesomeIcon
-                icon={faToggleOff}
-                className="pl-3 text-3xl cursor-pointer"
-              ></FontAwesomeIcon>
-            )}
+            <FontAwesomeIcon
+              icon={faPenToSquare}
+              className="pt-3 text-gray-500 cursor-pointer text-xl"
+              onClick={openCycleEditModal}
+            ></FontAwesomeIcon>
           </aside>
         </main>
       </Layout>
