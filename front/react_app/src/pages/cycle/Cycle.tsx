@@ -2,24 +2,18 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Layout from "../../components/Layout";
-import { CycleIfc } from "../../utils/cycle.interface";
+import { refreshCycle, setCycle } from "../../redux/cycleSlice";
+import { RootState } from "../../redux/store";
+import { EditCycleIfc } from "../../utils/cycle.interface";
 import EditCycleModal from "./EditCycleModal";
 
 const Cycle = () => {
   const params = useParams<{ cycleId: string }>();
-  const [cycle, setCycle] = useState<CycleIfc>({
-    id: 0,
-    name: "",
-    about: "",
-    goal: "",
-    userId: 0,
-    favorite: false,
-    watchFromAnyone: false,
-    erased: false,
-    suspend: false,
-  });
+  const cycle = useSelector((state: RootState) => state.cycle.value);
+  const dispatch = useDispatch();
   const [mode, setMode] = useState<string>("about");
   const [showEditCycleModal, setShowEditCycleModal] = useState(false);
 
@@ -29,12 +23,17 @@ const Cycle = () => {
 
   useEffect(() => {
     (async () => {
-      const data = await (
+      const data: EditCycleIfc = await (
         await axios.get(`/api/cycles/${params.cycleId}/${1}`)
       ).data;
-      setCycle(data);
+      dispatch(setCycle(data));
     })();
+
+    return () => {
+      dispatch(refreshCycle());
+    };
   }, []);
+
   return (
     <>
       <Layout>
@@ -85,7 +84,6 @@ const Cycle = () => {
       </Layout>
       {showEditCycleModal && (
         <EditCycleModal
-          cycle={cycle}
           setShowEditCycleModal={setShowEditCycleModal}
         ></EditCycleModal>
       )}
