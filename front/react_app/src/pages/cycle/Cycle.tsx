@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "../../components/Layout";
 import { CycleIfc } from "../../utils/cycle.interface";
+import EditCycleModal from "./EditCycleModal";
 
 const Cycle = () => {
   const params = useParams<{ cycleId: string }>();
@@ -20,9 +21,10 @@ const Cycle = () => {
     suspend: false,
   });
   const [mode, setMode] = useState<string>("about");
+  const [showEditCycleModal, setShowEditCycleModal] = useState(false);
 
   const openCycleEditModal = () => {
-    console.log("cycle edit");
+    setShowEditCycleModal(true);
   };
 
   useEffect(() => {
@@ -81,6 +83,12 @@ const Cycle = () => {
           </aside>
         </main>
       </Layout>
+      {showEditCycleModal && (
+        <EditCycleModal
+          cycle={cycle}
+          setShowEditCycleModal={setShowEditCycleModal}
+        ></EditCycleModal>
+      )}
     </>
   );
 };
