@@ -17,7 +17,6 @@ const Cycle = () => {
     favorite: false,
     watchFromAnyone: false,
     erased: false,
-    currentRound: 0,
     suspend: false,
   });
   const [mode, setMode] = useState<string>("about");
