@@ -9,3 +9,11 @@ export interface CycleIfc {
   erased: boolean;
   suspend: boolean;
 }
+
+export interface EditCycleIfc {
+  name: string;
+  about: string | null;
+  goal: string;
+  watchFromAnyone: boolean;
+  suspend: boolean;
+}
