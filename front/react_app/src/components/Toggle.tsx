@@ -8,11 +8,12 @@ interface PropsIfc {
 
 const Toggle = (props: PropsIfc) => {
   return (
-    <div className="select-none" onClick={() => props.setState(!props.state)}>
+    <div className="select-none">
       <div
-        className={`h-7 w-14 rounded-lg transition-all flex items-center px-1 ${
-          props.state ? "bg-green-500 pl-8" : "bg-gray-400"
+        className={`h-7 w-14 rounded-lg flex items-center px-1 ${
+          props.state ? "bg-green-500 justify-end" : "bg-gray-400"
         }`}
+        onClick={() => props.setState(!props.state)}
       >
         <div className="rounded-full h-5 w-5 bg-gray-50"></div>
       </div>
