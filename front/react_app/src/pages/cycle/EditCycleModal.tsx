@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Toggle from "../../components/Toggle";
 import { CycleIfc } from "../../utils/cycle.interface";
 
 interface PropsIfc {
@@ -58,13 +59,25 @@ const EditCycleModal = (props: PropsIfc) => {
               onChange={(e) => setAbout(e.target.value)}
             />
             <p className="my-2">サイクル公開</p>
+            <Toggle
+              state={watchFromAnyone}
+              setState={setWatchFromAnyone}
+            ></Toggle>
             <p className="my-2">保留にする</p>
+            <Toggle state={suspend} setState={setSuspend}></Toggle>
           </div>
           <div className="flex w-full justify-end">
             <button
               className="text-white bg-blue-500 text-lg px-4 py-2 rounded-md hover:bg-blue-600"
               onClick={() => {
                 console.log("save");
+                console.log({
+                  cycleName,
+                  goal,
+                  about,
+                  watchFromAnyone,
+                  suspend,
+                });
               }}
             >
               保存する
