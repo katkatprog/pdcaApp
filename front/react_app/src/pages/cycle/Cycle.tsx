@@ -13,13 +13,19 @@ const Cycle = () => {
   const cycle = useSelector((state: RootState) => state.cycle.value);
   const dispatch = useDispatch();
   const [mode, setMode] = useState<string>("about");
+  const [round, setRound] = useState<number>(0);
 
   useEffect(() => {
     (async () => {
-      const data: EditCycleIfc = await (
+      const fetchedCycle: EditCycleIfc = await (
         await axios.get(`/api/cycles/${params.cycleId}/${1}`)
       ).data;
-      dispatch(setCycle(data));
+      dispatch(setCycle(fetchedCycle));
+
+      const fetchedRound: number = await (
+        await axios.get(`/api/plans/latest-round/${params.cycleId}`)
+      ).data;
+      setRound(fetchedRound);
     })();
 
     return () => {
