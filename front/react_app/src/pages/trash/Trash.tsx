@@ -11,6 +11,7 @@ import { RootState } from "../../redux/store";
 import { setErasedCycles } from "../../redux/erasedCyclesSlice";
 import { CycleIfc } from "../../utils/cycle.interface";
 import { hideMenu } from "../../redux/menuSlice";
+import { hideModal } from "../../redux/modalSlice";
 
 const Trash = () => {
   const erasedCyclesState = useSelector(
@@ -22,6 +23,7 @@ const Trash = () => {
 
   useEffect(() => {
     dispatch(hideMenu());
+    dispatch(hideModal());
     (async () => {
       const data: CycleIfc[] = await (
         await axios.get(`/api/cycles/trashed/${1}`)
