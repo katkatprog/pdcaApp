@@ -50,7 +50,7 @@ front-rmvol:
 
 # front ログ表示
 front-logs:
-	export LESS="-iRMXS" && docker-compose logs front | less
+	docker-compose logs --tail="100" front
 
 # Next.jsプロジェクト新規作成
 # (1)/workspace/front(ホスト側の./front)のプロジェクト内のnode_modulesがVolume-Mountがされている関係上、
@@ -95,7 +95,7 @@ api-prisma:
 
 # api ログ表示
 api-logs:
-	export LESS="-iRMXS" && docker-compose logs api | less
+	docker-compose logs --tail="100" api
 
 ########################################################################################
 ################################# dbに関するコマンド ######################################
@@ -114,4 +114,4 @@ db-rmvol:
 
 # db ログ表示
 db-logs:
-	export LESS="-iRMXS" && docker-compose logs db | less
+	docker-compose logs --tail="100" db
