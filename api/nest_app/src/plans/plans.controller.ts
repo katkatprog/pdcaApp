@@ -14,6 +14,13 @@ import { PlansService } from './plans.service';
 export class PlansController {
   constructor(private readonly plansService: PlansService) {}
 
+  @Get('latest-round/:cycleId')
+  async getLatestRound(
+    @Param('cycleId', ParseIntPipe) cycleId: number,
+  ): Promise<number> {
+    return await this.plansService.getLatestRound(cycleId);
+  }
+
   @Get(':cycleId/:round')
   async findPlan(
     @Param('cycleId', ParseIntPipe) cycleId: number,
