@@ -1,5 +1,3 @@
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,18 +6,13 @@ import Layout from "../../components/Layout";
 import { refreshCycle, setCycle } from "../../redux/cycleSlice";
 import { RootState } from "../../redux/store";
 import { EditCycleIfc } from "../../utils/cycle.interface";
-import EditCycleModal from "./EditCycleModal";
+import AboutCycle from "./AboutCycle";
 
 const Cycle = () => {
   const params = useParams<{ cycleId: string }>();
   const cycle = useSelector((state: RootState) => state.cycle.value);
   const dispatch = useDispatch();
   const [mode, setMode] = useState<string>("about");
-  const [showEditCycleModal, setShowEditCycleModal] = useState(false);
-
-  const openCycleEditModal = () => {
-    setShowEditCycleModal(true);
-  };
 
   useEffect(() => {
     (async () => {
@@ -60,33 +53,9 @@ const Cycle = () => {
               <h1>Action</h1>
             </div>
           </article>
-          <aside className="w-1/3 p-5 border-l border-l-slate-200">
-            <h1 className="text-xl">目標</h1>
-            <p className="pl-3 text-gray-500">{cycle.goal}</p>
-
-            <h1 className="text-xl pt-3">概要</h1>
-            <p className="pl-3 text-gray-500">{cycle.about}</p>
-
-            <h1 className="text-xl pt-3">サイクルの公開</h1>
-            {cycle.watchFromAnyone ? (
-              <p className="pl-3 text-gray-500">公開する</p>
-            ) : (
-              <p className="pl-3 text-gray-500">非公開</p>
-            )}
-
-            <FontAwesomeIcon
-              icon={faPenToSquare}
-              className="pt-3 text-gray-500 cursor-pointer text-xl"
-              onClick={openCycleEditModal}
-            ></FontAwesomeIcon>
-          </aside>
+          {mode === "about" && <AboutCycle></AboutCycle>}
         </main>
       </Layout>
-      {showEditCycleModal && (
-        <EditCycleModal
-          setShowEditCycleModal={setShowEditCycleModal}
-        ></EditCycleModal>
-      )}
     </>
   );
 };
