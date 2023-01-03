@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Plan } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -39,20 +35,15 @@ export class PlansService {
     });
   }
 
-  async updateDate(
+  async update(
     cycleId: number,
     round: number,
-    startDate: Date,
-    endDate: Date,
+    goalInRound: string,
   ): Promise<void> {
-    if (startDate && endDate && endDate < startDate) {
-      throw new BadRequestException('開始日が終了日より後になっています。');
-    }
     await this.prisma.plan.updateMany({
       where: { cycleId, round },
       data: {
-        startDate,
-        endDate,
+        goalInRound,
       },
     });
   }

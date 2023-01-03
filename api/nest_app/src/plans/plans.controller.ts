@@ -29,14 +29,13 @@ export class PlansController {
     return await this.plansService.findPlan(cycleId, round);
   }
 
-  @Put('update-date/:cycleId/:round')
+  @Put('update/:cycleId/:round')
   async updateDate(
     @Param('cycleId', ParseIntPipe) cycleId: number,
     @Param('round', ParseIntPipe) round: number,
-    @Body('startDate') startDate: Date,
-    @Body('endDate') endDate: Date,
+    @Body('goalInRound') goalInRound: string,
   ): Promise<void> {
-    await this.plansService.updateDate(cycleId, round, startDate, endDate);
+    await this.plansService.update(cycleId, round, goalInRound);
   }
 
   @Put('update-complete/:cycleId/:round')
