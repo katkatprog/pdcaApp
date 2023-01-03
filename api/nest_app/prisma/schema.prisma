@@ -30,8 +30,7 @@ model Cycle{
 model Plan{
   cycleId Int
   round Int @default(1)
-  startDate DateTime?
-  endDate DateTime?
+  goalInRound String?
   complete Boolean @default(false)
   cycle Cycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
   @@id([cycleId, round])
