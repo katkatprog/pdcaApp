@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DeleteModal from "../../components/modal/DeleteModal";
 import { RootState } from "../../redux/store";
 import { setErasedCycles } from "../../redux/erasedCyclesSlice";
-import { CycleIfc } from "../../utils/cycle.interface";
+import { Cycle } from "@prisma/client";
 import { hideMenu } from "../../redux/menuSlice";
 import { hideModal } from "../../redux/modalSlice";
 
@@ -25,7 +25,7 @@ const Trash = () => {
     dispatch(hideMenu());
     dispatch(hideModal());
     (async () => {
-      const data: CycleIfc[] = await (
+      const data: Cycle[] = await (
         await axios.get(`/api/cycles/trashed/${1}`)
       ).data;
       dispatch(setErasedCycles(data));

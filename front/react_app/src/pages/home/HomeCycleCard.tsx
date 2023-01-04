@@ -1,5 +1,5 @@
 import React from "react";
-import { CycleIfc } from "../../utils/cycle.interface";
+import { Cycle } from "@prisma/client";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { showModal } from "../../redux/modalSlice";
@@ -7,7 +7,7 @@ import { hideMenu } from "../../redux/menuSlice";
 import CycleCard from "../../components/CycleCard";
 
 interface PropsIfc {
-  element: CycleIfc;
+  element: Cycle;
 }
 
 const HomeCycleCard = (props: PropsIfc) => {

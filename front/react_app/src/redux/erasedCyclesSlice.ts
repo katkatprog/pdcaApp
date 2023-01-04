@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CycleIfc } from "../utils/cycle.interface";
+import { Cycle } from "@prisma/client";
 
 export interface CyclesState {
-  value: CycleIfc[];
+  value: Cycle[];
 }
 
 const initialState: CyclesState = {
@@ -14,11 +14,11 @@ export const erasedCyclesSlice = createSlice({
   initialState,
   reducers: {
     // サイクルにデータをセットするReducer
-    setErasedCycles: (state, action: PayloadAction<CycleIfc[]>) => {
+    setErasedCycles: (state, action: PayloadAction<Cycle[]>) => {
       state.value = action.payload;
     },
     // サイクルのstateにデータを追加するReducer
-    addErasedCycle: (state, action: PayloadAction<CycleIfc>) => {
+    addErasedCycle: (state, action: PayloadAction<Cycle>) => {
       state.value.push(action.payload);
     },
     // サイクルのstateからデータを削除するReducer

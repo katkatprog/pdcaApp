@@ -4,7 +4,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import CycleCard from "./HomeCycleCard";
 import Layout from "../../components/Layout";
-import { CycleIfc } from "../../utils/cycle.interface";
 import Header from "./Header";
 import EraseModal from "../../components/modal/EraseModal";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +11,7 @@ import { RootState } from "../../redux/store";
 import { setCycles } from "../../redux/cyclesSlice";
 import { hideMenu } from "../../redux/menuSlice";
 import { hideModal } from "../../redux/modalSlice";
+import { Cycle } from "@prisma/client";
 
 const Home = () => {
   const modalState = useSelector((state: RootState) => state.modal.value);
@@ -23,7 +23,7 @@ const Home = () => {
     (async () => {
       dispatch(hideMenu());
       dispatch(hideModal());
-      const data: CycleIfc[] = await (await axios.get(`/api/cycles/${1}`)).data;
+      const data: Cycle[] = await (await axios.get(`/api/cycles/${1}`)).data;
       dispatch(setCycles(data));
       setLoading(false);
     })();

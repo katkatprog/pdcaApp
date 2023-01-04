@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EditCycleIfc } from "../utils/cycle.interface";
+import { EditCycleIfc } from "../utils/interface";
 
 export interface CycleState {
   value: EditCycleIfc;

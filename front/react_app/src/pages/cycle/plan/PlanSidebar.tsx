@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Plan } from "../../../utils/plan.interface";
+import { Plan } from "@prisma/client";
 
 interface PropsIfc {
   cycleId: number;
@@ -12,7 +12,9 @@ const PlanSidebar = (props: PropsIfc) => {
 
   useEffect(() => {
     (async () => {
-      const planData: Plan = await (await axios.get(`/api/plans/${props.cycleId}/${props.round}`)).data;
+      const planData: Plan = await (
+        await axios.get(`/api/plans/${props.cycleId}/${props.round}`)
+      ).data;
       setPlan(planData);
     })();
   }, []);

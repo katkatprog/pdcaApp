@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Toggle from "../../components/Toggle";
 import { setCycle } from "../../redux/cycleSlice";
 import { RootState } from "../../redux/store";
-import { EditCycleIfc } from "../../utils/cycle.interface";
+import { EditCycleIfc } from "../../utils/interface";
 
 interface PropsIfc {
   setShowEditCycleModal: React.Dispatch<React.SetStateAction<boolean>>;
