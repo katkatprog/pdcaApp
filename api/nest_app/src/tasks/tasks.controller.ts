@@ -39,6 +39,11 @@ export class TasksController {
     await this.tasksService.create(cycleId, round, taskDto);
   }
 
+  @Put('update-complete/:id')
+  async updateComplete(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    await this.tasksService.updateComplete(id);
+  }
+
   @Put(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
