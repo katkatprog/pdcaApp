@@ -54,28 +54,21 @@ model Do {
 model Plan {
   cycleId     Int
   round       Int     @default(1)
-  goalInRound String?
   complete    Boolean @default(false)
+  goalInRound String?
   Cycle       Cycle   @relation(fields: [cycleId], references: [id], onDelete: Cascade)
 
   @@id([cycleId, round])
 }
 
-model Status {
-  id   Int    @id
-  name String
-  Task Task[]
-}
-
 model Task {
   id        Int       @id @default(autoincrement())
   name      String
-  cycleId   Int
-  round     Int       @default(1)
   about     String?
-  statusId  Int       @default(0)
   startDate DateTime?
   endDate   DateTime?
+  cycleId   Int
+  round     Int       @default(1)
+  complete  Boolean   @default(false)
   Cycle     Cycle     @relation(fields: [cycleId], references: [id], onDelete: Cascade)
-  Status    Status    @relation(fields: [statusId], references: [id], onDelete: Cascade)
 }

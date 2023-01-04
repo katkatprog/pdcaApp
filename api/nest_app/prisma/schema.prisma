@@ -67,15 +67,8 @@ model Task {
   cycleId   Int
   round     Int       @default(1)
   about     String?
-  statusId  Int       @default(0)
   startDate DateTime?
   endDate   DateTime?
+  complete  Boolean   @default(false)
   cycle     Cycle     @relation(fields: [cycleId], references: [id], onDelete: Cascade)
-  status    Status    @relation(fields: [statusId], references: [id], onDelete: Cascade)
-}
-
-model Status {
-  id    Int    @id
-  name  String
-  tasks Task[]
 }
