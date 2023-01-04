@@ -1,4 +1,4 @@
-import { Cycle, PrismaClient, Status, Task } from '@prisma/client';
+import { Cycle, PrismaClient, Task } from '@prisma/client';
 import axios from 'axios';
 
 const prisma = new PrismaClient();
@@ -23,7 +23,7 @@ const taskData: Task[] = [
     name: 'task1',
     about: 'task1task1',
     cycleId: 1,
-    statusId: 0,
+    complete: false,
     round: 3,
     startDate: null,
     endDate: null,
@@ -33,26 +33,10 @@ const taskData: Task[] = [
     name: 'task2',
     about: 'task2task2',
     cycleId: 1,
-    statusId: 0,
+    complete: false,
     round: 3,
     startDate: null,
     endDate: null,
-  },
-];
-
-// statusの初期データ
-const statusData: Status[] = [
-  {
-    id: 0,
-    name: '未完了',
-  },
-  {
-    id: 1,
-    name: '完了',
-  },
-  {
-    id: 2,
-    name: '保留',
   },
 ];
 
@@ -63,11 +47,6 @@ const main = async () => {
   // p,d,c,aデータの作成
   for (let i = 1; i <= 3; i++) {
     await axios.post(`http://localhost:3000/cycles/create-pdca/1/${i}`);
-  }
-
-  // statusデータの投入
-  for (const status of statusData) {
-    await prisma.status.create({ data: status });
   }
 
   // taskデータの投入
