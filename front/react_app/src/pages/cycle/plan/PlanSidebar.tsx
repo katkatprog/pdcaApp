@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Plan, Task } from "@prisma/client";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import TaskCard from "../TaskCard";
 
 interface PropsIfc {
   cycleId: number;
@@ -31,6 +34,9 @@ const PlanSidebar = (props: PropsIfc) => {
       <p className="pl-3 text-gray-500">{plan?.goalInRound}</p>
 
       <h1 className="text-xl pt-3">タスク</h1>
+      {tasks.map((task) => (
+        <TaskCard key={task.id} task={task}></TaskCard>
+      ))}
       <h1 className="text-xl pt-3">スケジュール</h1>
     </aside>
   );
