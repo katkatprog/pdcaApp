@@ -1,45 +1,41 @@
-import { faCheck, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Task } from "@prisma/client";
+import axios from "axios";
 import React, { useState } from "react";
+import CheckBox from "../../components/CheckBox";
 
 interface PropsIfc {
   task: Task;
 }
 
 const TaskCard = (props: PropsIfc) => {
-  // const [name, setName] = useState("");
-  // const [about, setAbout] = useState<string | null>()
-  // const [statusId, setstatusId] = useState(second)
-  // useEffect(() => {}, []);
+  const [name, setName] = useState(props.task.name);
+  const [about, setAbout] = useState(props.task.about);
+  const [complete, setComplete] = useState(props.task.complete);
+  const [startDate, setStartDate] = useState(props.task.startDate);
+  const [endDate, setEndDate] = useState(props.task.endDate);
 
   return (
     <div className="p-1  border-b border-b-slate-200">
-      <div
-        className={`text-slate-100 h-7 w-7 flex items-center justify-center
-        select-none rounded-md border-2 transition-all 
-        ${
-          props.task.statusId === 1
-            ? "bg-blue-500 border-blue-400"
-            : "bg-slate-200 border-slate-300"
-        }`}
-      >
-        {props.task.statusId === 1 && (
-          <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
-        )}
-      </div>
-
+      <CheckBox
+        state={complete}
+        onClickAction={async () => {
+          setComplete(!complete);
+          await axios.put(`/api/tasks/update-complete/${props.task.id}`);
+        }}
+      ></CheckBox>
       <p>
-        {props.task.name}
+        {name}
         <FontAwesomeIcon
           icon={faPenToSquare}
           className="ml-3 text-gray-500 cursor-pointer text-xl"
         ></FontAwesomeIcon>
       </p>
-      <p className="pl-3 text-gray-500">{props.task.about}</p>
-      {props.task.startDate && props.task.endDate && (
+      <p className="pl-3 text-gray-500">{about}</p>
+      {startDate && endDate && (
         <p className="pl-3 text-gray-500">
-          {props.task.startDate.toString()} ~ {props.task.endDate.toString()}
+          {startDate.toString()} ~ {endDate.toString()}
         </p>
       )}
     </div>
