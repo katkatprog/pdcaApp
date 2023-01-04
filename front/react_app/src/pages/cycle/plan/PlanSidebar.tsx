@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Plan } from "@prisma/client";
+import { Plan, Task } from "@prisma/client";
 
 interface PropsIfc {
   cycleId: number;
@@ -9,13 +9,19 @@ interface PropsIfc {
 
 const PlanSidebar = (props: PropsIfc) => {
   const [plan, setPlan] = useState<Plan>();
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
     (async () => {
-      const planData: Plan = await (
-        await axios.get(`/api/plans/${props.cycleId}/${props.round}`)
-      ).data;
-      setPlan(planData);
+      Promise.all([
+        axios.get(`/api/plans/${props.cycleId}/${props.round}`),
+        axios.get(`/api/tasks/${props.cycleId}/${props.round}`),
+      ]).then(async (results) => {
+        const planData = await results[0].data;
+        const tasksData = await results[1].data;
+        setPlan(planData);
+        setTasks(tasksData);
+      });
     })();
   }, []);
 
