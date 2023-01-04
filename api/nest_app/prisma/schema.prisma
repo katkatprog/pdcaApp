@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,71 +7,75 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Cycle{
-  id Int @default(autoincrement()) @id
-  name String
-  about String?
-  goal String
-  userId Int
-  favorite Boolean @default(false)
-  watchFromAnyone Boolean @default(false)
-  erased Boolean @default(false)
-  suspend Boolean @default(false)
-  plans Plan[]
-  dos Do[]
-  checks Check[]
-  actions Action[]
-  tasks Task[]
+model Cycle {
+  id              Int      @id @default(autoincrement())
+  name            String
+  about           String?
+  goal            String
+  userId          Int
+  favorite        Boolean  @default(false)
+  watchFromAnyone Boolean  @default(false)
+  erased          Boolean  @default(false)
+  suspend         Boolean  @default(false)
+  actions         Action[]
+  checks          Check[]
+  dos             Do[]
+  plans           Plan[]
+  tasks           Task[]
 }
 
-model Plan{
-  cycleId Int
-  round Int @default(1)
+model Plan {
+  cycleId     Int
+  round       Int     @default(1)
   goalInRound String?
-  complete Boolean @default(false)
-  cycle Cycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  complete    Boolean @default(false)
+  cycle       Cycle   @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+
   @@id([cycleId, round])
 }
 
-model Do{
-  cycleId Int
-  round Int @default(1)
+model Do {
+  cycleId  Int
+  round    Int     @default(1)
   complete Boolean @default(false)
-  cycle Cycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  cycle    Cycle   @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+
   @@id([cycleId, round])
 }
 
-model Check{
-  cycleId Int
-  round Int @default(1)
+model Check {
+  cycleId  Int
+  round    Int     @default(1)
   complete Boolean @default(false)
-  cycle Cycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  cycle    Cycle   @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+
   @@id([cycleId, round])
 }
 
-model Action{
-  cycleId Int
-  round Int @default(1)
+model Action {
+  cycleId  Int
+  round    Int     @default(1)
   complete Boolean @default(false)
-  cycle Cycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  cycle    Cycle   @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+
   @@id([cycleId, round])
 }
 
-model Task{
-  id Int @default(autoincrement()) @id
-  name String
-  cycleId Int
-  round Int @default(1)
-  about String?
-  statusId Int @default(0)
+model Task {
+  id        Int       @id @default(autoincrement())
+  name      String
+  cycleId   Int
+  round     Int       @default(1)
+  about     String?
+  statusId  Int       @default(0)
   startDate DateTime?
-  endDate DateTime?
-  cycle Cycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
-  status Status @relation(fields: [statusId], references: [id], onDelete: Cascade)
+  endDate   DateTime?
+  cycle     Cycle     @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  status    Status    @relation(fields: [statusId], references: [id], onDelete: Cascade)
 }
 
-model Status{
-  id Int @id
-  name String
+model Status {
+  id    Int    @id
+  name  String
   tasks Task[]
 }
