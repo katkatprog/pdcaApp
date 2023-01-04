@@ -9,6 +9,7 @@ import { refreshCycle, setCycle } from "../../redux/cycleSlice";
 import { RootState } from "../../redux/store";
 import { EditCycleIfc } from "../../utils/cycle.interface";
 import AboutCycle from "./AboutCycle";
+import PlanSidebar from "./plan/PlanSidebar";
 
 const Cycle = () => {
   const params = useParams<{ cycleId: string }>();
@@ -88,7 +89,11 @@ const Cycle = () => {
         </header>
         <main className="flex px-5">
           <article className="w-2/3">
-            <div>
+            <div
+              onClick={() => {
+                setMode("Plan");
+              }}
+            >
               <h1>Plan</h1>
             </div>
             <div>
@@ -116,6 +121,7 @@ const Cycle = () => {
                   onClick={() => {
                     setSelectedRound(round);
                     updateRoundArray(round, latestRound);
+                    setMode("about");
                   }}
                 >
                   {round}
@@ -128,6 +134,12 @@ const Cycle = () => {
             </div>
           </article>
           {mode === "about" && <AboutCycle></AboutCycle>}
+          {mode === "Plan" && (
+            <PlanSidebar
+              round={selectedRound}
+              cycleId={Number(params.cycleId) | 0}
+            ></PlanSidebar>
+          )}
         </main>
       </Layout>
     </>
