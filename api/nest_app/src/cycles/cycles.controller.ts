@@ -51,30 +51,35 @@ export class CyclesController {
     return await this.cyclesService.findById(id, userId);
   }
 
+  // サイクルの新規作成
   @Post('create')
-  async create(@Body() cycleDto: CycleDto): Promise<void> {
+  async create(@Body() cycleDto: CycleDto): Promise<Cycle> {
     return await this.cyclesService.create(cycleDto);
   }
 
-  @Post('create-pdca/:cycleId/:round')
+  // 新しい周のP,D,C,Aのデータを作成する処理
+  // frontとの兼ね合いにより、戻り値は新しい周が入ったオブジェクトとしている
+  @Post('create-pdca/:id/:round')
   async createPDCA(
-    @Param('cycleId', ParseIntPipe) cycleId: number,
+    @Param('id', ParseIntPipe) id: number,
     @Param('round', ParseIntPipe) round: number,
-  ): Promise<void> {
-    Promise.all([
-      this.plansService.createPlan(cycleId, round),
-      this.dosService.createDo(cycleId, round),
-      this.checksService.createCheck(cycleId, round),
-      this.actionsService.createAction(cycleId, round),
+  ): Promise<{ round: number }> {
+    await Promise.all([
+      this.plansService.createPlan(id, round),
+      this.dosService.createDo(id, round),
+      this.checksService.createCheck(id, round),
+      this.actionsService.createAction(id, round),
     ]);
+    return { round };
   }
 
+  // サイクルを更新する処理
   @Put('update/:id/:userId')
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Param('userId', ParseIntPipe) userId: number,
     @Body() cycleDtoEdit: CycleDtoEdit,
-  ): Promise<void> {
+  ): Promise<Cycle> {
     return await this.cyclesService.update(id, userId, cycleDtoEdit);
   }
 
@@ -84,16 +89,20 @@ export class CyclesController {
   async erase(
     @Param('id', ParseIntPipe) id: number,
     @Param('userId', ParseIntPipe) userId: number,
-  ) {
+  ): Promise<{
+    erased: boolean;
+  }> {
     return await this.cyclesService.eraseOrRestore(id, userId);
   }
 
-  // 消去されたサイクルを復元する(erasedをfalseに変更する)処理
+  // サイクルをお気に入りに登録する処理
   @Put('favorite/:id/:userId')
   async favorite(
     @Param('id', ParseIntPipe) id: number,
     @Param('userId', ParseIntPipe) userId: number,
-  ) {
+  ): Promise<{
+    favorite: boolean;
+  }> {
     return await this.cyclesService.favorite(id, userId);
   }
 
@@ -102,7 +111,7 @@ export class CyclesController {
   async delete(
     @Param('id', ParseIntPipe) id: number,
     @Param('userId', ParseIntPipe) userId: number,
-  ) {
+  ): Promise<void> {
     return await this.cyclesService.delete(id, userId);
   }
 }
