@@ -28,6 +28,6 @@ export class ChecksService {
       where: { cycleId, round },
       data: { complete },
     });
-    return { complete: (await this.findCheck(cycleId, round)).complete };
+    return { complete: complete };
   }
 }

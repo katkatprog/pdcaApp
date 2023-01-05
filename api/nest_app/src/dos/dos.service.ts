@@ -29,7 +29,7 @@ export class DosService {
       data: { complete },
     });
     return {
-      complete: (await this.findDo(cycleId, round)).complete,
+      complete: complete,
     };
   }
 }

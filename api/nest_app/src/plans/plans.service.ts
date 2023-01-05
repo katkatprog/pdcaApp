@@ -59,7 +59,7 @@ export class PlansService {
       data: { complete },
     });
     return {
-      complete: (await this.findPlan(cycleId, round)).complete,
+      complete: complete,
     };
   }
 }

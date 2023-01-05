@@ -28,6 +28,6 @@ export class ActionsService {
       where: { cycleId, round },
       data: { complete },
     });
-    return { complete: (await this.findAction(cycleId, round)).complete };
+    return { complete: complete };
   }
 }
