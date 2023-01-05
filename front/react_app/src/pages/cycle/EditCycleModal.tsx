@@ -1,3 +1,4 @@
+import { Cycle } from "@prisma/client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -5,7 +6,6 @@ import { useParams } from "react-router-dom";
 import Toggle from "../../components/Toggle";
 import { setCycle } from "../../redux/cycleSlice";
 import { RootState } from "../../redux/store";
-import { EditCycleIfc } from "../../utils/interface";
 
 interface PropsIfc {
   setShowEditCycleModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -78,26 +78,32 @@ const EditCycleModal = (props: PropsIfc) => {
             <button
               className="text-white bg-blue-500 text-lg px-4 py-2 rounded-md hover:bg-blue-600"
               onClick={async () => {
-                await axios.put<EditCycleIfc>(
-                  `/api/cycles/update/${params.cycleId}/${1}`,
-                  {
+                // サイクルのupdateをしつつ、結果(updateされたサイクル)を変数resultに代入
+                const result: Cycle = await (
+                  await axios.put(`/api/cycles/update/${params.cycleId}/${1}`, {
                     name: cycleName,
                     goal: goal,
                     about: about,
                     watchFromAnyone: watchFromAnyone,
                     suspend: suspend,
-                  },
-                );
-                dispatch(
-                  setCycle({
-                    name: cycleName,
-                    goal: goal,
-                    about: about,
-                    watchFromAnyone: watchFromAnyone,
-                    suspend: suspend,
-                  }),
-                );
-                props.setShowEditCycleModal(false);
+                  })
+                ).data;
+
+                // DBへの反映に成功した(resultが存在している)ならば、画面側への反映も行う
+                if (result) {
+                  dispatch(
+                    setCycle({
+                      name: result.name,
+                      goal: result.goal,
+                      about: result.about,
+                      watchFromAnyone: result.watchFromAnyone,
+                      suspend: result.suspend,
+                    }),
+                  );
+                  props.setShowEditCycleModal(false);
+                } else {
+                  alert("サイクルの変更を正しく行えませんでした");
+                }
               }}
             >
               保存する
