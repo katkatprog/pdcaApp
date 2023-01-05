@@ -26,9 +26,18 @@ const TrashedCycleCard = (props: PropsIfc) => {
 
   const RestoreHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(hideMenu());
-    await axios.put(`/api/cycles/erase-restore/${props.element.id}/${1}`);
-    dispatch(deleteErasedCycle(props.element.id));
+    const result: { erased: boolean } = await (
+      await axios.put(`/api/cycles/erase-restore/${props.element.id}/${1}`, {
+        erased: false,
+      })
+    ).data;
+
+    if (result.erased === false) {
+      dispatch(hideMenu());
+      dispatch(deleteErasedCycle(props.element.id));
+    } else {
+      alert("サイクルを正しく復元できませんでした。");
+    }
   };
 
   return (
