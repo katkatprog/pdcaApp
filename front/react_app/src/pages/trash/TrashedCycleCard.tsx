@@ -5,10 +5,10 @@ import CycleCard from "../../components/CycleCard";
 import { deleteErasedCycle } from "../../redux/erasedCyclesSlice";
 import { hideMenu } from "../../redux/menuSlice";
 import { showModal } from "../../redux/modalSlice";
-import { CycleIfc } from "../../utils/cycle.interface";
+import { Cycle } from "@prisma/client";
 
 interface PropsIfc {
-  element: CycleIfc;
+  element: Cycle;
 }
 
 const TrashedCycleCard = (props: PropsIfc) => {

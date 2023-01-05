@@ -5,12 +5,12 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CycleIfc } from "../utils/cycle.interface";
+import { Cycle } from "@prisma/client";
 import { RootState } from "../redux/store";
 import { hideMenu, showMenu } from "../redux/menuSlice";
 
 interface PropsIfc {
-  element: CycleIfc;
+  element: Cycle;
   hoverCss?: string;
   children: React.ReactNode;
 }

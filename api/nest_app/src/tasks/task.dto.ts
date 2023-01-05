@@ -1,5 +1,4 @@
-import { Type } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class TaskDto {
   @IsNotEmpty({ message: 'タスク名を入力してください。' })
@@ -9,11 +8,6 @@ export class TaskDto {
   @IsString({ message: '概要は文字列である必要があります。' })
   about: string;
 
-  @Type(() => Number)
-  @IsNumber(undefined, {
-    message: 'ステータスIDは数値型である必要があります。',
-  })
-  statusId: number;
   startDate: Date;
   endDate: Date;
   // @Type(() => Date)

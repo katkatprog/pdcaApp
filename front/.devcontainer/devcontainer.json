@@ -24,7 +24,8 @@
 				"dbaeumer.vscode-eslint",
 				"styled-components.vscode-styled-components",
 				"mhutchie.git-graph",
-				"bradlc.vscode-tailwindcss"
+				"bradlc.vscode-tailwindcss",
+				"Prisma.prisma"
 			]
 		}
 	},

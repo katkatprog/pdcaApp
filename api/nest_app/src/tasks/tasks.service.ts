@@ -24,12 +24,20 @@ export class TasksService {
   }
 
   async update(id: number, taskDto: TaskDto): Promise<void> {
-    const task = this.findById(id);
+    const task = await this.findById(id);
     await this.prisma.task.update({ where: { id }, data: taskDto });
   }
 
+  async updateComplete(id: number): Promise<void> {
+    const task = await this.findById(id);
+    await this.prisma.task.update({
+      where: { id },
+      data: { complete: !task.complete },
+    });
+  }
+
   async delete(id: number): Promise<void> {
-    const task = this.findById(id);
+    const task = await this.findById(id);
     await this.prisma.task.delete({ where: { id } });
   }
 }

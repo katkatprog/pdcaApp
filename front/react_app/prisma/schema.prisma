@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Action {
+  cycleId  Int
+  round    Int     @default(1)
+  complete Boolean @default(false)
+  Cycle    Cycle   @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+
+  @@id([cycleId, round])
+}
+
+model Check {
+  cycleId  Int
+  round    Int     @default(1)
+  complete Boolean @default(false)
+  Cycle    Cycle   @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+
+  @@id([cycleId, round])
+}
+
+model Cycle {
+  id              Int      @id @default(autoincrement())
+  name            String
+  about           String?
+  goal            String
+  userId          Int
+  favorite        Boolean  @default(false)
+  watchFromAnyone Boolean  @default(false)
+  erased          Boolean  @default(false)
+  suspend         Boolean  @default(false)
+  Action          Action[]
+  Check           Check[]
+  Do              Do[]
+  Plan            Plan[]
+  Task            Task[]
+}
+
+model Do {
+  cycleId  Int
+  round    Int     @default(1)
+  complete Boolean @default(false)
+  Cycle    Cycle   @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+
+  @@id([cycleId, round])
+}
+
+model Plan {
+  cycleId     Int
+  round       Int     @default(1)
+  complete    Boolean @default(false)
+  goalInRound String?
+  Cycle       Cycle   @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+
+  @@id([cycleId, round])
+}
+
+model Task {
+  id        Int       @id @default(autoincrement())
+  name      String
+  about     String?
+  startDate DateTime?
+  endDate   DateTime?
+  cycleId   Int
+  round     Int       @default(1)
+  complete  Boolean   @default(false)
+  Cycle     Cycle     @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+}
