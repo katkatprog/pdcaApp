@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseBoolPipe,
   ParseIntPipe,
   Post,
   Put,
@@ -89,10 +90,11 @@ export class CyclesController {
   async erase(
     @Param('id', ParseIntPipe) id: number,
     @Param('userId', ParseIntPipe) userId: number,
+    @Body('erased', ParseBoolPipe) erased: boolean,
   ): Promise<{
     erased: boolean;
   }> {
-    return await this.cyclesService.eraseOrRestore(id, userId);
+    return await this.cyclesService.eraseOrRestore(id, userId, erased);
   }
 
   // サイクルをお気に入りに登録する処理
@@ -100,10 +102,11 @@ export class CyclesController {
   async favorite(
     @Param('id', ParseIntPipe) id: number,
     @Param('userId', ParseIntPipe) userId: number,
+    @Body('favorite', ParseBoolPipe) favorite: boolean,
   ): Promise<{
     favorite: boolean;
   }> {
-    return await this.cyclesService.favorite(id, userId);
+    return await this.cyclesService.favorite(id, userId, favorite);
   }
 
   // サイクルの完全な削除

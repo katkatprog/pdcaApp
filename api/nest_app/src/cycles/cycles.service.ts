@@ -62,11 +62,12 @@ export class CyclesService {
   async eraseOrRestore(
     id: number,
     userId: number,
+    erased: boolean,
   ): Promise<{ erased: boolean }> {
     const cycle = await this.findById(id, userId); //指定のサイクルの存在確認
     const updatedCycle = await this.prisma.cycle.update({
       where: { id: id },
-      data: { erased: !cycle.erased },
+      data: { erased: erased },
     });
     return { erased: updatedCycle.erased };
   }
@@ -79,14 +80,18 @@ export class CyclesService {
   }
 
   // サイクルをお気に入りする処理(付ける/外す両方対応)
-  async favorite(id: number, userId: number): Promise<{ favorite: boolean }> {
+  async favorite(
+    id: number,
+    userId: number,
+    favorite: boolean,
+  ): Promise<{ favorite: boolean }> {
     const cycle = await this.findById(id, userId); //指定のサイクルの存在確認
     if (cycle.erased == true) {
       throw new ForbiddenException('そのサイクルはすでに消去されています。');
     }
     const updatedCycle = await this.prisma.cycle.update({
       where: { id: id },
-      data: { favorite: !cycle.favorite },
+      data: { favorite: favorite },
     });
     return { favorite: updatedCycle.favorite };
   }
