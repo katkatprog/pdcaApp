@@ -34,8 +34,19 @@ const TaskCard = (props: PropsIfc) => {
           <CheckBox
             state={complete}
             onClickAction={async () => {
-              setComplete(!complete);
-              await axios.put(`/api/tasks/update-complete/${task.id}`);
+              // Taskの完了設定をしつつ、結果を変数resultに代入
+              const result: { complete: boolean } = await (
+                await axios.put(`/api/tasks/update-complete/${task.id}`, {
+                  complete: !complete,
+                })
+              ).data;
+
+              // resultに値が入っていれば、画面側の反映も行う
+              if (result) {
+                setComplete(result.complete);
+              } else {
+                alert("タスクのチェックを正常に出来ませんでした");
+              }
             }}
           ></CheckBox>
         </div>
@@ -96,26 +107,23 @@ const TaskCard = (props: PropsIfc) => {
             <button
               className="text-white bg-blue-500 text-lg px-4 py-2 rounded-md hover:bg-blue-600"
               onClick={async () => {
-                await axios.put<EditTaskIfc>(
-                  `/api/tasks/update/${props.task.id}`,
-                  {
+                // Taskの更新をしつつ、結果(更新されたTask)を変数resultに代入
+                const result: Task = await (
+                  await axios.put(`/api/tasks/update/${props.task.id}`, {
                     name: nameOnModal,
                     about: aboutOnModal,
                     startDate: startDateOnModal,
                     endDate: endDateOnModal,
-                  },
-                );
-                setTask({
-                  id: task.id,
-                  name: nameOnModal,
-                  about: aboutOnModal,
-                  complete: complete,
-                  cycleId: task.cycleId,
-                  endDate: endDateOnModal,
-                  startDate: startDateOnModal,
-                  round: task.round,
-                });
-                setShowModal(false);
+                  })
+                ).data;
+
+                // 変数resultの中身があれば、画面側にも反映する
+                if (result) {
+                  setTask(result);
+                  setShowModal(false);
+                } else {
+                  alert("タスクを正常に更新出来ませんでした");
+                }
               }}
             >
               保存する
