@@ -30,12 +30,12 @@ export class PlansController {
   }
 
   @Put('update/:cycleId/:round')
-  async updateDate(
+  async update(
     @Param('cycleId', ParseIntPipe) cycleId: number,
     @Param('round', ParseIntPipe) round: number,
     @Body('goalInRound') goalInRound: string,
-  ): Promise<void> {
-    await this.plansService.update(cycleId, round, goalInRound);
+  ): Promise<Plan> {
+    return await this.plansService.update(cycleId, round, goalInRound);
   }
 
   @Put('update-complete/:cycleId/:round')
@@ -43,7 +43,9 @@ export class PlansController {
     @Param('cycleId', ParseIntPipe) cycleId: number,
     @Param('round', ParseIntPipe) round: number,
     @Body('complete', ParseBoolPipe) complete: boolean,
-  ): Promise<void> {
-    await this.plansService.updateComplete(cycleId, round, complete);
+  ): Promise<{
+    complete: boolean;
+  }> {
+    return await this.plansService.updateComplete(cycleId, round, complete);
   }
 }
