@@ -10,8 +10,8 @@ export class ChecksService {
     return await this.prisma.check.findFirst({ where: { cycleId, round } });
   }
 
-  async createCheck(cycleId: number, round: number): Promise<void> {
-    await this.prisma.check.create({
+  async createCheck(cycleId: number, round: number): Promise<Check> {
+    return await this.prisma.check.create({
       data: {
         cycleId,
         round,
@@ -23,10 +23,11 @@ export class ChecksService {
     cycleId: number,
     round: number,
     complete: boolean,
-  ): Promise<void> {
+  ): Promise<{ complete: boolean }> {
     await this.prisma.check.updateMany({
       where: { cycleId, round },
       data: { complete },
     });
+    return { complete: (await this.findCheck(cycleId, round)).complete };
   }
 }
