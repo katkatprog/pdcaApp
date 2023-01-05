@@ -10,9 +10,19 @@ const EraseModal = () => {
   const dispatch = useDispatch();
   const confirmAction = async () => {
     // "消去する"が押された際の処理
-    await axios.put(`/api/cycles/erase-restore/${modalState.cycleId}/${1}`);
-    dispatch(deleteCycle(modalState.cycleId));
-    dispatch(hideModal());
+    // サイクルの消去設定をtrueにし、その結果を変数resultに代入する
+    const result: { erased: boolean } = await (
+      await axios.put(`/api/cycles/erase-restore/${modalState.cycleId}/${1}`, {
+        erased: true,
+      })
+    ).data;
+
+    if (result) {
+      dispatch(deleteCycle(modalState.cycleId));
+      dispatch(hideModal());
+    } else {
+      alert("正しく消去出来ませんでした。");
+    }
   };
   return (
     <>
