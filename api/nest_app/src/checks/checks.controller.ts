@@ -27,7 +27,7 @@ export class ChecksController {
     @Param('cycleId', ParseIntPipe) cycleId: number,
     @Param('round', ParseIntPipe) round: number,
     @Body('complete', ParseBoolPipe) complete: boolean,
-  ): Promise<void> {
-    await this.checksService.updateComplete(cycleId, round, complete);
+  ): Promise<{ complete: boolean }> {
+    return await this.checksService.updateComplete(cycleId, round, complete);
   }
 }

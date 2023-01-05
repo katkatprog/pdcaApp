@@ -19,21 +19,27 @@ export class TasksService {
     cycleId: number,
     round: number,
     taskDto: TaskDto,
-  ): Promise<void> {
-    await this.prisma.task.create({ data: { cycleId, round, ...taskDto } });
-  }
-
-  async update(id: number, taskDto: TaskDto): Promise<void> {
-    const task = await this.findById(id);
-    await this.prisma.task.update({ where: { id }, data: taskDto });
-  }
-
-  async updateComplete(id: number): Promise<void> {
-    const task = await this.findById(id);
-    await this.prisma.task.update({
-      where: { id },
-      data: { complete: !task.complete },
+  ): Promise<Task> {
+    return await this.prisma.task.create({
+      data: { cycleId, round, ...taskDto },
     });
+  }
+
+  async update(id: number, taskDto: TaskDto): Promise<Task> {
+    const task = await this.findById(id);
+    return await this.prisma.task.update({ where: { id }, data: taskDto });
+  }
+
+  async updateComplete(
+    id: number,
+    complete: boolean,
+  ): Promise<{ complete: boolean }> {
+    const task = await this.findById(id);
+    const updatedTask = await this.prisma.task.update({
+      where: { id },
+      data: { complete: complete },
+    });
+    return { complete: updatedTask.complete };
   }
 
   async delete(id: number): Promise<void> {

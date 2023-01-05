@@ -10,8 +10,8 @@ export class DosService {
     return await this.prisma.do.findFirst({ where: { cycleId, round } });
   }
 
-  async createDo(cycleId: number, round: number): Promise<void> {
-    await this.prisma.do.create({
+  async createDo(cycleId: number, round: number): Promise<Do> {
+    return await this.prisma.do.create({
       data: {
         cycleId,
         round,
@@ -23,10 +23,13 @@ export class DosService {
     cycleId: number,
     round: number,
     complete: boolean,
-  ): Promise<void> {
+  ): Promise<{ complete: boolean }> {
     await this.prisma.do.updateMany({
       where: { cycleId, round },
       data: { complete },
     });
+    return {
+      complete: complete,
+    };
   }
 }

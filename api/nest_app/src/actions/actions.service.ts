@@ -10,8 +10,8 @@ export class ActionsService {
     return await this.prisma.action.findFirst({ where: { cycleId, round } });
   }
 
-  async createAction(cycleId: number, round: number): Promise<void> {
-    await this.prisma.action.create({
+  async createAction(cycleId: number, round: number): Promise<Action> {
+    return await this.prisma.action.create({
       data: {
         cycleId,
         round,
@@ -23,10 +23,11 @@ export class ActionsService {
     cycleId: number,
     round: number,
     complete: boolean,
-  ): Promise<void> {
+  ): Promise<{ complete: boolean }> {
     await this.prisma.action.updateMany({
       where: { cycleId, round },
       data: { complete },
     });
+    return { complete: complete };
   }
 }

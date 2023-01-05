@@ -26,8 +26,8 @@ export class PlansService {
     return latestRound;
   }
 
-  async createPlan(cycleId: number, round: number): Promise<void> {
-    await this.prisma.plan.create({
+  async createPlan(cycleId: number, round: number): Promise<Plan> {
+    return await this.prisma.plan.create({
       data: {
         cycleId,
         round,
@@ -39,23 +39,27 @@ export class PlansService {
     cycleId: number,
     round: number,
     goalInRound: string,
-  ): Promise<void> {
+  ): Promise<Plan> {
     await this.prisma.plan.updateMany({
       where: { cycleId, round },
       data: {
         goalInRound,
       },
     });
+    return await this.findPlan(cycleId, round);
   }
 
   async updateComplete(
     cycleId: number,
     round: number,
     complete: boolean,
-  ): Promise<void> {
+  ): Promise<{ complete: boolean }> {
     await this.prisma.plan.updateMany({
       where: { cycleId, round },
       data: { complete },
     });
+    return {
+      complete: complete,
+    };
   }
 }

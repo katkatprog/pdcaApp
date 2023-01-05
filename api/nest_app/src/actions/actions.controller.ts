@@ -27,7 +27,7 @@ export class ActionsController {
     @Param('cycleId', ParseIntPipe) cycleId: number,
     @Param('round', ParseIntPipe) round: number,
     @Body('complete', ParseBoolPipe) complete: boolean,
-  ): Promise<void> {
-    await this.actionService.updateComplete(cycleId, round, complete);
+  ): Promise<{ complete: boolean }> {
+    return await this.actionService.updateComplete(cycleId, round, complete);
   }
 }
