@@ -11,7 +11,7 @@ const CheckBox = (props: Props) => {
   return (
     <div
       className={`text-slate-100 h-7 w-7 flex items-center justify-center
-        select-none rounded-md border-2 transition-all 
+        select-none rounded-md border-2 transition-all cursor-pointer
         ${
           props.state
             ? "bg-blue-500 border-blue-400"

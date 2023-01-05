@@ -25,28 +25,36 @@ const TaskCard = (props: PropsIfc) => {
 
   return (
     <>
-      <div className="p-1  border-b border-b-slate-200">
-        <CheckBox
-          state={complete}
-          onClickAction={async () => {
-            setComplete(!complete);
-            await axios.put(`/api/tasks/update-complete/${task.id}`);
-          }}
-        ></CheckBox>
-        <p>
-          {task.name}
-          <FontAwesomeIcon
-            icon={faPenToSquare}
-            className="ml-3 text-gray-500 cursor-pointer text-xl"
-            onClick={() => setShowModal(true)}
-          ></FontAwesomeIcon>
-        </p>
-        <p className="pl-3 text-gray-500">{task.about}</p>
-        {task.startDate && task.endDate && (
-          <p className="pl-3 text-gray-500">
-            {task.startDate.toString()} ~ {task.endDate.toString()}
+      <div
+        className={`p-1  border-b border-b-slate-200 flex items-center transition-all ${
+          complete && "bg-slate-300"
+        }`}
+      >
+        <div className="w-1/6">
+          <CheckBox
+            state={complete}
+            onClickAction={async () => {
+              setComplete(!complete);
+              await axios.put(`/api/tasks/update-complete/${task.id}`);
+            }}
+          ></CheckBox>
+        </div>
+        <div className="w-5/6">
+          <p className="text-xl">
+            {task.name}
+            <FontAwesomeIcon
+              icon={faPenToSquare}
+              className="ml-3 text-gray-500 cursor-pointer"
+              onClick={() => setShowModal(true)}
+            ></FontAwesomeIcon>
           </p>
-        )}
+          {task.startDate && task.endDate && (
+            <p className="pl-3 text-gray-500">
+              {task.startDate.toString()} ~ {task.endDate.toString()}
+            </p>
+          )}
+          <p className="pl-3">{task.about}</p>
+        </div>
       </div>
       {showModal && (
         <EditTaskModal closeModalAction={() => setShowModal(false)}>
