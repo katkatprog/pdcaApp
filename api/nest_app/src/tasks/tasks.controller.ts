@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseBoolPipe,
   ParseIntPipe,
   Post,
   Put,
@@ -34,21 +35,24 @@ export class TasksController {
     @Param('cycleId', ParseIntPipe) cycleId: number,
     @Param('round', ParseIntPipe) round: number,
     @Body() taskDto: TaskDto,
-  ): Promise<void> {
-    await this.tasksService.create(cycleId, round, taskDto);
+  ): Promise<Task> {
+    return await this.tasksService.create(cycleId, round, taskDto);
   }
 
   @Put('update-complete/:id')
-  async updateComplete(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    await this.tasksService.updateComplete(id);
+  async updateComplete(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('complete', ParseBoolPipe) complete: boolean,
+  ): Promise<{ complete: boolean }> {
+    return await this.tasksService.updateComplete(id, complete);
   }
 
   @Put('update/:id')
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() taskDto: TaskDto,
-  ): Promise<void> {
-    await this.tasksService.update(id, taskDto);
+  ): Promise<Task> {
+    return await this.tasksService.update(id, taskDto);
   }
 
   @Delete(':id')
