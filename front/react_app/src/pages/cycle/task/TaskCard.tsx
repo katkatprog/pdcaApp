@@ -4,7 +4,7 @@ import { Task } from "@prisma/client";
 import axios from "axios";
 import React, { useState } from "react";
 import CheckBox from "../../../components/CheckBox";
-import { EditTaskIfc } from "../../../utils/interface";
+import { fixDateTzAndFormat } from "../../../utils/fixDateTzAndFormat";
 import EditTaskModal from "./EditTaskModal";
 
 interface PropsIfc {
@@ -61,7 +61,8 @@ const TaskCard = (props: PropsIfc) => {
           </p>
           {task.startDate && task.endDate && (
             <p className="pl-3 text-gray-500">
-              {task.startDate.toString()} ~ {task.endDate.toString()}
+              {fixDateTzAndFormat(task.startDate)}~
+              {fixDateTzAndFormat(task.endDate)}
             </p>
           )}
           <p className="pl-3">{task.about}</p>
