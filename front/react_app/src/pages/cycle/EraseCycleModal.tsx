@@ -1,39 +1,42 @@
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteCycle } from "../../redux/cyclesSlice";
-import { hideModal } from "../../redux/modalSlice";
-import { RootState } from "../../redux/store";
 import ModalOverlay from "../../components/ModalOverlay";
 
-const EraseCycleModal = () => {
-  const modalState = useSelector((state: RootState) => state.modal.value);
+interface Props {
+  closeModalAction: () => void;
+  cycleId: number;
+  cycleName: string;
+}
+
+const EraseCycleModal = (props: Props) => {
   const dispatch = useDispatch();
   const confirmAction = async () => {
     // "消去する"が押された際の処理
     // サイクルの消去設定をtrueにし、その結果を変数resultに代入する
     const result: { erased: boolean } = await (
-      await axios.put(`/api/cycles/erase-restore/${modalState.cycleId}/${1}`, {
+      await axios.put(`/api/cycles/erase-restore/${props.cycleId}/${1}`, {
         erased: true,
       })
     ).data;
 
     if (result) {
-      dispatch(deleteCycle(modalState.cycleId));
-      closeModalAction();
+      dispatch(deleteCycle(props.cycleId));
+      props.closeModalAction();
     } else {
       alert("正しく消去出来ませんでした。");
     }
   };
 
-  // Modalを閉じるアクション
-  const closeModalAction = () => dispatch(hideModal());
-
   return (
     <>
-      <ModalOverlay modalWidth="w-1/2" closeModalAction={closeModalAction}>
+      <ModalOverlay
+        modalWidth="w-1/2"
+        closeModalAction={props.closeModalAction}
+      >
         <div className="p-12">
           <div className="flex flex-col items-center mb-6 text-lg">
-            <p>{modalState.cycleName}を消去します。</p>
+            <p>{props.cycleName}を消去します。</p>
             <p>本当によろしいですか。</p>
           </div>
           <div className="flex justify-center">
@@ -44,9 +47,7 @@ const EraseCycleModal = () => {
               消去
             </button>
             <button
-              onClick={() => {
-                dispatch(hideModal());
-              }}
+              onClick={props.closeModalAction}
               className="text-white bg-slate-500 text-lg px-4 py-2 rounded-md hover:bg-slate-600 ml-6 w-2/5"
             >
               キャンセル
