@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./pages/cycles/Home";
-import Trash from "./pages/trash/TrashPage";
+import CyclesPage from "./pages/cycles/CyclesPage";
+import TrashPage from "./pages/trash/TrashPage";
 import CycleDetailPage from "./pages/cycle_detail/CycleDetailPage";
 import "./App.css";
 
@@ -9,8 +9,8 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Home></Home>}></Route>
-          <Route path="/trash" element={<Trash></Trash>}></Route>
+          <Route path="/" element={<CyclesPage></CyclesPage>}></Route>
+          <Route path="/trash" element={<TrashPage></TrashPage>}></Route>
           <Route
             path="/:cycleId"
             element={<CycleDetailPage></CycleDetailPage>}
