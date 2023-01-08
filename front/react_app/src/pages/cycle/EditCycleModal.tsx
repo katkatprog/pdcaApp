@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import ModalOverlay from "../../components/modal/ModalOverlay";
+import ModalOverlay from "../../components/ModalOverlay";
 import Toggle from "../../components/Toggle";
 import { setCycle } from "../../redux/cycleSlice";
 import { RootState } from "../../redux/store";

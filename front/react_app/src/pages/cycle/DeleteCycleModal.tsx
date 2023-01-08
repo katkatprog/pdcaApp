@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteErasedCycle } from "../../redux/erasedCyclesSlice";
 import { hideModal } from "../../redux/modalSlice";
 import { RootState } from "../../redux/store";
-import ModalOverlay from "../../components/modal/ModalOverlay";
+import ModalOverlay from "../../components/ModalOverlay";
 
 const DeleteCycleModal = () => {
   const modalState = useSelector((state: RootState) => state.modal.value);
