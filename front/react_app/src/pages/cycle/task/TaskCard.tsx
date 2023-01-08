@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Task } from "@prisma/client";
 import axios from "axios";
 import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import CheckBox from "../../../components/CheckBox";
-import { EditTaskIfc } from "../../../utils/interface";
+import { fixDateTzAndFormat } from "../../../utils/fixDateTzAndFormat";
 import EditTaskModal from "./EditTaskModal";
 
 interface PropsIfc {
@@ -19,9 +21,11 @@ const TaskCard = (props: PropsIfc) => {
   const [nameOnModal, setNameOnModal] = useState(props.task.name);
   const [aboutOnModal, setAboutOnModal] = useState(props.task.about);
   const [startDateOnModal, setStartDateOnModal] = useState(
-    props.task.startDate,
+    props.task.startDate ? new Date(props.task.startDate) : null,
   );
-  const [endDateOnModal, setEndDateOnModal] = useState(props.task.endDate);
+  const [endDateOnModal, setEndDateOnModal] = useState(
+    props.task.endDate ? new Date(props.task.endDate) : null,
+  );
 
   return (
     <>
@@ -61,7 +65,8 @@ const TaskCard = (props: PropsIfc) => {
           </p>
           {task.startDate && task.endDate && (
             <p className="pl-3 text-gray-500">
-              {task.startDate.toString()} ~ {task.endDate.toString()}
+              {fixDateTzAndFormat(task.startDate)}~
+              {fixDateTzAndFormat(task.endDate)}
             </p>
           )}
           <p className="pl-3">{task.about}</p>
@@ -88,19 +93,21 @@ const TaskCard = (props: PropsIfc) => {
           />
           <p className="my-2">期間</p>
           <div>
-            <input
-              type="text"
+            <DatePicker
               className="w-1/3 p-2 rounded-md bg-slate-200 border-none outline-none"
-              // value={}
-              required
-            />
+              dateFormat="yyyy/MM/dd"
+              selected={startDateOnModal}
+              onChange={(date) => {
+                setStartDateOnModal(date);
+              }}
+            ></DatePicker>
             <span className="mx-2 text-xl">~</span>
-            <input
-              type="text"
+            <DatePicker
               className="w-1/3 p-2 rounded-md bg-slate-200 border-none outline-none"
-              // value={}
-              required
-            />
+              dateFormat="yyyy/MM/dd"
+              selected={endDateOnModal}
+              onChange={(date) => setEndDateOnModal(date)}
+            ></DatePicker>
           </div>
 
           <div className="flex w-full justify-end">
