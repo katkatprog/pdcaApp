@@ -38,7 +38,7 @@ const EditCycleModal = (props: PropsIfc) => {
   const saveCycleAction = async () => {
     // サイクルのupdateをしつつ、結果(updateされたサイクル)を変数resultに代入
     const result: Cycle = await (
-      await axios.put(`/api/cycles/update/${params.cycleId}/${0}`, {
+      await axios.put(`/api/cycles/update/${params.cycleId}/${1}`, {
         name: cycleName,
         goal: goal,
         about: about,
