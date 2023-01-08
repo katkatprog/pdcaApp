@@ -1,28 +1,18 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCycle } from "../../redux/cyclesSlice";
+import { deleteErasedCycle } from "../../redux/erasedCyclesSlice";
 import { hideModal } from "../../redux/modalSlice";
 import { RootState } from "../../redux/store";
-import ModalOverlay from "./ModalOverlay";
+import ModalOverlay from "../../components/modal/ModalOverlay";
 
-const EraseModal = () => {
+const DeleteCycleModal = () => {
   const modalState = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
   const confirmAction = async () => {
-    // "消去する"が押された際の処理
-    // サイクルの消去設定をtrueにし、その結果を変数resultに代入する
-    const result: { erased: boolean } = await (
-      await axios.put(`/api/cycles/erase-restore/${modalState.cycleId}/${1}`, {
-        erased: true,
-      })
-    ).data;
-
-    if (result) {
-      dispatch(deleteCycle(modalState.cycleId));
-      closeModalAction();
-    } else {
-      alert("正しく消去出来ませんでした。");
-    }
+    // "削除する"が押された際の処理
+    await axios.delete(`/api/cycles/${modalState.cycleId}/${1}`);
+    dispatch(deleteErasedCycle(modalState.cycleId));
+    closeModalAction();
   };
 
   // Modalを閉じるアクション
@@ -33,7 +23,8 @@ const EraseModal = () => {
       <ModalOverlay modalWidth="w-1/2" closeModalAction={closeModalAction}>
         <div className="p-12">
           <div className="flex flex-col items-center mb-6 text-lg">
-            <p>{modalState.cycleName}を消去します。</p>
+            <p>{modalState.cycleName}を削除します。</p>
+            <p>削除すると元には戻せません。</p>
             <p>本当によろしいですか。</p>
           </div>
           <div className="flex justify-center">
@@ -41,12 +32,10 @@ const EraseModal = () => {
               className="text-white bg-red-500 text-lg px-4 py-2 rounded-md hover:bg-red-600 w-2/5"
               onClick={confirmAction}
             >
-              消去
+              削除
             </button>
             <button
-              onClick={() => {
-                dispatch(hideModal());
-              }}
+              onClick={closeModalAction}
               className="text-white bg-slate-500 text-lg px-4 py-2 rounded-md hover:bg-slate-600 ml-6 w-2/5"
             >
               キャンセル
@@ -58,4 +47,4 @@ const EraseModal = () => {
   );
 };
 
-export default EraseModal;
+export default DeleteCycleModal;

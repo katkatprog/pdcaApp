@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import CycleCard from "./HomeCycleCard";
 import Layout from "../../components/Layout";
 import Header from "./Header";
-import EraseModal from "../../components/modal/EraseModal";
+import EraseCycleModal from "../cycle/EraseCycleModal";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { setCycles } from "../../redux/cyclesSlice";
@@ -53,7 +53,7 @@ const Home = () => {
           ))
         )}
       </Layout>
-      {modalState.visible && <EraseModal></EraseModal>}
+      {modalState.visible && <EraseCycleModal></EraseCycleModal>}
     </>
   );
 };

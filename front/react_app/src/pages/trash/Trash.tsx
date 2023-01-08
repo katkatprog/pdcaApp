@@ -6,7 +6,7 @@ import CycleCard from "./TrashedCycleCard";
 import Layout from "../../components/Layout";
 import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";
-import DeleteModal from "../../components/modal/DeleteModal";
+import DeleteCycleModal from "../cycle/DeleteCycleModal";
 import { RootState } from "../../redux/store";
 import { setErasedCycles } from "../../redux/erasedCyclesSlice";
 import { Cycle } from "@prisma/client";
@@ -59,7 +59,7 @@ const Trash = () => {
           ))
         )}
       </Layout>
-      {modalState.visible && <DeleteModal></DeleteModal>}
+      {modalState.visible && <DeleteCycleModal></DeleteCycleModal>}
     </>
   );
 };
