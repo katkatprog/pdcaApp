@@ -2,7 +2,7 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import HomeCycleCard from "./HomeCycleCard";
+import HomeCycleCard from "./CycleCard";
 import Layout from "../../components/Layout";
 import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";

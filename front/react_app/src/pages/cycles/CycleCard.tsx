@@ -3,14 +3,14 @@ import { Cycle } from "@prisma/client";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { hideMenu } from "../../redux/menuSlice";
-import CycleCard from "../../components/CycleCardTemplate";
+import CycleCardTemplate from "../../components/CycleCardTemplate";
 import EraseCycleModal from "./EraseCycleModal";
 
 interface PropsIfc {
   element: Cycle;
 }
 
-const HomeCycleCard = (props: PropsIfc) => {
+const CycleCard = (props: PropsIfc) => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
 
@@ -33,7 +33,7 @@ const HomeCycleCard = (props: PropsIfc) => {
   return (
     <div>
       <Link to={`/${props.element.id}`}>
-        <CycleCard
+        <CycleCardTemplate
           element={props.element}
           hoverCss="transition duration-400 hover:bg-slate-200"
         >
@@ -51,7 +51,7 @@ const HomeCycleCard = (props: PropsIfc) => {
               消去する
             </p>
           </>
-        </CycleCard>
+        </CycleCardTemplate>
       </Link>
       {showModal && (
         <EraseCycleModal
@@ -64,4 +64,4 @@ const HomeCycleCard = (props: PropsIfc) => {
   );
 };
 
-export default HomeCycleCard;
+export default CycleCard;
