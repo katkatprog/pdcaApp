@@ -9,7 +9,15 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "prettier",
   ],
-  overrides: [],
+  overrides: [
+    // Next.js needs default exports for pages and API points
+    {
+      files: ["src/App.tsx"],
+      rules: {
+        "import/no-default-export": "off",
+      },
+    },
+  ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: "latest",
