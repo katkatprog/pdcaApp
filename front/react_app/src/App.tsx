@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import CyclePage from "./pages/cycle/Cycle";
-import Home from "./pages/home/Home";
-import Trash from "./pages/trash/Trash";
+import Home from "./pages/cycles/Home";
+import Trash from "./pages/trash/TrashPage";
+import CyclePage from "./pages/cycle_detail/CyclePage";
 import "./App.css";
 
 function App() {
