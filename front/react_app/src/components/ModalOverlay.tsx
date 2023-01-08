@@ -1,11 +1,12 @@
-import React, { ReactNode } from "react";
+import React from "react";
 
-interface Props {
+interface PropsIfc {
+  children: React.ReactNode;
   closeModalAction: () => void;
-  children: ReactNode;
+  modalWidth: `w-${string}`;
 }
 
-const EditTaskModal = (props: Props) => {
+export const ModalOverlay = (props: PropsIfc) => {
   return (
     <>
       <div
@@ -16,13 +17,11 @@ const EditTaskModal = (props: Props) => {
           onClick={(e) => {
             e.stopPropagation();
           }}
-          className="bg-slate-50 px-8 py-8 flex flex-col justify-center items-center rounded-lg w-3/6"
+          className={`bg-slate-50 rounded-lg ${props.modalWidth}`}
         >
-          <div className="w-full">{props.children}</div>
+          {props.children}
         </div>
       </div>
     </>
   );
 };
-
-export default EditTaskModal;

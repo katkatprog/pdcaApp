@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Cycle from "./pages/cycle/Cycle";
-import Home from "./pages/home/Home";
-import Trash from "./pages/trash/Trash";
+import { CyclesPage } from "./pages/cycles/CyclesPage";
+import { TrashPage } from "./pages/trash/TrashPage";
+import { CycleDetailPage } from "./pages/cycle_detail/CycleDetailPage";
 import "./App.css";
 
 function App() {
@@ -9,9 +9,12 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Home></Home>}></Route>
-          <Route path="/trash" element={<Trash></Trash>}></Route>
-          <Route path="/:cycleId" element={<Cycle></Cycle>}></Route>
+          <Route path="/" element={<CyclesPage></CyclesPage>}></Route>
+          <Route path="/trash" element={<TrashPage></TrashPage>}></Route>
+          <Route
+            path="/:cycleId"
+            element={<CycleDetailPage></CycleDetailPage>}
+          ></Route>
         </Routes>
       </Router>
     </>

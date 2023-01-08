@@ -6,7 +6,7 @@ interface PropsIfc {
 }
 // stateがtrueならtoggleがon、falseならtoggleがoff
 
-const Toggle = (props: PropsIfc) => {
+export const Toggle = (props: PropsIfc) => {
   return (
     <div className="select-none">
       <div
@@ -20,5 +20,3 @@ const Toggle = (props: PropsIfc) => {
     </div>
   );
 };
-
-export default Toggle;

@@ -1,23 +1,17 @@
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Task } from "@prisma/client";
-import axios from "axios";
 import React, { useState } from "react";
+import { ModalOverlay } from "../../../components/ModalOverlay";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import CheckBox from "../../../components/CheckBox";
-import { fixDateTzAndFormat } from "../../../utils/fixDateTzAndFormat";
-import EditTaskModal from "./EditTaskModal";
+import axios from "axios";
 
-interface PropsIfc {
+interface Props {
+  closeModalAction: () => void;
   task: Task;
+  setTask: React.Dispatch<React.SetStateAction<Task>>;
 }
 
-const TaskCard = (props: PropsIfc) => {
-  const [task, setTask] = useState(props.task);
-  const [showModal, setShowModal] = useState(false);
-
-  const [complete, setComplete] = useState(props.task.complete);
+export const EditTaskModal = (props: Props) => {
   const [nameOnModal, setNameOnModal] = useState(props.task.name);
   const [aboutOnModal, setAboutOnModal] = useState(props.task.about);
   const [startDateOnModal, setStartDateOnModal] = useState(
@@ -29,51 +23,11 @@ const TaskCard = (props: PropsIfc) => {
 
   return (
     <>
-      <div
-        className={`p-1  border-b border-b-slate-200 flex items-center transition-all ${
-          complete && "bg-slate-300"
-        }`}
+      <ModalOverlay
+        modalWidth="w-1/2"
+        closeModalAction={props.closeModalAction}
       >
-        <div className="w-1/6">
-          <CheckBox
-            state={complete}
-            onClickAction={async () => {
-              // Taskの完了設定をしつつ、結果を変数resultに代入
-              const result: { complete: boolean } = await (
-                await axios.put(`/api/tasks/update-complete/${task.id}`, {
-                  complete: !complete,
-                })
-              ).data;
-
-              // resultに値が入っていれば、画面側の反映も行う
-              if (result) {
-                setComplete(result.complete);
-              } else {
-                alert("タスクのチェックを正常に出来ませんでした");
-              }
-            }}
-          ></CheckBox>
-        </div>
-        <div className="w-5/6">
-          <p className="text-xl">
-            {task.name}
-            <FontAwesomeIcon
-              icon={faPenToSquare}
-              className="ml-3 text-gray-500 cursor-pointer"
-              onClick={() => setShowModal(true)}
-            ></FontAwesomeIcon>
-          </p>
-          {task.startDate && task.endDate && (
-            <p className="pl-3 text-gray-500">
-              {fixDateTzAndFormat(task.startDate)}~
-              {fixDateTzAndFormat(task.endDate)}
-            </p>
-          )}
-          <p className="pl-3">{task.about}</p>
-        </div>
-      </div>
-      {showModal && (
-        <EditTaskModal closeModalAction={() => setShowModal(false)}>
+        <div className="p-12">
           <h1 className="text-xl">タスクの編集</h1>
           <p className="my-2">タスク名</p>
           <input
@@ -109,7 +63,6 @@ const TaskCard = (props: PropsIfc) => {
               onChange={(date) => setEndDateOnModal(date)}
             ></DatePicker>
           </div>
-
           <div className="flex w-full justify-end">
             <button
               className="text-white bg-blue-500 text-lg px-4 py-2 rounded-md hover:bg-blue-600"
@@ -123,11 +76,10 @@ const TaskCard = (props: PropsIfc) => {
                     endDate: endDateOnModal,
                   })
                 ).data;
-
                 // 変数resultの中身があれば、画面側にも反映する
                 if (result) {
-                  setTask(result);
-                  setShowModal(false);
+                  props.setTask(result);
+                  props.closeModalAction();
                 } else {
                   alert("タスクを正常に更新出来ませんでした");
                 }
@@ -136,16 +88,14 @@ const TaskCard = (props: PropsIfc) => {
               保存する
             </button>
             <button
-              onClick={() => setShowModal(false)}
+              onClick={props.closeModalAction}
               className="text-white bg-slate-500 text-lg px-4 py-2 rounded-md hover:bg-slate-600 ml-3"
             >
               キャンセル
             </button>
           </div>
-        </EditTaskModal>
-      )}
+        </div>
+      </ModalOverlay>
     </>
   );
 };
-
-export default TaskCard;

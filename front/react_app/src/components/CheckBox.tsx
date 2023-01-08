@@ -7,7 +7,7 @@ interface Props {
   onClickAction: () => Promise<void>;
 }
 
-const CheckBox = (props: Props) => {
+export const CheckBox = (props: Props) => {
   return (
     <div
       className={`text-slate-100 h-7 w-7 flex items-center justify-center
@@ -25,5 +25,3 @@ const CheckBox = (props: Props) => {
     </div>
   );
 };
-
-export default CheckBox;

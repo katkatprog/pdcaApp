@@ -2,19 +2,16 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import CycleCard from "./HomeCycleCard";
-import Layout from "../../components/Layout";
-import Header from "./Header";
-import EraseModal from "../../components/modal/EraseModal";
+import { CycleCard } from "./CycleCard";
+import { Layout } from "../../components/Layout";
+import { Header } from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { setCycles } from "../../redux/cyclesSlice";
 import { hideMenu } from "../../redux/menuSlice";
-import { hideModal } from "../../redux/modalSlice";
 import { Cycle } from "@prisma/client";
 
-const Home = () => {
-  const modalState = useSelector((state: RootState) => state.modal.value);
+export const CyclesPage = () => {
   const cyclesState = useSelector((state: RootState) => state.cycles.value);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
@@ -22,7 +19,6 @@ const Home = () => {
   useEffect(() => {
     (async () => {
       dispatch(hideMenu());
-      dispatch(hideModal());
       const data: Cycle[] = await (await axios.get(`/api/cycles/${1}`)).data;
       dispatch(setCycles(data));
       setLoading(false);
@@ -53,9 +49,6 @@ const Home = () => {
           ))
         )}
       </Layout>
-      {modalState.visible && <EraseModal></EraseModal>}
     </>
   );
 };
-
-export default Home;

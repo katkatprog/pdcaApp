@@ -11,7 +11,7 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Sidebar = () => {
+export const Sidebar = () => {
   const [showFavorites, setShowFavorites] = useState<boolean>(false);
   const favoriteClickHandler = () => {
     setShowFavorites(!showFavorites);
@@ -69,5 +69,3 @@ const Sidebar = () => {
     </aside>
   );
 };
-
-export default Sidebar;

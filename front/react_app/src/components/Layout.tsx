@@ -1,11 +1,11 @@
 import React from "react";
-import Sidebar from "./Sidebar";
+import { Sidebar } from "./Sidebar";
 
 interface MainProps {
   children: React.ReactNode;
 }
 
-const Layout = (props: MainProps) => {
+export const Layout = (props: MainProps) => {
   return (
     <>
       <div className="flex">
@@ -15,5 +15,3 @@ const Layout = (props: MainProps) => {
     </>
   );
 };
-
-export default Layout;

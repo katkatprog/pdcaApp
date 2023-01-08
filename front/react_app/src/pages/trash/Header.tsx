@@ -7,7 +7,7 @@ const searchHandler = (e: React.FormEvent) => {
   console.log("search!");
 };
 
-const Header = () => {
+export const Header = () => {
   return (
     <header className="flex justify-between h-20 items-center px-5 border-b border-slate-100">
       <h1 className="text-xl">消去したサイクル</h1>
@@ -24,5 +24,3 @@ const Header = () => {
     </header>
   );
 };
-
-export default Header;

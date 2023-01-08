@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Cycle } from "@prisma/client";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { showModal } from "../../redux/modalSlice";
 import { hideMenu } from "../../redux/menuSlice";
-import CycleCard from "../../components/CycleCard";
+import { CycleCardTemplate } from "../../components/CycleCardTemplate";
+import { EraseCycleModal } from "./EraseCycleModal";
 
 interface PropsIfc {
   element: Cycle;
 }
 
-const HomeCycleCard = (props: PropsIfc) => {
+export const CycleCard = (props: PropsIfc) => {
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
 
   const FavoriteHandler = (e: React.FormEvent, cycleId: number) => {
     e.preventDefault();
@@ -20,20 +21,19 @@ const HomeCycleCard = (props: PropsIfc) => {
     console.log(`CycleId: ${cycleId}`);
   };
 
-  const ElaseModalHandler = (
-    e: React.FormEvent,
-    cycleId: number,
-    cycleName: string,
-  ) => {
-    e.preventDefault();
-    dispatch(hideMenu());
-    dispatch(showModal({ cycleId, cycleName }));
+  const closeModalAction = () => {
+    setShowModal(false);
+  };
+
+  const eraseHandler = (e: React.FormEvent) => {
+    e.preventDefault(); //Linkタグの内部からのクリックのため、これが無いとページ遷移してしまう
+    setShowModal(true);
   };
 
   return (
     <div>
       <Link to={`/${props.element.id}`}>
-        <CycleCard
+        <CycleCardTemplate
           element={props.element}
           hoverCss="transition duration-400 hover:bg-slate-200"
         >
@@ -45,18 +45,21 @@ const HomeCycleCard = (props: PropsIfc) => {
               お気に入りに登録
             </p>
             <p
-              onClick={(e) =>
-                ElaseModalHandler(e, props.element.id, props.element.name)
-              }
+              onClick={(e) => eraseHandler(e)}
               className="bg-slate-300 hover:bg-slate-400 px-3 py-1 rounded-b-md"
             >
               消去する
             </p>
           </>
-        </CycleCard>
+        </CycleCardTemplate>
       </Link>
+      {showModal && (
+        <EraseCycleModal
+          cycleId={props.element.id}
+          cycleName={props.element.name}
+          closeModalAction={closeModalAction}
+        ></EraseCycleModal>
+      )}
     </div>
   );
 };
-
-export default HomeCycleCard;
