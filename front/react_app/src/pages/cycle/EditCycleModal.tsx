@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import ModalOverlay from "../../components/modal/ModalOverlay";
 import Toggle from "../../components/Toggle";
 import { setCycle } from "../../redux/cycleSlice";
 import { RootState } from "../../redux/store";
@@ -30,18 +31,42 @@ const EditCycleModal = (props: PropsIfc) => {
     setSuspend(cycle.suspend);
   }, []);
 
+  const closeModalAction = () => {
+    props.setShowEditCycleModal(false);
+  };
+
+  const saveCycleAction = async () => {
+    // サイクルのupdateをしつつ、結果(updateされたサイクル)を変数resultに代入
+    const result: Cycle = await (
+      await axios.put(`/api/cycles/update/${params.cycleId}/${0}`, {
+        name: cycleName,
+        goal: goal,
+        about: about,
+        watchFromAnyone: watchFromAnyone,
+        suspend: suspend,
+      })
+    ).data;
+    // DBへの反映に成功した(resultが存在している)ならば、画面側への反映も行う
+    if (result) {
+      dispatch(
+        setCycle({
+          name: result.name,
+          goal: result.goal,
+          about: result.about,
+          watchFromAnyone: result.watchFromAnyone,
+          suspend: result.suspend,
+        }),
+      );
+      closeModalAction();
+    } else {
+      alert("サイクルの変更を正しく行えませんでした");
+    }
+  };
+
   return (
     <>
-      <div
-        onClick={() => props.setShowEditCycleModal(false)}
-        className="bg-black/[.3] h-full w-full fixed inset-0 flex items-center justify-center z-10"
-      >
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-          className="bg-slate-50 px-8 py-8 flex flex-col justify-center items-center rounded-lg w-3/6"
-        >
+      <ModalOverlay modalWidth="w-1/2" closeModalAction={closeModalAction}>
+        <div className="px-12 py-12 flex flex-col justify-center items-center ">
           <div className="w-full">
             <h1 className="text-xl">サイクルの編集</h1>
             <p className="my-2">サイクル名</p>
@@ -77,46 +102,19 @@ const EditCycleModal = (props: PropsIfc) => {
           <div className="flex w-full justify-end">
             <button
               className="text-white bg-blue-500 text-lg px-4 py-2 rounded-md hover:bg-blue-600"
-              onClick={async () => {
-                // サイクルのupdateをしつつ、結果(updateされたサイクル)を変数resultに代入
-                const result: Cycle = await (
-                  await axios.put(`/api/cycles/update/${params.cycleId}/${1}`, {
-                    name: cycleName,
-                    goal: goal,
-                    about: about,
-                    watchFromAnyone: watchFromAnyone,
-                    suspend: suspend,
-                  })
-                ).data;
-
-                // DBへの反映に成功した(resultが存在している)ならば、画面側への反映も行う
-                if (result) {
-                  dispatch(
-                    setCycle({
-                      name: result.name,
-                      goal: result.goal,
-                      about: result.about,
-                      watchFromAnyone: result.watchFromAnyone,
-                      suspend: result.suspend,
-                    }),
-                  );
-                  props.setShowEditCycleModal(false);
-                } else {
-                  alert("サイクルの変更を正しく行えませんでした");
-                }
-              }}
+              onClick={saveCycleAction}
             >
               保存する
             </button>
             <button
-              onClick={() => props.setShowEditCycleModal(false)}
+              onClick={closeModalAction}
               className="text-white bg-slate-500 text-lg px-4 py-2 rounded-md hover:bg-slate-600 ml-3"
             >
               キャンセル
             </button>
           </div>
         </div>
-      </div>
+      </ModalOverlay>
     </>
   );
 };
