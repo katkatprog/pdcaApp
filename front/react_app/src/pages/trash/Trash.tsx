@@ -6,24 +6,20 @@ import CycleCard from "./TrashedCycleCard";
 import Layout from "../../components/Layout";
 import Header from "./Header";
 import { useDispatch, useSelector } from "react-redux";
-import DeleteCycleModal from "../cycle/DeleteCycleModal";
 import { RootState } from "../../redux/store";
 import { setErasedCycles } from "../../redux/erasedCyclesSlice";
 import { Cycle } from "@prisma/client";
 import { hideMenu } from "../../redux/menuSlice";
-import { hideModal } from "../../redux/modalSlice";
 
 const Trash = () => {
   const erasedCyclesState = useSelector(
     (state: RootState) => state.erasedCycles.value,
   );
-  const modalState = useSelector((state: RootState) => state.modal.value);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     dispatch(hideMenu());
-    dispatch(hideModal());
     (async () => {
       const data: Cycle[] = await (
         await axios.get(`/api/cycles/trashed/${1}`)
@@ -59,7 +55,6 @@ const Trash = () => {
           ))
         )}
       </Layout>
-      {modalState.visible && <DeleteCycleModal></DeleteCycleModal>}
     </>
   );
 };
