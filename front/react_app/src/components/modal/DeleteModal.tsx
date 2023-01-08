@@ -27,16 +27,16 @@ const DeleteModal = () => {
             <p>削除すると元には戻せません。</p>
             <p>本当によろしいですか。</p>
           </div>
-          <div>
+          <div className="flex justify-center">
             <button
-              className="text-white bg-red-500 text-lg px-4 py-2 rounded-md hover:bg-red-600"
+              className="text-white bg-red-500 text-lg px-4 py-2 rounded-md hover:bg-red-600 w-2/5"
               onClick={confirmAction}
             >
               削除
             </button>
             <button
               onClick={closeModalAction}
-              className="text-white bg-slate-500 text-lg px-4 py-2 rounded-md hover:bg-slate-600 ml-6"
+              className="text-white bg-slate-500 text-lg px-4 py-2 rounded-md hover:bg-slate-600 ml-6 w-2/5"
             >
               キャンセル
             </button>
