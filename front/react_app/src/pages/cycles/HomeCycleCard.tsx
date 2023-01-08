@@ -3,7 +3,7 @@ import { Cycle } from "@prisma/client";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { hideMenu } from "../../redux/menuSlice";
-import CycleCard from "../../components/CycleCard";
+import CycleCard from "../../components/CycleCardTemplate";
 import EraseCycleModal from "./EraseCycleModal";
 
 interface PropsIfc {

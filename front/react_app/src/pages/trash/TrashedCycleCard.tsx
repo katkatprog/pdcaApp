@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import CycleCard from "../../components/CycleCard";
+import CycleCard from "../../components/CycleCardTemplate";
 import { deleteErasedCycle } from "../../redux/erasedCyclesSlice";
 import { hideMenu } from "../../redux/menuSlice";
 import { Cycle } from "@prisma/client";
