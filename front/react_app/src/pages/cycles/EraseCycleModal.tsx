@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { deleteCycle } from "../../redux/cyclesSlice";
-import ModalOverlay from "../../components/ModalOverlay";
+import { ModalOverlay } from "../../components/ModalOverlay";
 
 interface Props {
   closeModalAction: () => void;

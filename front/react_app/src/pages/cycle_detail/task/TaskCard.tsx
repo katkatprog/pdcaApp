@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Task } from "@prisma/client";
 import axios from "axios";
 import React, { useState } from "react";
-import CheckBox from "../../../components/CheckBox";
+import { CheckBox } from "../../../components/CheckBox";
 import { fixDateTzAndFormat } from "../../../utils/fixDateTzAndFormat";
-import EditTaskModal from "./EditTaskModal";
+import { EditTaskModal } from "./EditTaskModal";
 
 interface PropsIfc {
   task: Task;

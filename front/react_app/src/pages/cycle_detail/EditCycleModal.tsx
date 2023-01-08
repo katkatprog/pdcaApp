@@ -2,8 +2,8 @@ import { Cycle } from "@prisma/client";
 import axios from "axios";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import ModalOverlay from "../../components/ModalOverlay";
-import Toggle from "../../components/Toggle";
+import { ModalOverlay } from "../../components/ModalOverlay";
+import { Toggle } from "../../components/Toggle";
 
 interface PropsIfc {
   cycle: Cycle;

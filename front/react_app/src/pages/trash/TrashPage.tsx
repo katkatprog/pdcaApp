@@ -2,16 +2,16 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import CycleCard from "./TrashedCycleCard";
-import Layout from "../../components/Layout";
-import Header from "./Header";
+import { Layout } from "../../components/Layout";
+import { Header } from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { setErasedCycles } from "../../redux/erasedCyclesSlice";
 import { Cycle } from "@prisma/client";
 import { hideMenu } from "../../redux/menuSlice";
+import { TrashedCycleCard } from "./TrashedCycleCard";
 
-export const Trash = () => {
+export const TrashPage = () => {
   const erasedCyclesState = useSelector(
     (state: RootState) => state.erasedCycles.value,
   );
@@ -50,7 +50,7 @@ export const Trash = () => {
         ) : (
           erasedCyclesState.map((ele) => (
             <div key={ele.id}>
-              <CycleCard element={ele}></CycleCard>
+              <TrashedCycleCard element={ele}></TrashedCycleCard>
             </div>
           ))
         )}

@@ -4,9 +4,9 @@ import { Cycle } from "@prisma/client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Layout from "../../components/Layout";
-import AboutCycle from "./AboutCycle";
-import PlanSidebar from "./plan/PlanSidebar";
+import { Layout } from "../../components/Layout";
+import { AboutCycle } from "./AboutCycle";
+import { PlanSidebar } from "./plan/PlanSidebar";
 
 export const CycleDetailPage = () => {
   const params = useParams<{ cycleId: string }>();

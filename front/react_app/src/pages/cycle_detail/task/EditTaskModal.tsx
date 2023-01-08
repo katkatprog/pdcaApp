@@ -1,6 +1,6 @@
 import { Task } from "@prisma/client";
 import React, { useState } from "react";
-import ModalOverlay from "../../../components/ModalOverlay";
+import { ModalOverlay } from "../../../components/ModalOverlay";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";

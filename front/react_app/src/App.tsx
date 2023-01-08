@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import CyclesPage from "./pages/cycles/CyclesPage";
-import TrashPage from "./pages/trash/TrashPage";
-import CycleDetailPage from "./pages/cycle_detail/CycleDetailPage";
+import { CyclesPage } from "./pages/cycles/CyclesPage";
+import { TrashPage } from "./pages/trash/TrashPage";
+import { CycleDetailPage } from "./pages/cycle_detail/CycleDetailPage";
 import "./App.css";
 
-export function App() {
+function App() {
   return (
     <>
       <Router>
@@ -20,3 +20,5 @@ export function App() {
     </>
   );
 }
+
+export default App;

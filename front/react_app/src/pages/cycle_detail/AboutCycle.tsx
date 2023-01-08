@@ -2,7 +2,7 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Cycle } from "@prisma/client";
 import React, { useState } from "react";
-import EditCycleModal from "./EditCycleModal";
+import { EditCycleModal } from "./EditCycleModal";
 
 interface Props {
   cycle: Cycle;

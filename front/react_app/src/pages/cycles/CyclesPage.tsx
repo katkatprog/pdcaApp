@@ -2,9 +2,9 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import HomeCycleCard from "./CycleCard";
-import Layout from "../../components/Layout";
-import Header from "./Header";
+import { CycleCard } from "./CycleCard";
+import { Layout } from "../../components/Layout";
+import { Header } from "./Header";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { setCycles } from "../../redux/cyclesSlice";
@@ -45,7 +45,7 @@ export const CyclesPage = () => {
           </div>
         ) : (
           cyclesState.map((ele) => (
-            <HomeCycleCard key={ele.id} element={ele}></HomeCycleCard>
+            <CycleCard key={ele.id} element={ele}></CycleCard>
           ))
         )}
       </Layout>

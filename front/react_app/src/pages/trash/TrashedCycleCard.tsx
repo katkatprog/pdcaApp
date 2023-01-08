@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import CycleCard from "../../components/CycleCardTemplate";
 import { deleteErasedCycle } from "../../redux/erasedCyclesSlice";
 import { hideMenu } from "../../redux/menuSlice";
 import { Cycle } from "@prisma/client";
-import DeleteCycleModal from "./DeleteCycleModal";
+import { DeleteCycleModal } from "./DeleteCycleModal";
+import { CycleCardTemplate } from "../../components/CycleCardTemplate";
 
 interface PropsIfc {
   element: Cycle;
@@ -42,7 +42,7 @@ export const TrashedCycleCard = (props: PropsIfc) => {
 
   return (
     <div>
-      <CycleCard element={props.element}>
+      <CycleCardTemplate element={props.element}>
         <p
           onClick={RestoreHandler}
           className="bg-slate-200 hover:bg-slate-300 px-3 py-1 rounded-t-md"
@@ -55,7 +55,7 @@ export const TrashedCycleCard = (props: PropsIfc) => {
         >
           削除する
         </p>
-      </CycleCard>
+      </CycleCardTemplate>
       {showModal && (
         <DeleteCycleModal
           closeModalAction={closeModalAction}
