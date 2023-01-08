@@ -1,13 +1,16 @@
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Cycle } from "@prisma/client";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import EditCycleModal from "./EditCycleModal";
 
-const AboutCycle = () => {
+interface Props {
+  cycle: Cycle;
+  setCycle: React.Dispatch<React.SetStateAction<Cycle>>;
+}
+
+const AboutCycle = (props: Props) => {
   const [showEditCycleModal, setShowEditCycleModal] = useState(false);
-  const cycle = useSelector((state: RootState) => state.cycle.value);
 
   const openCycleEditModal = () => {
     setShowEditCycleModal(true);
@@ -16,13 +19,13 @@ const AboutCycle = () => {
   return (
     <aside className="w-1/3 p-5 border-l border-l-slate-200">
       <h1 className="text-xl">目標</h1>
-      <p className="pl-3 text-gray-500">{cycle.goal}</p>
+      <p className="pl-3 text-gray-500">{props.cycle.goal}</p>
 
       <h1 className="text-xl pt-3">概要</h1>
-      <p className="pl-3 text-gray-500">{cycle.about}</p>
+      <p className="pl-3 text-gray-500">{props.cycle.about}</p>
 
       <h1 className="text-xl pt-3">サイクルの公開</h1>
-      {cycle.watchFromAnyone ? (
+      {props.cycle.watchFromAnyone ? (
         <p className="pl-3 text-gray-500">公開する</p>
       ) : (
         <p className="pl-3 text-gray-500">非公開</p>
@@ -36,6 +39,8 @@ const AboutCycle = () => {
 
       {showEditCycleModal && (
         <EditCycleModal
+          cycle={props.cycle}
+          setCycle={props.setCycle}
           setShowEditCycleModal={setShowEditCycleModal}
         ></EditCycleModal>
       )}
