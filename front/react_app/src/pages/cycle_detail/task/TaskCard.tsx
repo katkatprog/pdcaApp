@@ -11,7 +11,7 @@ interface PropsIfc {
   task: Task;
 }
 
-const TaskCard = (props: PropsIfc) => {
+export const TaskCard = (props: PropsIfc) => {
   const [showModal, setShowModal] = useState(false);
   const [complete, setComplete] = useState(props.task.complete);
   const [task, setTask] = useState(props.task);
@@ -71,5 +71,3 @@ const TaskCard = (props: PropsIfc) => {
     </>
   );
 };
-
-export default TaskCard;

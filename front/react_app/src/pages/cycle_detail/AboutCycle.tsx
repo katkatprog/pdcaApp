@@ -9,7 +9,7 @@ interface Props {
   setCycle: React.Dispatch<React.SetStateAction<Cycle>>;
 }
 
-const AboutCycle = (props: Props) => {
+export const AboutCycle = (props: Props) => {
   const [showEditCycleModal, setShowEditCycleModal] = useState(false);
 
   const openCycleEditModal = () => {
@@ -47,5 +47,3 @@ const AboutCycle = (props: Props) => {
     </aside>
   );
 };
-
-export default AboutCycle;

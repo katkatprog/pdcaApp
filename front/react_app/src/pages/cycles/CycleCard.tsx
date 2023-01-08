@@ -10,7 +10,7 @@ interface PropsIfc {
   element: Cycle;
 }
 
-const CycleCard = (props: PropsIfc) => {
+export const CycleCard = (props: PropsIfc) => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
 
@@ -63,5 +63,3 @@ const CycleCard = (props: PropsIfc) => {
     </div>
   );
 };
-
-export default CycleCard;

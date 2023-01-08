@@ -10,7 +10,7 @@ interface PropsIfc {
   round: number;
 }
 
-const PlanSidebar = (props: PropsIfc) => {
+export const PlanSidebar = (props: PropsIfc) => {
   const [plan, setPlan] = useState<Plan>();
   const [tasks, setTasks] = useState<Task[]>([]);
 
@@ -41,5 +41,3 @@ const PlanSidebar = (props: PropsIfc) => {
     </aside>
   );
 };
-
-export default PlanSidebar;

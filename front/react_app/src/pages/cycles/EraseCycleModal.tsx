@@ -9,7 +9,7 @@ interface Props {
   cycleName: string;
 }
 
-const EraseCycleModal = (props: Props) => {
+export const EraseCycleModal = (props: Props) => {
   const dispatch = useDispatch();
   const confirmAction = async () => {
     // "消去する"が押された際の処理
@@ -58,5 +58,3 @@ const EraseCycleModal = (props: Props) => {
     </>
   );
 };
-
-export default EraseCycleModal;

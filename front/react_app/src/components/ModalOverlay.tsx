@@ -6,7 +6,7 @@ interface PropsIfc {
   modalWidth: `w-${string}`;
 }
 
-const ModalOverlay = (props: PropsIfc) => {
+export const ModalOverlay = (props: PropsIfc) => {
   return (
     <>
       <div
@@ -25,5 +25,3 @@ const ModalOverlay = (props: PropsIfc) => {
     </>
   );
 };
-
-export default ModalOverlay;

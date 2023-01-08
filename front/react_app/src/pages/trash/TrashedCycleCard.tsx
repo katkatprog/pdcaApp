@@ -11,7 +11,7 @@ interface PropsIfc {
   element: Cycle;
 }
 
-const TrashedCycleCard = (props: PropsIfc) => {
+export const TrashedCycleCard = (props: PropsIfc) => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
 
@@ -66,5 +66,3 @@ const TrashedCycleCard = (props: PropsIfc) => {
     </div>
   );
 };
-
-export default TrashedCycleCard;

@@ -11,7 +11,7 @@ interface PropsIfc {
   setShowEditCycleModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const EditCycleModal = (props: PropsIfc) => {
+export const EditCycleModal = (props: PropsIfc) => {
   const params = useParams<{ cycleId: string }>();
 
   const [cycleName, setCycleName] = useState(props.cycle.name);
@@ -101,5 +101,3 @@ const EditCycleModal = (props: PropsIfc) => {
     </>
   );
 };
-
-export default EditCycleModal;

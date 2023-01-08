@@ -9,7 +9,7 @@ interface Props {
   cycleName: string;
 }
 
-const DeleteCycleModal = (props: Props) => {
+export const DeleteCycleModal = (props: Props) => {
   const dispatch = useDispatch();
   const confirmAction = async () => {
     // "削除する"が押された際の処理
@@ -49,5 +49,3 @@ const DeleteCycleModal = (props: Props) => {
     </>
   );
 };
-
-export default DeleteCycleModal;

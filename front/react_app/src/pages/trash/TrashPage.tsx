@@ -11,7 +11,7 @@ import { setErasedCycles } from "../../redux/erasedCyclesSlice";
 import { Cycle } from "@prisma/client";
 import { hideMenu } from "../../redux/menuSlice";
 
-const Trash = () => {
+export const Trash = () => {
   const erasedCyclesState = useSelector(
     (state: RootState) => state.erasedCycles.value,
   );
@@ -58,5 +58,3 @@ const Trash = () => {
     </>
   );
 };
-
-export default Trash;

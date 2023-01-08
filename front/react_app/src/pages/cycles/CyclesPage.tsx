@@ -11,7 +11,7 @@ import { setCycles } from "../../redux/cyclesSlice";
 import { hideMenu } from "../../redux/menuSlice";
 import { Cycle } from "@prisma/client";
 
-const CyclesPage = () => {
+export const CyclesPage = () => {
   const cyclesState = useSelector((state: RootState) => state.cycles.value);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
@@ -52,5 +52,3 @@ const CyclesPage = () => {
     </>
   );
 };
-
-export default CyclesPage;

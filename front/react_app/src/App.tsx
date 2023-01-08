@@ -4,7 +4,7 @@ import TrashPage from "./pages/trash/TrashPage";
 import CycleDetailPage from "./pages/cycle_detail/CycleDetailPage";
 import "./App.css";
 
-function App() {
+export function App() {
   return (
     <>
       <Router>
@@ -20,5 +20,3 @@ function App() {
     </>
   );
 }
-
-export default App;

@@ -11,7 +11,7 @@ interface Props {
   setTask: React.Dispatch<React.SetStateAction<Task>>;
 }
 
-const EditTaskModal = (props: Props) => {
+export const EditTaskModal = (props: Props) => {
   const [nameOnModal, setNameOnModal] = useState(props.task.name);
   const [aboutOnModal, setAboutOnModal] = useState(props.task.about);
   const [startDateOnModal, setStartDateOnModal] = useState(
@@ -99,5 +99,3 @@ const EditTaskModal = (props: Props) => {
     </>
   );
 };
-
-export default EditTaskModal;

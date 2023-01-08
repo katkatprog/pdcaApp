@@ -15,7 +15,7 @@ interface PropsIfc {
   children: React.ReactNode;
 }
 
-const CycleCardTemplate = (props: PropsIfc) => {
+export const CycleCardTemplate = (props: PropsIfc) => {
   const menuState = useSelector((state: RootState) => state.menu.value);
   const dispatch = useDispatch();
 
@@ -56,5 +56,3 @@ const CycleCardTemplate = (props: PropsIfc) => {
     </div>
   );
 };
-
-export default CycleCardTemplate;
