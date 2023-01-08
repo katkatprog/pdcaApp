@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { hideMenu } from "../../redux/menuSlice";
 import CycleCard from "../../components/CycleCard";
-import EraseCycleModal from "../cycle/EraseCycleModal";
+import EraseCycleModal from "./EraseCycleModal";
 
 interface PropsIfc {
   element: Cycle;
