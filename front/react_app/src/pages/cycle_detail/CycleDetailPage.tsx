@@ -8,7 +8,7 @@ import Layout from "../../components/Layout";
 import AboutCycle from "./AboutCycle";
 import PlanSidebar from "./plan/PlanSidebar";
 
-const CyclePage = () => {
+const CycleDetailPage = () => {
   const params = useParams<{ cycleId: string }>();
   const [cycle, setCycle] = useState<Cycle>();
   const [mode, setMode] = useState<string>("about");
@@ -149,4 +149,4 @@ const CyclePage = () => {
   );
 };
 
-export default CyclePage;
+export default CycleDetailPage;
