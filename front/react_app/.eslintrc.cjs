@@ -15,10 +15,11 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint", "import"],
   rules: {
     "react/jsx-uses-react": "off", //「React' must be in scope when using JSX」を防止
     "react/react-in-jsx-scope": "off", //「React' must be in scope when using JSX」を防止
+    "import/no-default-export": 1, // default exportを防止
   },
   // React version not specified in eslint-plugin-react settings...を防止
   settings: {
